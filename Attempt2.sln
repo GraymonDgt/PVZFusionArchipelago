@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36310.24
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PVZFusionArchipelago", "Attempt2\PVZFusionArchipelago.csproj", "{4166BEB7-F94C-4390-8624-59BFEFE32BFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4166BEB7-F94C-4390-8624-59BFEFE32BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4166BEB7-F94C-4390-8624-59BFEFE32BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4166BEB7-F94C-4390-8624-59BFEFE32BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4166BEB7-F94C-4390-8624-59BFEFE32BFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C5724CE0-C3CE-48B9-A491-52058510F060}
+	EndGlobalSection
+EndGlobal
