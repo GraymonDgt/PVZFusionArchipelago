@@ -19,7 +19,7 @@ generic_item_data_table: dict[str, PVZFItemData] = {
     #refreshed cooldowns
 }
 traps_item_data_table:dict[str, PVZFItemData] = {
-"More Zombies": PVZFItemData(220, ItemClassification.trap),
+"Placebo Trap": PVZFItemData(220, ItemClassification.trap),
 #Queen Jack in the box
 #Sun loss
 #seed packet shuffle
