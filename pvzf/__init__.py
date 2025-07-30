@@ -147,11 +147,13 @@ class PVZFWorld(World):
             # 1Up Mushrooms
             possible_starts = ["Peashooter","Fume-shroom","Scaredy-shroom","Threepeater","Cactus","Starfruit","Cabbage-pult","Kernel-pult","Spruce Sharpshooter"]
 
+            rand_idx = random.randrange(len(possible_starts))
 
+            starting_plant = possible_starts[rand_idx]
 
 
             self.multiworld.push_precollected(self.create_item("Sunflower"))
-            self.multiworld.push_precollected(self.create_item("Peashooter"))
+            self.multiworld.push_precollected(self.create_item(starting_plant))
 
             self.multiworld.push_precollected(self.create_item("Day Access"))
 
@@ -163,7 +165,7 @@ class PVZFWorld(World):
                 self.multiworld.itempool += [self.create_item(zone_name)]#and != starting_zone
 
             for plant in plants_item_data_table.keys():
-                if plant == "Sunflower" or plant == "Peashooter":
+                if plant == "Sunflower" or plant == starting_plant:
                     continue
                 self.multiworld.itempool += [self.create_item(plant)]
                 slots_to_fill -=1
@@ -176,7 +178,7 @@ class PVZFWorld(World):
                 while trap_slots != 0:
                     trapnum = random.randrange(3)
                     if trapnum<3:
-                        self.multiworld.itempool += [self.create_item("More Zombies")]#4
+                        self.multiworld.itempool += [self.create_item("Placebo Trap")]#4
                     trap_slots-=1
                     slots_to_fill-=1
 
@@ -185,7 +187,7 @@ class PVZFWorld(World):
                 while filler_slots != 0:
                     fillernum = random.randrange(8)
                     if fillernum<8:
-                        self.multiworld.itempool += [self.create_item("Nothing (Temporary)")]
+                        self.multiworld.itempool += [self.create_item("Bonus Sun")]
                     filler_slots-=1
                     slots_to_fill-=1
 
