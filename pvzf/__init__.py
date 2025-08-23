@@ -1,7 +1,7 @@
 import typing
 import os
 import json
-from .Items import (item_data_table, generic_item_data_table,traps_item_data_table,plants_item_data_table,tools_item_data_table, item_table, access_item_table, PVZFItem)
+from .Items import (item_data_table, generic_item_data_table,traps_item_data_table,plants_item_data_table,tools_item_data_table, minigame_item_table, item_table, access_item_table, PVZFItem)
 from .Locations import location_table #GFZ_table, THZ_table, DSZ_table, CEZ_table,ACZ_table,RVZ_table,ERZ_table,BCZ_table,FHZ_table,PTZ_table,FFZ_table,HHZ_table,AGZ_table,ATZ_table,FFSP_table,TPSP_table,FCSP_table,CFSP_table,DWSP_table,MCSP_table,ESSP_table,BHSP_table,CCSP_table,DHSP_table,APSP_table,EXTRA_table,tokens_table,oneupcoords_table,ringmonitors_table, SRB2Location
 from .Options import pvzf_options_groups,PVZFOptions
 from .Rules import set_rules
@@ -42,7 +42,7 @@ option_groups = pvzf_options_groups
 #))
 
 class PVZFWorld(World):
-    """ 
+    """
     Peak game
     Remember to actually edit this later
     """
@@ -121,7 +121,15 @@ class PVZFWorld(World):
 
     def generate_early(self):
 
-        max_locations = 109#TODO up this once i have enough locations
+        max_locations = 108#TODO up this once i have enough locations
+        if self.options.challenge_sanity:
+            max_locations += 22
+        if self.options.showcase_sanity:
+            max_locations += 24
+        if self.options.minigame_sanity:
+            max_locations += 88
+        if self.options.goal_type == 0 and not self.options.minigame_sanity:
+            max_locations+=1
         #if not self.options.time_emblems:
         #    max_locations -= 27
         self.number_of_locations = max_locations
@@ -158,11 +166,35 @@ class PVZFWorld(World):
             self.multiworld.push_precollected(self.create_item("Day Access"))
 
             slots_to_fill = self.number_of_locations
-            for zone_name in access_item_table.keys():
-                if zone_name == "Day Access":
-                    continue
-                slots_to_fill-=1
-                self.multiworld.itempool += [self.create_item(zone_name)]#and != starting_zone
+
+            if self.options.randomize_seed_slots:
+                for i in range(9):
+                    self.multiworld.itempool += [self.create_item("Seed Slot")]
+                    slots_to_fill -= 1
+            else:
+                for i in range(9):
+                    self.multiworld.push_precollected(self.create_item("Seed Slot"))
+
+
+            self.multiworld.itempool += [self.create_item("Night Access")]
+            self.multiworld.itempool += [self.create_item("Pool Access")]
+            self.multiworld.itempool += [self.create_item("Fog Access")]
+            self.multiworld.itempool += [self.create_item("Roof Access")]
+            self.multiworld.itempool += [self.create_item("Snow Access")]
+            slots_to_fill -= 5
+            if self.options.challenge_sanity:
+                self.multiworld.itempool += [self.create_item("Fusion Challenge Access")]
+                slots_to_fill -= 1
+
+            if self.options.showcase_sanity:
+                self.multiworld.itempool += [self.create_item("Fusion Showcase Access")]
+                slots_to_fill -= 1
+
+            if self.options.minigame_sanity:
+                for minigame in minigame_item_table.keys():
+                    self.multiworld.itempool += [self.create_item(minigame)]
+                    slots_to_fill -= 1
+
 
             for plant in plants_item_data_table.keys():
                 if plant == "Sunflower" or plant == starting_plant:
@@ -203,7 +235,8 @@ class PVZFWorld(World):
 
     def fill_slot_data(self):
         return {
-            #"RingLink": self.options.ring_link.value,
+            "CompletionType": self.options.goal_type.value,
+            "RingLink": self.options.ring_link.value,
             "DeathLink": self.options.death_link.value,
             #"CompletionType": self.options.completion_type.value,
         }
@@ -237,5 +270,3 @@ class PVZFWorld(World):
         star_cost_spoiler_header = '\n\n' + self.player_name + ' line 159, TODO find out what this does:\n\n'
         spoiler_handle.write(self.player_name)
         # - Reformat star costs dictionary in spoiler to be a bit more readable.
-
-
