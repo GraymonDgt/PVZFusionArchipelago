@@ -13,7 +13,7 @@ class PVZFItemData(NamedTuple):
 
 
 generic_item_data_table: dict[str, PVZFItemData] = {
-    "Seed Slot": PVZFItemData(201, ItemClassification.filler),
+    "Seed Slot": PVZFItemData(201, ItemClassification.progression),
     "Bonus Sun": PVZFItemData(200, ItemClassification.filler),
     #"Lawn Clear":PVZFItemData(201, ItemClassification.filler),
     #refreshed cooldowns
@@ -27,6 +27,9 @@ traps_item_data_table:dict[str, PVZFItemData] = {
 #bungee ambush
 #grave danger
 #lawn clear
+#play a minigame
+#rough economy - doubles all plant costs
+#conveyor belt trap
 }
 
 access_item_table: dict[str, PVZFItemData] = {
@@ -36,7 +39,10 @@ access_item_table: dict[str, PVZFItemData] = {
     "Fog Access": PVZFItemData(93, ItemClassification.progression),
     "Roof Access": PVZFItemData(94, ItemClassification.progression),
     "Snow Access": PVZFItemData(95, ItemClassification.progression),
-    #"Fusion Challenges": PVZFItemData(96, ItemClassification.progression),
+    "Fusion Challenge Access": PVZFItemData(96, ItemClassification.progression),
+    "Fusion Showcase Access": PVZFItemData(97, ItemClassification.progression),
+    "Odyssey Mode": PVZFItemData(98, ItemClassification.progression),
+    "Abyss Mode": PVZFItemData(99, ItemClassification.progression),
 }
 
 
@@ -58,7 +64,7 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Doom-shroom": PVZFItemData(15, ItemClassification.progression),
     "Zombie Giftbox": PVZFItemData(16, ItemClassification.useful),
     "Gloom-shroom": PVZFItemData(17, ItemClassification.progression),
-    "Grave Buster": PVZFItemData(18, ItemClassification.progression),
+    "Grave Buster": PVZFItemData(18, ItemClassification.useful),
     "Lily Pad": PVZFItemData(19, ItemClassification.progression),
     "Squash": PVZFItemData(20, ItemClassification.progression),
     "Threepeater": PVZFItemData(21, ItemClassification.progression),
@@ -69,7 +75,7 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Spikerock": PVZFItemData(26, ItemClassification.progression),
     "Barley": PVZFItemData(27, ItemClassification.useful),
     "Sea-shroom": PVZFItemData(28, ItemClassification.progression),
-    "Platern": PVZFItemData(29, ItemClassification.progression),
+    "Plantern": PVZFItemData(29, ItemClassification.progression),
     "Cactus": PVZFItemData(30, ItemClassification.progression),
     "Blover": PVZFItemData(31, ItemClassification.progression),
     "Starfruit": PVZFItemData(32, ItemClassification.progression),
@@ -102,7 +108,7 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Burger Blaster": PVZFItemData(58, ItemClassification.progression),
     "Queen Endoflame": PVZFItemData(59, ItemClassification.progression),#odyssey exclusive
     "Coldsnap Bean": PVZFItemData(60, ItemClassification.progression),
-    "Electronion": PVZFItemData(61, ItemClassification.progression),
+    "Amp-nion": PVZFItemData(61, ItemClassification.progression),
     "Sniper Pea": PVZFItemData(62, ItemClassification.progression),#odyssey exclusive
     "Chrysanctum": PVZFItemData(63, ItemClassification.progression),
     "Icetip Lily": PVZFItemData(64, ItemClassification.progression),
@@ -113,7 +119,7 @@ plants_item_data_table: dict[str, PVZFItemData] = {
 
 tools_item_data_table: dict[str, PVZFItemData] = {
     "Shovel": PVZFItemData(70, ItemClassification.useful),
-    #"Fertilizer": PVZFItemData(71, ItemClassification.progression),
+    "Fertilizer": PVZFItemData(71, ItemClassification.progression),
     "Plant Gloves":PVZFItemData(72, ItemClassification.progression),
     #"Zombie Gloves": PVZFItemData(73, ItemClassification.useful),
     "Mallet": PVZFItemData(74, ItemClassification.progression),
@@ -132,13 +138,71 @@ tools_item_data_table: dict[str, PVZFItemData] = {
 
 }
 
+minigame_item_table: dict[str, PVZFItemData] = {
 
+    "Scaredy's Dream": PVZFItemData(110, ItemClassification.progression),
+    "Pole Vaulting Disco": PVZFItemData(111, ItemClassification.progression),
+    "Compact Planting": PVZFItemData(112, ItemClassification.progression),
+    "Newspaper War": PVZFItemData(113, ItemClassification.progression),
+    "D-Day": PVZFItemData(114, ItemClassification.progression),
+    "ZombiesTD": PVZFItemData(115, ItemClassification.progression),
+    "ZombiesTD 2": PVZFItemData(116, ItemClassification.progression),
+    "Matryoshka": PVZFItemData(117, ItemClassification.progression),
+    "Columns Like You See 'Em": PVZFItemData(118, ItemClassification.progression),
+    "Mirrors Like You See 'Em": PVZFItemData(119, ItemClassification.progression),
+    "It's Raining Seeds": PVZFItemData(120, ItemClassification.progression),
+    "Last Stand": PVZFItemData(121, ItemClassification.progression),
+    "Air Raid": PVZFItemData(122, ItemClassification.progression),
+    "Advanced Challenge: 12-Lane Day": PVZFItemData(123, ItemClassification.progression),
+    "Advanced Challenge: 12-Lane Pool": PVZFItemData(124, ItemClassification.progression),
+    "ZombiesTD 3": PVZFItemData(125, ItemClassification.progression),
 
+    "True Art is an Explosion!": PVZFItemData(126, ItemClassification.progression),
+    "Pogo Party!": PVZFItemData(127, ItemClassification.progression),
+    "Attack on Gargantuar!": PVZFItemData(128, ItemClassification.progression),
+    "Zum-nut!": PVZFItemData(129, ItemClassification.progression),
+    "Squash Showdown!": PVZFItemData(130, ItemClassification.progression),
+    "Hypno-tism!": PVZFItemData(131, ItemClassification.progression),
+    "Dr Zomboss' Revenge": PVZFItemData(132, ItemClassification.progression),
+    "Protect the Gold Magnet": PVZFItemData(133, ItemClassification.progression),
+    "Compact Planting 2": PVZFItemData(134, ItemClassification.progression),
+    "Bungee Blitz": PVZFItemData(135, ItemClassification.progression),
+    "Beghouled": PVZFItemData(136, ItemClassification.progression),
+    "Seeing Stars": PVZFItemData(137, ItemClassification.progression),
+    "Wall-nut Billiards": PVZFItemData(138, ItemClassification.progression),
+    "Wall-nut Billiards 2": PVZFItemData(139, ItemClassification.progression),
+    "Wall-nut Billiards 3": PVZFItemData(140, ItemClassification.progression),
+    "Whack a Zombie": PVZFItemData(141, ItemClassification.progression),
+    "Zombie Nimble Zombie Quick": PVZFItemData(142, ItemClassification.progression),
+    "High Gravity": PVZFItemData(143, ItemClassification.progression),
 
+    "Chomper Snake": PVZFItemData(144, ItemClassification.progression),
+    "Chinese Chezz": PVZFItemData(145, ItemClassification.progression),
+    "Squash Showdown 2": PVZFItemData(146, ItemClassification.progression),
+    "Zombies VS Zombies 2": PVZFItemData(147, ItemClassification.progression),#yes this is a normal minigame not odyssey for some reason
+    "2048: Peavolution": PVZFItemData(148, ItemClassification.progression),
+    "Splash and Clash": PVZFItemData(149, ItemClassification.progression),
+    "Melon Ninja": PVZFItemData(150, ItemClassification.progression),
+    "Eclipse": PVZFItemData(151, ItemClassification.progression),
+    "Wall-nut Bowling": PVZFItemData(152, ItemClassification.progression),
+    "Iceborg Executrix's Revenge": PVZFItemData(153, ItemClassification.progression),
+}
+
+progressives_item_data_table: dict[str, PVZFItemData] = {
+
+    "Progressive Compact Planting": PVZFItemData(154, ItemClassification.progression),
+    "Progressive ZombiesTD": PVZFItemData(155, ItemClassification.progression),
+    "Progressive Wall-nut Billiards": PVZFItemData(156, ItemClassification.progression),
+    "Progressive Squash Showdown": PVZFItemData(157, ItemClassification.progression),
+
+    #odyssey exclusive
+    "Progressive Wack-a-Zombie": PVZFItemData(158, ItemClassification.progression),
+    "Progressive Zombies VS Zombies": PVZFItemData(159, ItemClassification.progression),
+}
 
 
 item_data_table = {
-    **generic_item_data_table,**traps_item_data_table,**plants_item_data_table,**tools_item_data_table,**access_item_table
+    **generic_item_data_table,**traps_item_data_table,**plants_item_data_table,**tools_item_data_table,**access_item_table,**minigame_item_table
 }
 
 item_table = {name: data.code for name, data in item_data_table.items() if data.code is not None}
