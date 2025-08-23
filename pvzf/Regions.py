@@ -86,8 +86,11 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                 "Roof: Level 43 (1)", "Roof: Level 43 (2)",
                 "Roof: Level 44 (1)", "Roof: Level 44 (2)",
                 "Roof: Level 45 (1)", "Roof: Level 45 (2)",
-                "Dr. Zomboss' Revenge"
+
     )
+    if options.goal_type == 0 and options.minigame_sanity == 0:
+        create_locs(regRoof,"Dr. Zomboss' Revenge")
+
 
     regSnow = create_region("Snow", player, world)
     create_locs(regSnow,
@@ -101,19 +104,65 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
     "Snow: Level 8 (1)", "Snow: Level 8 (2)",
     "Snow: Level 9 (1)", "Snow: Level 9 (2)",
                 )
-    #regChal = create_region("Fusion Challenges", player, world)
-    #create_locs(regChal,
-    #"Fusion Challenge: Explod-o-shooter",
-    #"Fusion Challenge: Chompzilla",
-    #"Fusion Challenge: Charm-shroom",
-    #"Fusion Challenge: Doomspike-shroom",
-    #"Fusion Challenge: Infernowood",
-    #"Fusion Challenge: Krakerberus",
-    #"Fusion Challenge: Stardrop",
-    #"Fusion Challenge: Bloverthorn Pumpkin",
-    #"Fusion Challenge: Salad-pult",
-    #"Fusion Challenge: Alchemist Umbrella",
-    #"Fusion Challenge: Spruce Supershooter")
+    if options.challenge_sanity:
+        regChal = create_region("Fusion Challenges", player, world)
+        create_locs(regChal,
+            "Fusion Challenge: Explod-o-shooter (1)",
+            "Fusion Challenge: Chompzilla (1)",
+            "Fusion Challenge: Charm-shroom (1)",
+            "Fusion Challenge: Doomspike-shroom (1)",
+            "Fusion Challenge: Infernowood (1)",
+            "Fusion Challenge: Krakerberus (1)",
+            "Fusion Challenge: Stardrop (1)",
+            "Fusion Challenge: Bloverthorn Pumpkin (1)",
+            "Fusion Challenge: Salad-pult (1)",
+            "Fusion Challenge: Alchemist Umbrella (1)",
+            "Fusion Challenge: Spruce Supershooter (1)",
+
+            "Fusion Challenge: Explod-o-shooter (2)",
+            "Fusion Challenge: Chompzilla (2)",
+            "Fusion Challenge: Charm-shroom (2)",
+            "Fusion Challenge: Doomspike-shroom (2)",
+            "Fusion Challenge: Infernowood (2)",
+            "Fusion Challenge: Krakerberus (2)",
+            "Fusion Challenge: Stardrop (2)",
+            "Fusion Challenge: Bloverthorn Pumpkin (2)",
+            "Fusion Challenge: Salad-pult (2)",
+            "Fusion Challenge: Alchemist Umbrella (2)",
+            "Fusion Challenge: Spruce Supershooter (2)"
+)
+    if options.showcase_sanity:
+        regShow = create_region("Fusion Showcase", player, world)
+        create_locs(regShow,
+            "Fusion Showcase: Titan Pea Turret (1)",
+            "Fusion Showcase: Explod-o-tato Mine (1)",
+            "Fusion Showcase: Pumpkin Bunker (1)",
+            "Fusion Showcase: Nugget-shroom (1)",
+            "Fusion Showcase: Spuddy-shroom (1)",
+            "Fusion Showcase: Chomper Maw (1)",
+            "Fusion Showcase: Foul-shroom (1)",
+            "Fusion Showcase: Mind-blover (1)",
+            "Fusion Showcase: Boomwood (1)",
+            "Fusion Showcase: Bamboom (1)",
+            "Fusion Showcase: Spike-nut (1)",
+            "Fusion Showcase: Leviathan-shroom (1)",
+
+            "Fusion Showcase: Titan Pea Turret (2)",
+            "Fusion Showcase: Explod-o-tato Mine (2)",
+            "Fusion Showcase: Pumpkin Bunker (2)",
+            "Fusion Showcase: Nugget-shroom (2)",
+            "Fusion Showcase: Spuddy-shroom (2)",
+            "Fusion Showcase: Chomper Maw (2)",
+            "Fusion Showcase: Foul-shroom (2)",
+            "Fusion Showcase: Mind-blover (2)",
+            "Fusion Showcase: Boomwood (2)",
+            "Fusion Showcase: Bamboom (2)",
+            "Fusion Showcase: Spike-nut (2)",
+            "Fusion Showcase: Leviathan-shroom (2)")
+
+
+
+
 
     #if options.time_emblems:
     #    create_locs(regGFZ, "Greenflower (Act 1) Time Emblem","Greenflower (Act 2) Time Emblem","Greenflower (Act 3) Time Emblem")
