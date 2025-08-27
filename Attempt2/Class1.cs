@@ -63,8 +63,9 @@ namespace PVZFusionArchipelago
         public static int prevSun;
         public static bool sunExists = false;
         public static int goalType = 0;
-
-
+        public static GameObject boardGl;
+        public static GameObject canvasGl;
+        public static Transform levelUIGl;
 
         public AssetBundle bundle;
         public GameObject sunPrefab;
@@ -103,7 +104,7 @@ namespace PVZFusionArchipelago
                 APData data = JsonConvert.DeserializeObject<APData>(jsonContent);
                 MelonLogger.Msg("Loaded JSON data");
                 session = ArchipelagoSessionFactory.CreateSession(data.serverAddress, data.serverPort);
-                Connect("Plants Vs Zombies Fusion", data.slotName, "", session);
+                Connect("Plants Vs Zombies Fusion", data.slotName, data.password, session);
             }
             else
             {
@@ -114,7 +115,7 @@ namespace PVZFusionArchipelago
 
 
 
-        public override void OnLateUpdate()
+        public override void OnUpdate()
         {
             AttachClickHandler("TrophyPrefab");
             if (session == null)
@@ -127,20 +128,29 @@ namespace PVZFusionArchipelago
             {
                 if (ringLinkMode != 0)
                 {
+                    //if (boardGl == null)
+                    //{ }
 
 
-                    var canvas = GameObject.Find("Canvas");
-                    if (canvas != null)
+                    if (canvasGl == null)
+                    { canvasGl = GameObject.Find("Canvas");}
+                    
+                    if (canvasGl != null)
                     {
-                        var levelUI = canvas.transform.Find("InGameUI(Clone)");
+                        if (levelUIGl == null)
+                        { levelUIGl = canvasGl.transform.Find("InGameUI(Clone)"); }
+
+
+                        if (boardGl == null) { 
+                        boardGl = GameObject.Find("Board");
+                        }
 
 
 
-                        var board = GameObject.Find("Board");
-                        if ((board != null) && (levelUI != null))
+                        if ((boardGl != null) && (levelUIGl != null))
                         {
 
-                            var boardComp = board.GetComponent(Il2CppType.Of<Board>());
+                            var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
                             var type = boardComp.GetIl2CppType();
                             var field = type.GetField("theSun");
                             Il2CppSystem.Object rawValue = field.GetValue(boardComp);
@@ -569,13 +579,17 @@ namespace PVZFusionArchipelago
 
         private void CheckConveyorBelt()
         {
-            var canvas = GameObject.Find("Canvas");
-            if (canvas == null)
+
+
+
+            if (canvasGl == null)
+            { canvasGl = GameObject.Find("Canvas"); }
+            if (canvasGl == null)
             {
                 //MelonLogger.Warning("Background not found");
                 return;
             }
-            var targetTransform = canvas.transform.Find("InGameUI(Clone)/ConeryorBelt/Content");
+            var targetTransform = canvasGl.transform.Find("InGameUI(Clone)/ConeryorBelt/Content");
             if (targetTransform == null)
             {
                 return;
@@ -586,7 +600,7 @@ namespace PVZFusionArchipelago
                 var board = GameObject.Find("Board");
                 if (board != null)
                 {
-                    var conveyorTransform = canvas.transform.Find("InGameUI(Clone)/ConeryorBelt");
+                    var conveyorTransform = canvasGl.transform.Find("InGameUI(Clone)/ConeryorBelt");
 
 
                     if (conveyorTransform.gameObject.activeSelf)
@@ -789,16 +803,16 @@ namespace PVZFusionArchipelago
         private void AttachClickHandler(string path)
         {
 
-            
 
-            var canvas = GameObject.Find("Board");
-            if (canvas == null)
+            if (boardGl == null)
+            { boardGl = GameObject.Find("Board"); }
+            if (boardGl == null)
             {
                 //MelonLogger.Warning("Background not found");
                 return;
             }
 
-            var targetTransform = canvas.transform.Find(path);
+            var targetTransform = boardGl.transform.Find(path);
             if (targetTransform == null)
             {
                 return;
@@ -810,7 +824,7 @@ namespace PVZFusionArchipelago
             { 
                 obj.AddComponent<OnClickHandler2D>();
                 MelonLogger.Msg($"Attached OnClickHandler2D to '{obj.name}'");
-                canvas = GameObject.Find("CanvasUp");
+                var canvas = GameObject.Find("CanvasUp");
                 //if (canvas == null)
                 //{
                 //    return;
@@ -1191,35 +1205,40 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(70);
                         session.Locations.CompleteLocationChecks(370);
                         break;
-                    case "Foul-shroom":
+                    case "Chomper Maw":
                         checkedArray[71] = true;
                         session.Locations.CompleteLocationChecks(71);
                         session.Locations.CompleteLocationChecks(371);
                         break;
-                    case "Mind-blover":
+                    case "Foul-shroom":
                         checkedArray[72] = true;
                         session.Locations.CompleteLocationChecks(72);
                         session.Locations.CompleteLocationChecks(372);
                         break;
-                    case "Boomwood":
+                    case "Mind-blover":
                         checkedArray[73] = true;
                         session.Locations.CompleteLocationChecks(73);
                         session.Locations.CompleteLocationChecks(373);
                         break;
-                    case "Bamboom":
+                    case "Boomwood":
                         checkedArray[74] = true;
                         session.Locations.CompleteLocationChecks(74);
                         session.Locations.CompleteLocationChecks(374);
                         break;
-                    case "Spike-nut":
+                    case "Bamboom":
                         checkedArray[75] = true;
                         session.Locations.CompleteLocationChecks(75);
                         session.Locations.CompleteLocationChecks(375);
                         break;
-                    case "Leviathan-shroom":
+                    case "Spike-nut":
                         checkedArray[76] = true;
                         session.Locations.CompleteLocationChecks(76);
                         session.Locations.CompleteLocationChecks(376);
+                        break;
+                    case "Leviathan-shroom":
+                        checkedArray[77] = true;
+                        session.Locations.CompleteLocationChecks(77);
+                        session.Locations.CompleteLocationChecks(377);
                         break;
 
 
@@ -1500,6 +1519,8 @@ namespace PVZFusionArchipelago
         public string serverAddress { get; set; }
         public int serverPort { get; set; }
         public string slotName { get; set; }
+        public string password { get; set; }
+
     }
 
 
