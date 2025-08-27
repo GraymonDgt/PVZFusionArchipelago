@@ -7,7 +7,7 @@ https://discord.gg/kkH4wBUmG9
 
 # SETUP GUIDE
 
-Download the PVZ Fusion Multilanguage translation here: https://github.com/Teyliu/PVZF-Translation
+Download the melonloader version of the PVZ Fusion Multilanguage translation here: https://github.com/Teyliu/PVZF-Translation
 (Currently only Multi-Language 2.7 has been tested)
 
 Download PVZFusionArchipelago.zip and extract its contents into the same folder as PlantsVsZombiesRH.exe,
