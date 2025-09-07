@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\MelonLoader.PvZF.2.8.2.Multi-lang.Pack.v2.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppInterop.Common">
       <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>

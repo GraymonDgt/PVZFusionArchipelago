@@ -39,8 +39,8 @@ namespace PVZFusionArchipelago
 {
     public class Class1 : MelonMod
     {
-        public const int maxItems = 100; // holy shit good programming practice?\
-        public const int maxLocations = 400;
+        public const int maxItems = 160; // holy shit good programming practice?\
+        public const int maxLocations = 500;
         public int seedSlots = 0;
         public static ArchipelagoSession session;
         public static int currentPlayerSlot;
@@ -55,6 +55,10 @@ namespace PVZFusionArchipelago
         const string advanturePage2 = "ChallengeMenu(Clone)/Levels/PageAdvantureLevel/Pages/Page2/";
         const string advanturePage3 = "ChallengeMenu(Clone)/Levels/PageAdvantureLevel/Pages/Page3/";
         const string advanturePage4 = "ChallengeMenu(Clone)/Levels/PageNewAdvantureLevel/Pages/Page1/";
+        const string minigamePage1 = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page1/";
+        const string minigamePage2 = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page2/";
+        const string minigamePage3  = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page3/";
+
 
         const string showcasePage = "ExploreMenu(Clone)/Level/Line1/";
         const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
@@ -65,6 +69,7 @@ namespace PVZFusionArchipelago
         public static int goalType = 0;
         public static GameObject boardGl;
         public static GameObject canvasGl;
+        public static GameObject canvasupGl;
         public static Transform levelUIGl;
 
         public AssetBundle bundle;
@@ -203,141 +208,148 @@ namespace PVZFusionArchipelago
 
             CheckConveyorBelt();
 
-
-            if (unlockedArray[1] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "PeaShooter"); }
-            if (unlockedArray[2] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "SunFlower"); }
-            if (unlockedArray[3] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "CherryBomb"); }
-            if (unlockedArray[4] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "WallNut"); }
-            if (unlockedArray[5] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "PotatoMine"); }
-            if (unlockedArray[6] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Chomper"); }
-            if (unlockedArray[7] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Present"); }
-            if (unlockedArray[8] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "TallNut"); }
-            if (unlockedArray[9] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "EndoFlame"); }
-            if (unlockedArray[10] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "SmallPuff"); }
-            if (unlockedArray[11] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "FumeShroom"); }
-            if (unlockedArray[12] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "HypnoShroom"); }
-            if (unlockedArray[13] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "ScaredyShroom"); }
-            if (unlockedArray[14] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "IceShroom"); }
-            if (unlockedArray[15] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "DoomShroom"); }
-            if (unlockedArray[16] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "PresentZombie"); }
-            if (unlockedArray[17] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "GloomShroom"); }
-            if (unlockedArray[18] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "GraveBust"); }
-            if (unlockedArray[19] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "LilyPad"); }
-            if (unlockedArray[20] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Squash"); }
-            if (unlockedArray[21] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "ThreePeater"); }
-            if (unlockedArray[22] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Tanglekelp"); }
-            if (unlockedArray[23] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Jalapeno"); }
-            if (unlockedArray[24] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Caltrop"); }
-            if (unlockedArray[25] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "TorchWood"); }
-            if (unlockedArray[26] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Spike"); }
-            if (unlockedArray[27] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Wheat"); }
-            if (unlockedArray[28] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "SeaShroom"); }
-            if (unlockedArray[29] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Plantern"); }
-            if (unlockedArray[30] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Cactus"); }
-            if (unlockedArray[31] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Blover"); }
-            if (unlockedArray[32] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "StarFruit"); }
-            if (unlockedArray[33] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Pumpkin"); }
-            if (unlockedArray[34] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Magnetshroom"); }
-            if (unlockedArray[35] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Cattail"); }
-            if (unlockedArray[36] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Imitater"); }
-            if (unlockedArray[37] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Cabbage"); }
-            if (unlockedArray[38] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Pot"); }
-            if (unlockedArray[39] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Cornpult"); }
-            if (unlockedArray[40] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Garlic"); }
-            if (unlockedArray[41] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Umbrellaleaf"); }
-            if (unlockedArray[42] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Marigold"); }
-            if (unlockedArray[43] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Melonpult"); }
-            if (unlockedArray[44] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "CobCannon"); }
-            if (unlockedArray[45] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "MixBomb"); }
-            if (unlockedArray[46] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "PineFurnace"); }
-            if (unlockedArray[47] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "SpruceShooter"); }
-            if (unlockedArray[48] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "ShulkFlower"); }
-            if (unlockedArray[49] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "IceLotus"); }
-            if (unlockedArray[50] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "WaterAloes"); }
-            if (unlockedArray[51] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "Bamboo"); }
-            if (unlockedArray[52] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "SnowPresent"); }
-            if (unlockedArray[53] == false)
-            { HideTargetObjectChildren("CanvasUp", page1 + "SpruceBallista"); }
-
-            if (unlockedArray[55] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "CattailGirl"); }
-            if (unlockedArray[56] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "SwordStar"); }
-            if (unlockedArray[57] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "Squalour"); }
-            if (unlockedArray[58] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "Hamburger"); }
-            if (unlockedArray[59] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "EndoFlameGirl"); }
-            if (unlockedArray[60] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "IceBean"); }
-            if (unlockedArray[61] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "Prismflower"); }
-            if (unlockedArray[62] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "SniperPea"); }
-            if (unlockedArray[63] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "Chrysantheautumn"); }
-            if (unlockedArray[64] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "IcePeach"); }
-            if (unlockedArray[65] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "FrozenPear"); }
-            if (unlockedArray[66] == false)
-            { HideTargetObjectChildren("CanvasUp", page2 + "PassionFruit"); }
+            if (canvasupGl == null)
+            { canvasupGl = GameObject.Find("CanvasUp"); }
 
 
 
+            if (canvasupGl != null)
+            {
+                //MelonLogger.Msg("Found CanvasUp");
+                if (unlockedArray[1] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "PeaShooter"); }
+                if (unlockedArray[2] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "SunFlower"); }
+                if (unlockedArray[3] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "CherryBomb"); }
+                if (unlockedArray[4] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "WallNut"); }
+                if (unlockedArray[5] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "PotatoMine"); }
+                if (unlockedArray[6] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Chomper"); }
+                if (unlockedArray[7] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Present"); }
+                if (unlockedArray[8] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "TallNut"); }
+                if (unlockedArray[9] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "EndoFlame"); }
+                if (unlockedArray[10] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "SmallPuff"); }
+                if (unlockedArray[11] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "FumeShroom"); }
+                if (unlockedArray[12] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "HypnoShroom"); }
+                if (unlockedArray[13] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "ScaredyShroom"); }
+                if (unlockedArray[14] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "IceShroom"); }
+                if (unlockedArray[15] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "DoomShroom"); }
+                if (unlockedArray[16] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "PresentZombie"); }
+                if (unlockedArray[17] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "GloomShroom"); }
+                if (unlockedArray[18] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "GraveBust"); }
+                if (unlockedArray[19] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "LilyPad"); }
+                if (unlockedArray[20] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Squash"); }
+                if (unlockedArray[21] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "ThreePeater"); }
+                if (unlockedArray[22] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Tanglekelp"); }
+                if (unlockedArray[23] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Jalapeno"); }
+                if (unlockedArray[24] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Caltrop"); }
+                if (unlockedArray[25] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "TorchWood"); }
+                if (unlockedArray[26] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Spike"); }
+                if (unlockedArray[27] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Wheat"); }
+                if (unlockedArray[28] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "SeaShroom"); }
+                if (unlockedArray[29] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Plantern"); }
+                if (unlockedArray[30] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Cactus"); }
+                if (unlockedArray[31] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Blover"); }
+                if (unlockedArray[32] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "StarFruit"); }
+                if (unlockedArray[33] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Pumpkin"); }
+                if (unlockedArray[34] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Magnetshroom"); }
+                if (unlockedArray[35] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Cattail"); }
+                if (unlockedArray[36] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Imitater"); }
+                if (unlockedArray[37] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Cabbage"); }
+                if (unlockedArray[38] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Pot"); }
+                if (unlockedArray[39] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Cornpult"); }
+                if (unlockedArray[40] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Garlic"); }
+                if (unlockedArray[41] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Umbrellaleaf"); }
+                if (unlockedArray[42] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Marigold"); }
+                if (unlockedArray[43] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Melonpult"); }
+                if (unlockedArray[44] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "CobCannon"); }
+                if (unlockedArray[45] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "MixBomb"); }
+                if (unlockedArray[46] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "PineFurnace"); }
+                if (unlockedArray[47] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "SpruceShooter"); }
+                if (unlockedArray[48] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "ShulkFlower"); }
+                if (unlockedArray[49] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "IceLotus"); }
+                if (unlockedArray[50] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "WaterAloes"); }
+                if (unlockedArray[51] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "Bamboo"); }
+                if (unlockedArray[52] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "SnowPresent"); }
+                if (unlockedArray[53] == false)
+                { HideTargetObjectChildren(canvasupGl, page1 + "SpruceBallista"); }
+
+                if (unlockedArray[55] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "CattailGirl"); }
+                if (unlockedArray[56] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "SwordStar"); }
+                if (unlockedArray[57] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "Squalour"); }
+                if (unlockedArray[58] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "Hamburger"); }
+                if (unlockedArray[59] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "EndoFlameGirl"); }
+                if (unlockedArray[60] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "IceBean"); }
+                if (unlockedArray[61] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "Prismflower"); }
+                if (unlockedArray[62] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "SniperPea"); }
+                if (unlockedArray[63] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "Chrysantheautumn"); }
+                if (unlockedArray[64] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "IcePeach"); }
+                if (unlockedArray[65] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "FrozenPear"); }
+                if (unlockedArray[66] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "PassionFruit"); }
+
+
+            }
 
 
             if (unlockedArray[70] == false)//shovel
@@ -345,40 +357,45 @@ namespace PVZFusionArchipelago
 
             if (unlockedArray[71] == false)//fertilizer
             {
-                var board = GameObject.Find("Board");
-                if (board != null)
+
+                if (boardGl == null)
+                { boardGl = GameObject.Find("Board"); }
+                if (boardGl != null)
                 {
-                    var fertilizerTransform = board.transform.Find("Ferilize(Clone)");
+                    var fertilizerTransform = boardGl.transform.Find("Ferilize(Clone)");
 
                     if (fertilizerTransform != null)
                     { GameObject.Destroy(fertilizerTransform.gameObject); }
                 }
             }
 
+            if (canvasGl == null)
+            { canvasGl = GameObject.Find("Canvas"); }
+            if (canvasGl != null)
+            {
+                if (unlockedArray[72] == false)//gloves
+                {
+                    HideTargetObject("Canvas", "InGameUI(Clone)/GloveBank");
+                    HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/GloveBank");
+                }
+                if (unlockedArray[74] == false)//mallet
+                { HideTargetObject("Canvas", "InGameUI(Clone)/HammerBank"); }
 
 
-            if (unlockedArray[72] == false)//gloves
-            { HideTargetObject("Canvas", "InGameUI(Clone)/GloveBank");
-                HideTargetObjectChildren("Canvas", "GardenUI(Clone)/Tools/GloveBank");
+                if (unlockedArray[76] == false)//watering can
+                { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/WaterBank"); }
+
+                if (unlockedArray[77] == false)//gramophone
+                { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/PhonographBank"); }
+
+                if (unlockedArray[78] == false)//bug spray
+                { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/BugSprayBank"); }
+
+                if (unlockedArray[79] == false)//wheelbarrow
+                { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/WheelBarrowBank"); }
+
+
             }
-            if (unlockedArray[74] == false)//mallet
-            { HideTargetObject("Canvas", "InGameUI(Clone)/HammerBank"); }
-
-
-            if (unlockedArray[76] == false)//watering can
-            { HideTargetObjectChildren("Canvas", "GardenUI(Clone)/Tools/WaterBank"); }
-
-            if (unlockedArray[77] == false)//gramophone
-            { HideTargetObjectChildren("Canvas", "GardenUI(Clone)/Tools/PhonographBank"); }
-
-            if (unlockedArray[78] == false)//bug spray
-            { HideTargetObjectChildren("Canvas", "GardenUI(Clone)/Tools/BugSprayBank"); }
-
-            if (unlockedArray[79] == false)//wheelbarrow
-            { HideTargetObjectChildren("Canvas", "GardenUI(Clone)/Tools/WheelBarrowBank"); }
-
-
-
 
 
 
@@ -549,8 +566,148 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[77]) { HideTargetObject("Canvas", showcasePage + "Lv12/Window/Trophy"); }
 
             }
+            if (unlockedArray[110] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv25"); }
+            else { if (!checkedArray[80]) { HideTargetObject("Canvas", minigamePage1 + "Lv25/Window/Trophy"); } }
+            if (unlockedArray[111] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv28"); }
+            else { if (!checkedArray[81]) { HideTargetObject("Canvas", minigamePage1 + "Lv28/Window/Trophy"); } }
+            if (unlockedArray[112] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv29"); }
+            else { if (!checkedArray[82]) { HideTargetObject("Canvas", minigamePage1 + "Lv29/Window/Trophy"); } }
+            if (unlockedArray[113] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv30"); }
+            else { if (!checkedArray[83]) { HideTargetObject("Canvas", minigamePage1 + "Lv30/Window/Trophy"); } }
+            if (unlockedArray[114] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv34"); }
+            else { if (!checkedArray[84]) { HideTargetObject("Canvas", minigamePage1 + "Lv34/Window/Trophy"); } }
+            if (unlockedArray[115] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv37"); }
+            else { if (!checkedArray[85]) { HideTargetObject("Canvas", minigamePage1 + "Lv37/Window/Trophy"); } }
+            if (unlockedArray[116] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv38"); }
+            else { if (!checkedArray[86]) { HideTargetObject("Canvas", minigamePage1 + "Lv38/Window/Trophy"); } }
+            if (unlockedArray[117] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv66"); }
+            else { if (!checkedArray[87]) { HideTargetObject("Canvas", minigamePage1 + "Lv66/Window/Trophy"); } }
+            if (unlockedArray[118] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv42"); }
+            else { if (!checkedArray[88]) { HideTargetObject("Canvas", minigamePage1 + "Lv42/Window/Trophy"); } }
+            if (unlockedArray[119] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv43"); }
+            else { if (!checkedArray[89]) { HideTargetObject("Canvas", minigamePage1 + "Lv43/Window/Trophy"); } }
+            if (unlockedArray[120] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv44"); }
+            else { if (!checkedArray[90]) { HideTargetObject("Canvas", minigamePage1 + "Lv44/Window/Trophy"); } }
+            if (unlockedArray[121] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv47"); }
+            else { if (!checkedArray[91]) { HideTargetObject("Canvas", minigamePage1 + "Lv47/Window/Trophy"); } }
+            if (unlockedArray[122] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv49"); }
+            else { if (!checkedArray[92]) { HideTargetObject("Canvas", minigamePage1 + "Lv49/Window/Trophy"); } }
+            if (unlockedArray[123] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv52"); }
+            if (unlockedArray[124] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv53"); }
+            if (unlockedArray[125] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv58"); }
+            else { if (!checkedArray[93]) { HideTargetObject("Canvas", minigamePage1 + "Lv58/Window/Trophy"); } }
+            if (unlockedArray[126] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv59"); }
+            else { if (!checkedArray[94]) { HideTargetObject("Canvas", minigamePage1 + "Lv59/Window/Trophy"); } }
+            if (unlockedArray[127] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv62"); }
+            else { if (!checkedArray[95]) { HideTargetObject("Canvas", minigamePage1 + "Lv62/Window/Trophy"); } }
+            if (unlockedArray[128] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv63"); }
+            else { if (!checkedArray[96]) { HideTargetObject("Canvas", minigamePage2 + "Lv63/Window/Trophy"); } }
+            if (unlockedArray[129] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv65"); }
+            else { if (!checkedArray[96]) { HideTargetObject("Canvas", minigamePage2 + "Lv65/Window/Trophy"); } }
+            if (unlockedArray[130] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv67"); }
+            else { if (!checkedArray[98]) { HideTargetObject("Canvas", minigamePage2 + "Lv67/Window/Trophy"); } }
+            if (unlockedArray[131] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv77"); }
+            else { if (!checkedArray[99]) { HideTargetObject("Canvas", minigamePage2 + "Lv77/Window/Trophy"); } }
+            if (unlockedArray[132] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv78"); }
+            else { if (!checkedArray[100]) { HideTargetObject("Canvas", minigamePage2 + "Lv78/Window/Trophy"); } }
+            if (unlockedArray[133] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv82"); }
+            else { if (!checkedArray[101]) { HideTargetObject("Canvas", minigamePage2 + "Lv82/Window/Trophy"); } }
+            if (unlockedArray[134] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv99"); }
+            else { if (!checkedArray[102]) { HideTargetObject("Canvas", minigamePage2 + "Lv99/Window/Trophy"); } }
+            if (unlockedArray[135] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv100"); }
+            else { if (!checkedArray[103]) { HideTargetObject("Canvas", minigamePage2 + "Lv100/Window/Trophy"); } }
+            if (unlockedArray[136] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv107"); }
+            else { if (!checkedArray[104]) { HideTargetObject("Canvas", minigamePage2 + "Lv107/Window/Trophy"); } }
+            if (unlockedArray[137] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv108"); }
+            else { if (!checkedArray[105]) { HideTargetObject("Canvas", minigamePage2 + "Lv108/Window/Trophy"); } }
+            if (unlockedArray[138] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv117"); }
+            else { if (!checkedArray[106]) { HideTargetObject("Canvas", minigamePage2 + "Lv117/Window/Trophy"); } }
+            if (unlockedArray[139] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv118"); }
+            else { if (!checkedArray[107]) { HideTargetObject("Canvas", minigamePage2 + "Lv118/Window/Trophy"); } }
+            if (unlockedArray[140] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv123"); }
+            else { if (!checkedArray[108]) { HideTargetObject("Canvas", minigamePage2 + "Lv123/Window/Trophy"); } }
+            if (unlockedArray[141] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv125"); }
+            else { if (!checkedArray[109]) { HideTargetObject("Canvas", minigamePage2 + "Lv125/Window/Trophy"); } }
+            if (unlockedArray[142] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv126"); }
+            else { if (!checkedArray[110]) { HideTargetObject("Canvas", minigamePage2 + "Lv126/Window/Trophy"); } }
+            if (unlockedArray[143] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv127"); }
+            else { if (!checkedArray[111]) { HideTargetObject("Canvas", minigamePage2 + "Lv127/Window/Trophy"); } }
+            if (unlockedArray[144] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv131"); }
+            else { if (!checkedArray[112]) { HideTargetObject("Canvas", minigamePage2 + "Lv131/Window/Trophy"); } }
+            if (unlockedArray[145] == false)
+            { HideTargetObject("Canvas", minigamePage2 + "Lv132"); }
+            else { if (!checkedArray[113]) { HideTargetObject("Canvas", minigamePage2 + "Lv132/Window/Trophy"); } }
+            if (unlockedArray[146] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv133"); }
+            else { if (!checkedArray[114]) { HideTargetObject("Canvas", minigamePage3 + "Lv133/Window/Trophy"); } }
+            if (unlockedArray[147] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv135"); }
+            else { if (!checkedArray[115]) { HideTargetObject("Canvas", minigamePage3 + "Lv135/Window/Trophy"); } }
+            if (unlockedArray[148] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv137"); }
+            else { if (!checkedArray[116]) { HideTargetObject("Canvas", minigamePage3 + "Lv137/Window/Trophy"); } }
+            if (unlockedArray[149] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv139"); }
+            else { if (!checkedArray[117]) { HideTargetObject("Canvas", minigamePage3 + "Lv139/Window/Trophy"); } }
+            if (unlockedArray[150] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv141"); }
+            else { if (!checkedArray[118]) { HideTargetObject("Canvas", minigamePage3 + "Lv141/Window/Trophy"); } }
+            if (unlockedArray[151] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv142"); }
+            else { if (!checkedArray[119]) { HideTargetObject("Canvas", minigamePage3 + "Lv142/Window/Trophy"); } }
+            if (unlockedArray[152] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv143"); }
+            else { if (!checkedArray[120]) { HideTargetObject("Canvas", minigamePage3 + "Lv143/Window/Trophy"); } }
+            if (unlockedArray[153] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv146"); }
+            else { if (!checkedArray[121]) { HideTargetObject("Canvas", minigamePage3 + "Lv146/Window/Trophy"); } }
+            if (unlockedArray[154] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv147"); }
+            else { if (!checkedArray[122]) { HideTargetObject("Canvas", minigamePage3 + "Lv147/Window/Trophy"); } }
+            if (unlockedArray[155] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv148"); }
+            else { if (!checkedArray[123]) { HideTargetObject("Canvas", minigamePage3 + "Lv143/Window/Trophy"); } }
+            if (unlockedArray[156] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv150"); }
+            else { if (!checkedArray[124]) { HideTargetObject("Canvas", minigamePage3 + "Lv150/Window/Trophy"); } }
 
-                //const string showcasePage = "ExploreMenu(Clone)/Level/Line1";
+
+            //const string showcasePage = "ExploreMenu(Clone)/Level/Line1";
             //const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
 
 
@@ -639,155 +796,235 @@ namespace PVZFusionArchipelago
                 //MelonLogger.Msg(plantType.ToString());
 
 
-                if (unlockedArray[1] == false && plantType == PlantType.Peashooter)
+                switch (plantType)
                 {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[3] == false && plantType == PlantType.CherryBomb)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[4] == false && plantType == PlantType.WallNut)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[5] == false && plantType == PlantType.PotatoMine)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[6] == false && plantType == PlantType.Chomper)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
+                    case PlantType.Peashooter:
+                        if (!unlockedArray[1]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.CherryBomb:
+                        if (!unlockedArray[3]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.WallNut:
+                        if (!unlockedArray[4]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.PotatoMine:
+                        if (!unlockedArray[5]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Chomper:
+                        if (!unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.HypnoShroom:
+                        if (!unlockedArray[12]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.IceShroom:
+                        if (!unlockedArray[14]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.DoomShroom:
+                        if (!unlockedArray[15]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.LilyPad:
+                        if (!unlockedArray[19]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Squash:
+                        if (!unlockedArray[20]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.ThreePeater:
+                        if (!unlockedArray[21]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Tanglekelp:
+                        if (!unlockedArray[22]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Jalapeno:
+                        if (!unlockedArray[23]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Caltrop:
+                        if (!unlockedArray[24]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.TorchWood:
+                        if (!unlockedArray[25]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SeaShroom:
+                        if (!unlockedArray[28]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Plantern:
+                        if (!unlockedArray[29]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Cactus:
+                        if (!unlockedArray[30]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Blover:
+                        if (!unlockedArray[31]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.StarFruit:
+                        if (!unlockedArray[32]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Pumpkin:
+                        if (!unlockedArray[33]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Magnetshroom:
+                        if (!unlockedArray[34]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Cabbagepult:
+                        if (!unlockedArray[37]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Pot:
+                        if (!unlockedArray[38]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Cornpult:
+                        if (!unlockedArray[39]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Umbrellaleaf:
+                        if (!unlockedArray[41]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Marigold:
+                        if (!unlockedArray[42]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Melonpult:
+                        if (!unlockedArray[43]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.PineFurnace:
+                        if (!unlockedArray[46]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SpruceShooter:
+                        if (!unlockedArray[47]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Shulkflower:
+                        if (!unlockedArray[48]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.IceLotus:
+                        if (!unlockedArray[49]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.WaterAloes:
+                        if (!unlockedArray[50]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.Bamboo:
+                        if (!unlockedArray[51]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+
+                    case PlantType.PortalNut:
+                        if (!unlockedArray[4]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.FireSquash:
+                        if (!unlockedArray[20]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+                    case PlantType.PeaChomper:
+                        if (!unlockedArray[1] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.GatlingPuff:
+                        if (!unlockedArray[1] || !unlockedArray[10]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SnowGatling:
+                        if (!unlockedArray[1] || !unlockedArray[14]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SunChomper:
+                        if (!unlockedArray[2] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SunMagnet:
+                        if (!unlockedArray[2] || !unlockedArray[34]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.CherryNut:
+                        if (!unlockedArray[3] || !unlockedArray[4]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.CherryChomper:
+                        if (!unlockedArray[3] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.CherryJalapeno:
+                        if (!unlockedArray[3] || !unlockedArray[23]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.NutChomper:
+                        if (!unlockedArray[4] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.HypnoNut:
+                        if (!unlockedArray[4] || !unlockedArray[12]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.IceNut:
+                        if (!unlockedArray[4] || !unlockedArray[14]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.DoomNut:
+                        if (!unlockedArray[4] || !unlockedArray[15]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SquashNut:
+                        if (!unlockedArray[4] || !unlockedArray[20]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.FireNut:
+                        if (!unlockedArray[4] || !unlockedArray[23]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.CaltropNut:
+                        if (!unlockedArray[4] || !unlockedArray[24]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.PotatoChomper:
+                        if (!unlockedArray[5] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+
+                    case PlantType.HypnoSquash:
+                        if (!unlockedArray[12] || !unlockedArray[20]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.IceDoom:
+                        if (!unlockedArray[14] || !unlockedArray[15]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+                    case PlantType.IceSquash:
+                        if (!unlockedArray[14] || !unlockedArray[20]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.ObsidianJalapeno:
+                        if (!unlockedArray[14] || !unlockedArray[23]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.IceBlover:
+                        if (!unlockedArray[14] || !unlockedArray[31]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.DoomBlover:
+                        if (!unlockedArray[15] || !unlockedArray[31]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.DoomStar:
+                        if (!unlockedArray[15] || !unlockedArray[32]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.JackboxDoom:
+                        if (!unlockedArray[15] || !unlockedArray[34]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+                    case PlantType.JalaSquash:
+                        if (!unlockedArray[20] || !unlockedArray[23]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SquashSpike:
+                        if (!unlockedArray[20] || !unlockedArray[24]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.SquashTorch:
+                        if (!unlockedArray[20] || !unlockedArray[25]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.DarkThreePeater:
+                        if (!unlockedArray[21] || !unlockedArray[23]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+                    case PlantType.JalaStar:
+                        if (!unlockedArray[23] || !unlockedArray[32]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+                    case PlantType.IronPumpkin:
+                        if (!unlockedArray[33] || !unlockedArray[34]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.GoldMagnet:
+                        if (!unlockedArray[34] || !unlockedArray[42]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+                    case PlantType.GoldCabbage:
+                        if (!unlockedArray[37] || !unlockedArray[42]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.GoldCorn:
+                        if (!unlockedArray[39] || !unlockedArray[42]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.GoldMelon:
+                        if (!unlockedArray[42] || !unlockedArray[43]) { GameObject.Destroy(child.gameObject); }
+                        break;
 
 
 
-                if (unlockedArray[12] == false && plantType == PlantType.HypnoShroom)
-                {
-                    GameObject.Destroy(child.gameObject);
+                    case PlantType.SuperChomper:
+                        if (!unlockedArray[1] || !unlockedArray[4] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
                 }
-
-                if (unlockedArray[14] == false && plantType == PlantType.IceShroom)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-
-                if (unlockedArray[19] == false && plantType == PlantType.LilyPad)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[20] == false && plantType == PlantType.Squash)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[21] == false && plantType == PlantType.ThreePeater)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[22] == false && plantType == PlantType.Tanglekelp)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[23] == false && plantType == PlantType.Jalapeno)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[24] == false && plantType == PlantType.Caltrop)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[25] == false && plantType == PlantType.TorchWood)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-
-                if (unlockedArray[28] == false && plantType == PlantType.SeaShroom)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[29] == false && plantType == PlantType.Plantern)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[30] == false && plantType == PlantType.Cactus)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[31] == false && plantType == PlantType.Blover)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[32] == false && plantType == PlantType.StarFruit)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[33] == false && plantType == PlantType.Pumpkin)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[34] == false && plantType == PlantType.Magnetshroom)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[37] == false && plantType == PlantType.Cabbagepult)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[38] == false && plantType == PlantType.Pot)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[39] == false && plantType == PlantType.Cornpult)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[41] == false && plantType == PlantType.Umbrellaleaf)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[42] == false && plantType == PlantType.Marigold)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[43] == false && plantType == PlantType.Melonpult)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-
-                if (unlockedArray[46] == false && plantType == PlantType.PineFurnace)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[47] == false && plantType == PlantType.SpruceShooter)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[48] == false && plantType == PlantType.Shulkflower)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[49] == false && plantType == PlantType.IceLotus)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[50] == false && plantType == PlantType.WaterAloes)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                if (unlockedArray[51] == false && plantType == PlantType.Bamboo)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-
-
-
-
-
-
-                //if (unlockedArray[41] == false)
-                //{ HideTargetObjectChildren("CanvasUp", page1 + "Umbrellaleaf"); }
-
-
 
 
 
@@ -808,17 +1045,35 @@ namespace PVZFusionArchipelago
             { boardGl = GameObject.Find("Board"); }
             if (boardGl == null)
             {
+                var zumaBG = GameObject.Find("Background(Clone)");
+                if (zumaBG != null)
+                {var  stupidZumaTrophy = zumaBG.transform.Find("TrophyZuma(Clone)");
+                    if (stupidZumaTrophy != null)
+                    {
+                        checkedArray[96] = true;
+                        session.Locations.CompleteLocationChecks(96);
+                        session.Locations.CompleteLocationChecks(396);
+                    } }//this stupid ass zuma trophy
                 //MelonLogger.Warning("Background not found");
                 return;
             }
 
-            var targetTransform = boardGl.transform.Find(path);
+            var targetTransform = boardGl.transform.Find("TrophyPrefab");
             if (targetTransform == null)
             {
-                return;
-            }
 
-            GameObject obj = targetTransform.gameObject;
+                targetTransform = boardGl.transform.Find("TrophyZuma(Clone)");
+                if (targetTransform == null)
+                { return; }
+                else
+                {
+
+                    return;
+                }
+                    
+                }
+
+                GameObject obj = targetTransform.gameObject;
 
             if (obj.GetComponent<OnClickHandler2D>() == null)
             { 
@@ -838,8 +1093,12 @@ namespace PVZFusionArchipelago
                     if (leveltext == null)
                     { return; }
                 }
-
-                var textComponent = leveltext.GetComponent<TextMeshProUGUI>();
+                    //case "Zum-nut!":
+                    //checkedArray[96] = true;
+                    //session.Locations.CompleteLocationChecks(96);
+                    //session.Locations.CompleteLocationChecks(396);
+                    //break;
+                    var textComponent = leveltext.GetComponent<TextMeshProUGUI>();
                 //if (textComponent == null)//dumb error checking thats probably good practice
                 //{
                 //    return;
@@ -1130,7 +1389,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(55);
                         session.Locations.CompleteLocationChecks(355);
                         break;
-                    case "Fusion Challenge: Chompzilla":
+                    case "Fusion Challenge: Chomper":
                         checkedArray[56] = true;
                         session.Locations.CompleteLocationChecks(56);
                         session.Locations.CompleteLocationChecks(356);
@@ -1150,7 +1409,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(59);
                         session.Locations.CompleteLocationChecks(359);
                         break;
-                    case "Fusion Challenge: Krakerberus":
+                    case "Fusion Challenge: Hydra Kelp":
                         checkedArray[60] = true;
                         session.Locations.CompleteLocationChecks(60);
                         session.Locations.CompleteLocationChecks(360);
@@ -1235,18 +1494,232 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(76);
                         session.Locations.CompleteLocationChecks(376);
                         break;
-                    case "Leviathan-shroom":
+                    case "Kraken-shroom":
                         checkedArray[77] = true;
                         session.Locations.CompleteLocationChecks(77);
                         session.Locations.CompleteLocationChecks(377);
                         break;
-
-
+                    case "Scaredy's Dream":
+                        checkedArray[80] = true;
+                        session.Locations.CompleteLocationChecks(80);
+                        session.Locations.CompleteLocationChecks(380);
+                        break;
+                    case "Pole Vaulting Disco":
+                        checkedArray[81] = true;
+                        session.Locations.CompleteLocationChecks(81);
+                        session.Locations.CompleteLocationChecks(381);
+                        break;
+                    case "Compact Planting":
+                        checkedArray[82] = true;
+                        session.Locations.CompleteLocationChecks(82);
+                        session.Locations.CompleteLocationChecks(382);
+                        break;
+                    case "Newspaper War":
+                        checkedArray[83] = true;
+                        session.Locations.CompleteLocationChecks(83);
+                        session.Locations.CompleteLocationChecks(383);
+                        break;
+                    case "D-Day":
+                        checkedArray[84] = true;
+                        session.Locations.CompleteLocationChecks(84);
+                        session.Locations.CompleteLocationChecks(384);
+                        break;
+                    case "Matryoshka":
+                        checkedArray[85] = true;
+                        session.Locations.CompleteLocationChecks(85);
+                        session.Locations.CompleteLocationChecks(385);
+                        break;
+                    case "Columns Like You See 'Em":
+                        checkedArray[86] = true;
+                        session.Locations.CompleteLocationChecks(86);
+                        session.Locations.CompleteLocationChecks(386);
+                        break;
+                    case "Mirrors Like You See 'Em":
+                        checkedArray[87] = true;
+                        session.Locations.CompleteLocationChecks(87);
+                        session.Locations.CompleteLocationChecks(387);
+                        break;
+                    case "It's Raining Seeds":
+                        checkedArray[88] = true;
+                        session.Locations.CompleteLocationChecks(88);
+                        session.Locations.CompleteLocationChecks(388);
+                        break;
+                    case "Last Stand":
+                        checkedArray[89] = true;
+                        session.Locations.CompleteLocationChecks(89);
+                        session.Locations.CompleteLocationChecks(389);
+                        break;
+                    case "Air Raid":
+                        checkedArray[90] = true;
+                        session.Locations.CompleteLocationChecks(90);
+                        session.Locations.CompleteLocationChecks(390);
+                        break;
+                    case "Advanced Challenge: 12-Lane Day":
+                        checkedArray[91] = true;
+                        session.Locations.CompleteLocationChecks(91);
+                        session.Locations.CompleteLocationChecks(391);
+                        break;
+                    case "Advanced Challenge: 12-Lane Pool":
+                        checkedArray[92] = true;
+                        session.Locations.CompleteLocationChecks(92);
+                        session.Locations.CompleteLocationChecks(392);
+                        break;
+                    case "True Art is an Explosion!":
+                        checkedArray[93] = true;
+                        session.Locations.CompleteLocationChecks(93);
+                        session.Locations.CompleteLocationChecks(393);
+                        break;
+                    case "Pogo Party!":
+                        checkedArray[94] = true;
+                        session.Locations.CompleteLocationChecks(94);
+                        session.Locations.CompleteLocationChecks(394);
+                        break;
+                    case "Attack on Gargantuar!":
+                        checkedArray[95] = true;
+                        session.Locations.CompleteLocationChecks(95);
+                        session.Locations.CompleteLocationChecks(395);
+                        break;
+                    case "Squash Showdown!":
+                        checkedArray[97] = true;
+                        session.Locations.CompleteLocationChecks(97);
+                        session.Locations.CompleteLocationChecks(397);
+                        break;
+                    case "Hypno-tism!":
+                        checkedArray[98] = true;
+                        session.Locations.CompleteLocationChecks(98);
+                        session.Locations.CompleteLocationChecks(398);
+                        break;
+                    case "Protect the Gold Magnet":
+                        checkedArray[100] = true;
+                        session.Locations.CompleteLocationChecks(100);
+                        session.Locations.CompleteLocationChecks(400);
+                        break;
+                    case "Compact Planting 2":
+                        checkedArray[101] = true;
+                        session.Locations.CompleteLocationChecks(101);
+                        session.Locations.CompleteLocationChecks(401);
+                        break;
+                    case "Bungee Blitz":
+                        checkedArray[102] = true;
+                        session.Locations.CompleteLocationChecks(102);
+                        session.Locations.CompleteLocationChecks(402);
+                        break;
+                    case "Beghouled":
+                        checkedArray[103] = true;
+                        session.Locations.CompleteLocationChecks(103);
+                        session.Locations.CompleteLocationChecks(403);
+                        break;
+                    case "Seeing Stars":
+                        checkedArray[104] = true;
+                        session.Locations.CompleteLocationChecks(104);
+                        session.Locations.CompleteLocationChecks(404);
+                        break;
+                    case "Wall-nut Billiards":
+                        checkedArray[105] = true;
+                        session.Locations.CompleteLocationChecks(105);
+                        session.Locations.CompleteLocationChecks(405);
+                        break;
+                    case "Wall-nut Billiards 2":
+                        checkedArray[106] = true;
+                        session.Locations.CompleteLocationChecks(106);
+                        session.Locations.CompleteLocationChecks(406);
+                        break;
+                    case "Wall-nut Billiards 3":
+                        checkedArray[107] = true;
+                        session.Locations.CompleteLocationChecks(107);
+                        session.Locations.CompleteLocationChecks(407);
+                        break;
+                    case "Whack a Zombie":
+                        checkedArray[108] = true;
+                        session.Locations.CompleteLocationChecks(108);
+                        session.Locations.CompleteLocationChecks(408);
+                        break;
+                    case "Zombie Nimble Zombie Quick":
+                        checkedArray[109] = true;
+                        session.Locations.CompleteLocationChecks(109);
+                        session.Locations.CompleteLocationChecks(409);
+                        break;
+                    case "High Gravity":
+                        checkedArray[110] = true;
+                        session.Locations.CompleteLocationChecks(110);
+                        session.Locations.CompleteLocationChecks(410);
+                        break;
+                    case "Chomper Snake":
+                        checkedArray[111] = true;
+                        session.Locations.CompleteLocationChecks(111);
+                        session.Locations.CompleteLocationChecks(411);
+                        break;
+                    case "Chinese Chezz":
+                        checkedArray[112] = true;
+                        session.Locations.CompleteLocationChecks(112);
+                        session.Locations.CompleteLocationChecks(412);
+                        break;
+                    case "Squash Showdown 2":
+                        checkedArray[113] = true;
+                        session.Locations.CompleteLocationChecks(113);
+                        session.Locations.CompleteLocationChecks(413);
+                        break;
+                    case "Zombies VS Zombies 2":
+                        checkedArray[114] = true;
+                        session.Locations.CompleteLocationChecks(114);
+                        session.Locations.CompleteLocationChecks(414);
+                        break;
+                    case "2048: Peavolution":
+                        checkedArray[115] = true;
+                        session.Locations.CompleteLocationChecks(115);
+                        session.Locations.CompleteLocationChecks(415);
+                        break;
+                    case "Splash and Clash":
+                        checkedArray[116] = true;
+                        session.Locations.CompleteLocationChecks(116);
+                        session.Locations.CompleteLocationChecks(416);
+                        break;
+                    case "Melon Ninja, Recommended Diff: 0-3":
+                        checkedArray[117] = true;
+                        session.Locations.CompleteLocationChecks(117);
+                        session.Locations.CompleteLocationChecks(417);
+                        break;
+                    case "Eclipse":
+                        checkedArray[118] = true;
+                        session.Locations.CompleteLocationChecks(118);
+                        session.Locations.CompleteLocationChecks(418);
+                        break;
+                    case "Wall-nut Bowling, Recommended Diff: 0-4":
+                        checkedArray[119] = true;
+                        session.Locations.CompleteLocationChecks(119);
+                        session.Locations.CompleteLocationChecks(419);
+                        break;
+                    case "Iceborg Executrix's Revenge":
+                        checkedArray[120] = true;
+                        session.Locations.CompleteLocationChecks(120);
+                        session.Locations.CompleteLocationChecks(420);
+                        break;
+                    case "Big Trouble Little Zombie":
+                        checkedArray[121] = true;
+                        session.Locations.CompleteLocationChecks(121);
+                        session.Locations.CompleteLocationChecks(421);
+                        break;
+                    case "True Art is an Explosion 2":
+                        checkedArray[122] = true;
+                        session.Locations.CompleteLocationChecks(122);
+                        session.Locations.CompleteLocationChecks(422);
+                        break;
+                    case "Capture the Flag":
+                        checkedArray[123] = true;
+                        session.Locations.CompleteLocationChecks(123);
+                        session.Locations.CompleteLocationChecks(423);
+                        break;
+                    case "Attack on Gargantuar! 2":
+                        checkedArray[124] = true;
+                        session.Locations.CompleteLocationChecks(124);
+                        session.Locations.CompleteLocationChecks(424);
+                        break;
 
 
                     case "Dr. Zomboss' Revenge":
-                        checkedArray[100] = true;
-                        session.Locations.CompleteLocationChecks(100);
+                        checkedArray[99] = true;
+                        session.Locations.CompleteLocationChecks(99);
+                        session.Locations.CompleteLocationChecks(399);
                         if (goalType == 0)
                         { session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal }); }
                         break;
@@ -1370,10 +1843,9 @@ namespace PVZFusionArchipelago
         }
 
 
-        private void HideTargetObjectChildren(string canvasname, string target)
+        private void HideTargetObjectChildren(GameObject canvas, string target)
         {
 
-            var canvas = GameObject.Find(canvasname);
             if (canvas == null)
             {
                 //LoggerInstance.Warning("CanvasUp not found");
@@ -1502,7 +1974,7 @@ namespace PVZFusionArchipelago
             var count = checkedLocations.Count;
             for (int i = 0; i < count; i++)
             {
-                MelonLogger.Msg(checkedLocations[i].ToString());
+                //MelonLogger.Msg(checkedLocations[i].ToString());
                 checkedArray[checkedLocations[i]] = true;
 
 
