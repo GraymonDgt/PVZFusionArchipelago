@@ -88,22 +88,21 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                 "Roof: Level 45 (1)", "Roof: Level 45 (2)",
 
     )
-    if options.goal_type == 0 and options.minigame_sanity == 0:
-        create_locs(regRoof,"Dr. Zomboss' Revenge")
 
 
-    regSnow = create_region("Snow", player, world)
-    create_locs(regSnow,
-    "Snow: Level 1 (1)","Snow: Level 1 (2)",
-    "Snow: Level 2 (1)", "Snow: Level 2 (2)",
-    "Snow: Level 3 (1)", "Snow: Level 3 (2)",
-    "Snow: Level 4 (1)", "Snow: Level 4 (2)",
-    "Snow: Level 5 (1)", "Snow: Level 5 (2)",
-    "Snow: Level 6 (1)", "Snow: Level 6 (2)",
-    "Snow: Level 7 (1)", "Snow: Level 7 (2)",
-    "Snow: Level 8 (1)", "Snow: Level 8 (2)",
-    "Snow: Level 9 (1)", "Snow: Level 9 (2)",
-                )
+    if options.adventure_extra == 2:
+        regSnow = create_region("Snow", player, world)
+        create_locs(regSnow,
+        "Snow: Level 1 (1)","Snow: Level 1 (2)",
+        "Snow: Level 2 (1)", "Snow: Level 2 (2)",
+        "Snow: Level 3 (1)", "Snow: Level 3 (2)",
+        "Snow: Level 4 (1)", "Snow: Level 4 (2)",
+        "Snow: Level 5 (1)", "Snow: Level 5 (2)",
+        "Snow: Level 6 (1)", "Snow: Level 6 (2)",
+        "Snow: Level 7 (1)", "Snow: Level 7 (2)",
+        "Snow: Level 8 (1)", "Snow: Level 8 (2)",
+        "Snow: Level 9 (1)", "Snow: Level 9 (2)",
+                    )
     if options.challenge_sanity:
         regChal = create_region("Fusion Challenges", player, world)
         create_locs(regChal,
@@ -160,12 +159,118 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
             "Fusion Showcase: Spike-nut (2)",
             "Fusion Showcase: Leviathan-shroom (2)")
 
+    if options.minigame_sanity!=0:
+        regMini = create_region("Minigames", player, world)
+        create_locs(regMini,"Compact Planting (1)",
+                    "Newspaper War (1)",
+                    "Matryoshka (1)",
+                    "Pogo Party! (1)",
+                    "Bungee Blitz (1)",
+                    "Beghouled (1)",
+                    "Seeing Stars (1)",
+                    "Wall-nut Billiards (1)",
+                    "Whack a Zombie (1)",
+                    "High Gravity (1)",
+                    "Squash Showdown 2 (1)",
+                    "Zombies VS Zombies 2 (1)",
+                    "Splash and Clash (1)",
+                    "Melon Ninja (1)",
+                    "Eclipse (1)",
+                    "Wall-nut Bowling (1)",
+                    "Big Trouble Little Zombie (1)",
+                    "True Art is an Explosion 2 (1)",
+                    "Graveout (1)",
+                    "The Floor is Lava (1)",
+                    "Art Challenge: Wall-nut (1)",
+
+                    "Compact Planting (2)",
+                    "Newspaper War (2)",
+                    "Matryoshka (2)",
+                    "Pogo Party! (2)",
+                    "Bungee Blitz (2)",
+                    "Beghouled (2)",
+                    "Seeing Stars (2)",
+                    "Wall-nut Billiards (2)",
+                    "Whack a Zombie (2)",
+                    "High Gravity (2)",
+                    "Squash Showdown 2 (2)",
+                    "Zombies VS Zombies 2 (2)",
+                    "Splash and Clash (2)",
+                    "Melon Ninja (2)",
+                    "Eclipse (2)",
+                    "Wall-nut Bowling (2)",
+                    "Big Trouble Little Zombie (2)",
+                    "True Art is an Explosion 2 (2)",
+                    "Graveout (2)",
+                    "The Floor is Lava (2)",
+                    "Art Challenge: Wall-nut (2)",
+                    )
+
+        if options.minigame_sanity>1:
+            create_locs(regMini,
+                    "Scaredy's Dream (1)",
+                    "Pole Vaulting Disco (1)",
+                    "Compact Planting (1)",
+                    "D-Day (1)",
+                    "Columns Like You See 'Em (1)",
+                    "Mirrors Like You See 'Em (1)",
+                    "It's Raining Seeds (1)",
+                    "Last Stand (1)",
+                    "Air Raid (1)",
+                    "Advanced Challenge: 12-Lane Day (1)",
+                    "Advanced Challenge: 12-Lane Pool (1)",
+                    "True Art is an Explosion! (1)",
+                    "Attack on Gargantuar! (1)",
+                    "Zum-nut! (1)",
+                    "Squash Showdown! (1)",
+                    "Hypno-tism! (1)",
+                    "Dr Zomboss' Revenge (1)",
+                    "Protect the Gold Magnet (1)",
+                    "Compact Planting 2 (1)",
+                    "Wall-nut Billiards 2 (1)",
+                    "Wall-nut Billiards 3 (1)",
+                    "Zombie Nimble Zombie Quick (1)",
+                    "Chomper Snake (1)",
+                    "Chinese Chezz (1)",
+                    "2048: Pea-volution (1)",
+                    "Iceborg Executrix's Revenge (1)",
+                    "Capture the Flag (1)",
+                    "Attack on Gargantuar! 2 (1)",
+                    "Graveout 2 (1)",
+                    "I, Zombie (Minigame) (1)",
 
 
+                    "Scaredy's Dream (2)",
+                    "Pole Vaulting Disco (2)",
+                    "D-Day (2)",
+                    "Columns Like You See 'Em (2)",
+                    "Mirrors Like You See 'Em (2)",
+                    "It's Raining Seeds (2)",
+                    "Last Stand (2)",
+                    "Air Raid (2)",
+                    "Advanced Challenge: 12-Lane Day (2)",
+                    "Advanced Challenge: 12-Lane Pool (2)",
+                    "True Art is an Explosion! (2)",
+                    "Attack on Gargantuar! (2)",
+                    "Zum-nut! (2)",
+                    "Squash Showdown! (2)",
+                    "Hypno-tism! (2)",
+                    "Dr Zomboss' Revenge (2)",
+                    "Protect the Gold Magnet (2)",
+                    "Compact Planting 2 (2)",
+                    "Wall-nut Billiards 2 (2)",
+                    "Wall-nut Billiards 3 (2)",
+                    "Zombie Nimble Zombie Quick (2)",
+                    "Chomper Snake (2)",
+                    "Chinese Chezz (2)",
+                    "2048: Pea-volution (2)",
+                    "Iceborg Executrix's Revenge (2)",
+                    "Capture the Flag (2)",
+                    "Attack on Gargantuar! 2 (2)",
+                    "Graveout 2 (2)",
+                    "I, Zombie (Minigame) (2)",
+                    )
 
-
-    #if options.time_emblems:
-    #    create_locs(regGFZ, "Greenflower (Act 1) Time Emblem","Greenflower (Act 2) Time Emblem","Greenflower (Act 3) Time Emblem")
 
 
 def connect_regions(world: MultiWorld, player: int, source: str, target: str, rule=None) -> Entrance:
