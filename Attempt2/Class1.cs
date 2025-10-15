@@ -39,7 +39,7 @@ namespace PVZFusionArchipelago
 {
     public class Class1 : MelonMod
     {
-        public const int maxItems = 160; // holy shit good programming practice?\
+        public const int maxItems = 180; // holy shit good programming practice?\
         public const int maxLocations = 500;
         public int seedSlots = 0;
         public static ArchipelagoSession session;
@@ -64,6 +64,7 @@ namespace PVZFusionArchipelago
         const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
         const string slotPath = "InGameUI(Clone)/SeedBank/SeedGroup/";
         public int ringLinkMode = 0;
+        public bool adventureExtraEnabled = false;
         public static int prevSun;
         public static bool sunExists = false;
         public static int goalType = 0;
@@ -705,11 +706,27 @@ namespace PVZFusionArchipelago
             if (unlockedArray[156] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv150"); }
             else { if (!checkedArray[124]) { HideTargetObject("Canvas", minigamePage3 + "Lv150/Window/Trophy"); } }
-
+            if (unlockedArray[157] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv156"); }
+            else { if (!checkedArray[125]) { HideTargetObject("Canvas", minigamePage3 + "Lv156/Window/Trophy"); } }
+            if (unlockedArray[158] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv157"); }
+            else { if (!checkedArray[126]) { HideTargetObject("Canvas", minigamePage3 + "Lv157/Window/Trophy"); } }
+            if (unlockedArray[159] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv158"); }
+            else { if (!checkedArray[127]) { HideTargetObject("Canvas", minigamePage3 + "Lv158/Window/Trophy"); } }
+            if (unlockedArray[160] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv160"); }
+            else { if (!checkedArray[128]) { HideTargetObject("Canvas", minigamePage3 + "Lv160/Window/Trophy"); } }
+            if (unlockedArray[161] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv161"); }
+            else { if (!checkedArray[129]) { HideTargetObject("Canvas", minigamePage3 + "Lv161/Window/Trophy"); } }
+            if (unlockedArray[162] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv163"); }
+            else { if (!checkedArray[130]) { HideTargetObject("Canvas", minigamePage3 + "Lv163/Window/Trophy"); } }
 
             //const string showcasePage = "ExploreMenu(Clone)/Level/Line1";
             //const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
-
 
             if (seedSlots < 9)
             { HideTargetObject("CanvasUp", slotPath + "seed13"); }
@@ -1564,7 +1581,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(92);
                         session.Locations.CompleteLocationChecks(392);
                         break;
-                    case "True Art is an Explosion!":
+                    case "True Art is  an Explosion!":
                         checkedArray[93] = true;
                         session.Locations.CompleteLocationChecks(93);
                         session.Locations.CompleteLocationChecks(393);
@@ -1664,7 +1681,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(114);
                         session.Locations.CompleteLocationChecks(414);
                         break;
-                    case "2048: Peavolution":
+                    case "2048: Pea-volution":
                         checkedArray[115] = true;
                         session.Locations.CompleteLocationChecks(115);
                         session.Locations.CompleteLocationChecks(415);
@@ -1714,8 +1731,32 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(124);
                         session.Locations.CompleteLocationChecks(424);
                         break;
-
-
+                    case "Graveout":
+                        checkedArray[125] = true;
+                        session.Locations.CompleteLocationChecks(125);
+                        session.Locations.CompleteLocationChecks(425);
+                        break;
+                    case "Graveout 2":
+                        checkedArray[126] = true;
+                        session.Locations.CompleteLocationChecks(126);
+                        session.Locations.CompleteLocationChecks(426);
+                        break;
+                    case "The Floor is Lava":
+                        checkedArray[127] = true;
+                        session.Locations.CompleteLocationChecks(127);
+                        session.Locations.CompleteLocationChecks(427);
+                        break;
+                    case "Art Challenge: Wall-nut":
+                        checkedArray[128] = true;
+                        session.Locations.CompleteLocationChecks(128);
+                        session.Locations.CompleteLocationChecks(428);
+                        break;
+                    case "Challenge Mode":
+                        checkedArray[129] = true;
+                        session.Locations.CompleteLocationChecks(129);
+                        session.Locations.CompleteLocationChecks(429);
+                        break;
+                        
                     case "Dr. Zomboss' Revenge":
                         checkedArray[99] = true;
                         session.Locations.CompleteLocationChecks(99);
@@ -1755,6 +1796,7 @@ namespace PVZFusionArchipelago
 
                     foreach (var tag in jObject["tags"])
                     {
+
                         if ((string)tag == "RingLink")
 
                         {
@@ -1897,7 +1939,15 @@ namespace PVZFusionArchipelago
 
             if (checkedArray[9] && checkedArray[18] && checkedArray[27] && checkedArray[36] && checkedArray[45] && checkedArray[54])
             {
-                session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
+                if (adventureExtraEnabled && checkedArray[54])
+                {
+                    session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
+                }
+                else if (!adventureExtraEnabled)
+                {
+                    session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
+                }
+
             }
             return;
         }
@@ -1959,8 +2009,11 @@ namespace PVZFusionArchipelago
                 {
                     goalType = 1;//add more later
                 }
-
-
+                if (arg.Key == "AdventureExtra" && arg.Value.ToString() == "2")
+                {
+                    adventureExtraEnabled = true;
+                }
+                
 
             }
             session.Socket.PacketReceived += OnPacketReceived;

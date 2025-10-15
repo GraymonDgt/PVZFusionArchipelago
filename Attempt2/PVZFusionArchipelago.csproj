@@ -12,34 +12,34 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\Desktop\MelonLoader.PvZF.2.8.2.Multi-lang.Pack.v2.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppInterop.Common">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppInterop.Runtime">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\net6\MelonLoader.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\Desktop\PvZ Fusion 2.7 Multi-lang ver2 by Blooms\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 
