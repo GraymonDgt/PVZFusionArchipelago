@@ -90,14 +90,18 @@ namespace PVZFusionArchipelago
 
             string unity3dpath = System.IO.Path.Combine(Application.dataPath, "data.unity3d");
 
-            bundle = AssetBundle.LoadFromFile(unity3dpath);
-            if (bundle != null)
+  
+            foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>())
             {
-                GameObject sunPrefab = bundle.LoadAsset<GameObject>("SunPrefab");
+                MelonLogger.Msg("Name of resource: " + obj.name);
             }
+            //    sunPrefab = Resources.Load<GameObject>("plants/doublepea");
+
+            //if (sunPrefab == null)
+            //{ MelonLogger.Msg("Failed to load prefab"); }
 
 
-
+            //instantiate object whenever
 
 
 
@@ -139,16 +143,16 @@ namespace PVZFusionArchipelago
 
 
                     if (canvasGl == null)
-                    { canvasGl = GameObject.Find("Canvas");}
-                    
+                    { canvasGl = GameObject.Find("Canvas"); }
+
                     if (canvasGl != null)
                     {
                         if (levelUIGl == null)
                         { levelUIGl = canvasGl.transform.Find("InGameUI(Clone)"); }
 
 
-                        if (boardGl == null) { 
-                        boardGl = GameObject.Find("Board");
+                        if (boardGl == null) {
+                            boardGl = GameObject.Find("Board");
                         }
 
 
@@ -205,7 +209,7 @@ namespace PVZFusionArchipelago
             catch (System.Exception e) {
                 MelonLogger.Error("Exception when handling ring link, likely a thread error that Im not skilled enough to fix");
             }
-       
+
 
             CheckConveyorBelt();
 
@@ -348,9 +352,10 @@ namespace PVZFusionArchipelago
                 { HideTargetObjectChildren(canvasupGl, page2 + "FrozenPear"); }
                 if (unlockedArray[66] == false)
                 { HideTargetObjectChildren(canvasupGl, page2 + "PassionFruit"); }
+                if (unlockedArray[67] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "LuckyBlover"); }
 
-
-            }
+            } 
 
 
             if (unlockedArray[70] == false)//shovel
@@ -496,7 +501,7 @@ namespace PVZFusionArchipelago
                 HideTargetObject("Canvas", advanturePage3 + "Lv43");
                 HideTargetObject("Canvas", advanturePage3 + "Lv44");
                 HideTargetObject("Canvas", advanturePage3 + "Lv45");
-                if (goalType == 0) { HideTargetObject("Canvas", "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page2/Lv77"); }
+                if (goalType == 0 && !unlockedArray[131]) { HideTargetObject("Canvas", "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page2/Lv77"); }
             } else
             {   if (!checkedArray[37]) { HideTargetObject("Canvas", advanturePage3 + "Lv37/Window/Trophy"); }
                 if (!checkedArray[38]) { HideTargetObject("Canvas", advanturePage3 + "Lv38/Window/Trophy"); }
@@ -508,7 +513,7 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[44]) { HideTargetObject("Canvas", advanturePage3 + "Lv44/Window/Trophy"); }
                 if (!checkedArray[45]) { HideTargetObject("Canvas", advanturePage3 + "Lv45/Window/Trophy"); }
                 if (goalType == 0) { HideTargetObject("Canvas", "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page2/Lv77/Window/Trophy"); }
-            }
+            } 
 
             if (unlockedArray[95] == false)
             {
@@ -547,6 +552,7 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[63]) { HideTargetObject("Canvas", challengePage + "Lv74/Window/Trophy"); }
                 if (!checkedArray[64]) { HideTargetObject("Canvas", challengePage + "Lv75/Window/Trophy"); }
                 if (!checkedArray[65]) { HideTargetObject("Canvas", challengePage + "Lv128/Window/Trophy"); }
+                if (!checkedArray[66]) { HideTargetObject("Canvas", challengePage + "Lv128/Window/Trophy"); }
             }
             if (unlockedArray[97] == false)
             {
@@ -628,9 +634,15 @@ namespace PVZFusionArchipelago
             if (unlockedArray[130] == false)
             { HideTargetObject("Canvas", minigamePage2 + "Lv67"); }
             else { if (!checkedArray[98]) { HideTargetObject("Canvas", minigamePage2 + "Lv67/Window/Trophy"); } }
-            if (unlockedArray[131] == false)
+
+
+            if (!(unlockedArray[131] == true || (goalType == 0 && unlockedArray[94])))
             { HideTargetObject("Canvas", minigamePage2 + "Lv77"); }
             else { if (!checkedArray[99]) { HideTargetObject("Canvas", minigamePage2 + "Lv77/Window/Trophy"); } }
+
+
+            
+
             if (unlockedArray[132] == false)
             { HideTargetObject("Canvas", minigamePage2 + "Lv78"); }
             else { if (!checkedArray[100]) { HideTargetObject("Canvas", minigamePage2 + "Lv78/Window/Trophy"); } }
@@ -1456,7 +1468,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(65);
                         session.Locations.CompleteLocationChecks(365);
                         break;
-                    case "Titan Pea Turret":
+                    case "Fusion Challenge: Jicamagic":
                         checkedArray[66] = true;
                         session.Locations.CompleteLocationChecks(66);
                         session.Locations.CompleteLocationChecks(366);
@@ -1937,13 +1949,14 @@ namespace PVZFusionArchipelago
                 return;
             }
 
-            if (checkedArray[9] && checkedArray[18] && checkedArray[27] && checkedArray[36] && checkedArray[45] && checkedArray[54])
+            if (checkedArray[9] && checkedArray[18] && checkedArray[27] && checkedArray[36] && checkedArray[45])
             {
-                if (adventureExtraEnabled && checkedArray[54])
+                if (adventureExtraEnabled)
                 {
-                    session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
+                     if (checkedArray[54])
+                    {session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal }); }
                 }
-                else if (!adventureExtraEnabled)
+                else
                 {
                     session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
                 }
