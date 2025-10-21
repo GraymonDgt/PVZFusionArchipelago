@@ -8,7 +8,7 @@ https://discord.gg/kkH4wBUmG9
 # SETUP GUIDE
 
 Download the melonloader version of the PVZ Fusion Multilanguage translation here: https://github.com/Teyliu/PVZF-Translation
-(Currently Multi-Language 2.8 has been tested)
+(Currently Multi-Language 3.0.1 has been tested)
 
 Download PVZFusionArchipelago.zip and extract its contents into the same folder as PlantsVsZombiesRH.exe,
 making sure that Archipelago.MultiClient.Net.dll is in UserLibs and PVZFusionArchipelago.dll is in Mods
