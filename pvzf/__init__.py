@@ -121,15 +121,17 @@ class PVZFWorld(World):
 
     def generate_early(self):
 
-        max_locations = 108#TODO up this once i have enough locations
+        max_locations = 90#TODO up this once i have enough locations
+        if self.options.adventure_extra==2:
+            max_locations += 18
         if self.options.challenge_sanity:
             max_locations += 22
         if self.options.showcase_sanity:
-            max_locations += 24
-        if self.options.minigame_sanity:
-            max_locations += 88
-        if self.options.goal_type == 0 and not self.options.minigame_sanity:
-            max_locations+=1
+            max_locations += 176
+        if self.options.minigame_sanity != 0:
+            max_locations += 42
+            if self.options.minigame_sanity == 2:
+                max_locations += 58
         #if not self.options.time_emblems:
         #    max_locations -= 27
         self.number_of_locations = max_locations
@@ -153,7 +155,12 @@ class PVZFWorld(World):
 
     def create_items(self):
             # 1Up Mushrooms
-            possible_starts = ["Peashooter","Fume-shroom","Scaredy-shroom","Threepeater","Cactus","Starfruit","Cabbage-pult","Kernel-pult","Spruce Sharpshooter"]
+            possible_starts = ["Peashooter", "Fume-shroom", "Scaredy-shroom", "Threepeater", "Cactus", "Starfruit",
+                               "Cabbage-pult", "Kernel-pult", "Spruce Sharpshooter"]
+            for i in self.options.no_start_plant:
+                if i in possible_starts:
+                    possible_starts.remove(i)
+
 
             rand_idx = random.randrange(len(possible_starts))
 
@@ -180,18 +187,40 @@ class PVZFWorld(World):
             self.multiworld.itempool += [self.create_item("Pool Access")]
             self.multiworld.itempool += [self.create_item("Fog Access")]
             self.multiworld.itempool += [self.create_item("Roof Access")]
-            self.multiworld.itempool += [self.create_item("Snow Access")]
-            slots_to_fill -= 5
+            slots_to_fill -= 4
+            if self.options.adventure_extra == 2:
+                self.multiworld.itempool += [self.create_item("Snow Access")]
+                slots_to_fill -= 1
+
             if self.options.challenge_sanity:
                 self.multiworld.itempool += [self.create_item("Fusion Challenge Access")]
                 slots_to_fill -= 1
 
             if self.options.showcase_sanity:
-                self.multiworld.itempool += [self.create_item("Fusion Showcase Access")]
-                slots_to_fill -= 1
+                self.multiworld.itempool += [self.create_item("Fusion Showcase Day Plants")]
+                self.multiworld.itempool += [self.create_item("Fusion Showcase Night Plants")]
+                self.multiworld.itempool += [self.create_item("Fusion Showcase Pool Plants")]
+                self.multiworld.itempool += [self.create_item("Fusion Showcase Fog Plants")]
+                self.multiworld.itempool += [self.create_item("Fusion Showcase Roof Plants")]
+                slots_to_fill -= 5
 
-            if self.options.minigame_sanity:
+            if self.options.minigame_sanity != 0:
+                short_minigames = ["Compact Planting","Newspaper War", "Matryoshka", "Pogo Party!", "Bungee Blitz", "Beghouled","Seeing Stars",
+                                   "Wall-nut Billiards", "Whack a Zombie", "High Gravity", "Squash Showdown 2","Zombies VS Zombies 2",
+                                   "Splash and Clash", "Melon Ninja", "Eclipse", "Wall-nut Bowling","Big Trouble Little Zombie",
+                                   "True Art is an Explosion 2", "Graveout", "The Floor is Lava","Art Challenge: Wall-nut"]
                 for minigame in minigame_item_table.keys():
+
+                    if self.options.minigame_sanity == 1:
+                        if minigame not in short_minigames:
+                            continue
+
+
+
+
+
+
+
                     self.multiworld.itempool += [self.create_item(minigame)]
                     slots_to_fill -= 1
 
@@ -199,8 +228,38 @@ class PVZFWorld(World):
             for plant in plants_item_data_table.keys():
                 if plant == "Sunflower" or plant == starting_plant:
                     continue
+                if plant in self.options.unique_blacklist:
+                    continue
+                if self.options.unique_preset == 1:
+                    valid_keys = ["Cattail Girl", "Swordmaster Starfruit", "Burger Blaster",
+                                  "Queen Endoflame", "Amp-nion",
+                                  "Icetip Lily", "Doubleblast Passionfruit"]
+                    if plant in valid_keys:
+                        continue
+
+                if self.options.unique_preset == 2:
+                    valid_keys = ["Cattail Girl", "Swordmaster Starfruit", "Nyan Squash", "Burger Blaster",
+                                  "Queen Endoflame", "Coldsnap Bean", "Amp-nion", "Sniper Pea", "Chrysanctum",
+                                  "Icetip Lily", "Pearmafrost", "Doubleblast Passionfruit"]
+                    if plant in valid_keys:
+                        continue
+
+                if self.options.adventure_extra == 0:
+                    valid_keys = ["Firnace", "Spruce Sharpshooter", "Saw-me-not", "Snow Lotus",
+                                  "Aloe Aqua", "Bamblock", "Frozen Giftbox", "Spruce Ballista"]
+                    if plant in valid_keys:
+                        continue
+
                 self.multiworld.itempool += [self.create_item(plant)]
                 slots_to_fill -=1
+
+
+
+
+
+
+
+
             for item in tools_item_data_table.keys():
                 self.multiworld.itempool += [self.create_item(item)]
                 slots_to_fill -=1
@@ -238,6 +297,7 @@ class PVZFWorld(World):
             "CompletionType": self.options.goal_type.value,
             "RingLink": self.options.ring_link.value,
             "DeathLink": self.options.death_link.value,
+            "AdventureExtra": self.options.adventure_extra.value
             #"CompletionType": self.options.completion_type.value,
         }
 
