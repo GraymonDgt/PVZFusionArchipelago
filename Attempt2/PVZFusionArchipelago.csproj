@@ -35,6 +35,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
       <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>

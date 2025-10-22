@@ -27,10 +27,13 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq.Expressions;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Cryptography;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using UnityEngine.Windows;
 using static Il2CppSystem.Globalization.CultureInfo;
 using static UnityEngine.GraphicsBuffer;
 
@@ -74,7 +77,13 @@ namespace PVZFusionArchipelago
         public static Transform levelUIGl;
 
         public AssetBundle bundle;
-        public GameObject sunPrefab;
+        public GameObject sunflowerPrefabObject;
+        public GameObject droppedCardPrefabObject;
+        public GameObject gardenPlantPrefabObject;
+        public GameObject diamondPrefabObject;
+        public GameObject sunPrefabObject;
+        public GameObject starMeteorPrefabObject;
+        public GameObject fogPrefabObject;
         readonly IConnectionInfoProvider connectionInfoProvider;
 
 
@@ -90,11 +99,27 @@ namespace PVZFusionArchipelago
 
             string unity3dpath = System.IO.Path.Combine(Application.dataPath, "data.unity3d");
 
-  
-            foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>())
-            {
-                MelonLogger.Msg("Name of resource: " + obj.name);
-            }
+
+
+
+
+            sunflowerPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "SunflowerPrefab");
+            droppedCardPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "DroppedCard");
+            gardenPlantPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "SproutPotPrize");
+            diamondPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "Diamond");
+            sunPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "Sun");
+            starMeteorPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "BigSuperStar");
+            fogPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "Fog");
+
+            //foreach (GameObject obj in Resources.LoadAll<GameObject>(""))
+            //{
+            //    MelonLogger.Msg(obj.name);
+            //    if (obj.name == "SunflowerPrefab")
+            //     { sunflowerPrefabObject = obj; }
+            //}
+
+
+            //DroppedCard
             //    sunPrefab = Resources.Load<GameObject>("plants/doublepea");
 
             //if (sunPrefab == null)
@@ -120,14 +145,18 @@ namespace PVZFusionArchipelago
             {
                 MelonLogger.Warning("config.json not found, place it in the same folder as PVZFusionArchipelago.dll");
             }
-
+            CheckForItemsStartup();
         }
 
 
 
         public override void OnUpdate()
         {
-            AttachClickHandler("TrophyPrefab");
+            //{
+   
+            //}
+        
+        AttachClickHandler("TrophyPrefab");
             if (session == null)
             {
                 MelonLogger.Msg("didnt find archipelago session");
@@ -552,7 +581,7 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[63]) { HideTargetObject("Canvas", challengePage + "Lv74/Window/Trophy"); }
                 if (!checkedArray[64]) { HideTargetObject("Canvas", challengePage + "Lv75/Window/Trophy"); }
                 if (!checkedArray[65]) { HideTargetObject("Canvas", challengePage + "Lv128/Window/Trophy"); }
-                if (!checkedArray[66]) { HideTargetObject("Canvas", challengePage + "Lv128/Window/Trophy"); }
+                if (!checkedArray[66]) { HideTargetObject("Canvas", challengePage + "Lv162/Window/Trophy"); }
             }
             if (unlockedArray[97] == false)
             {
@@ -1854,13 +1883,26 @@ namespace PVZFusionArchipelago
                     break;
             }
         }
+        private void CheckForItemsStartup()
+        {
+            while (session.Items.Any())
+            {
+                var networkItem = session.Items.DequeueItem();
 
+                //if (networkItem.ItemId == null)
+                //{ continue; }
+                if (networkItem.ItemId < maxItems)
+                { unlockedArray[networkItem.ItemId] = true; }
+
+                if (networkItem.ItemId == 201)
+                {
+                    seedSlots += 1;
+                }
+
+            }
+        }
         private void CheckForNewItems()
         {
-
-
-
-
 
             while (session.Items.Any())
             {
@@ -1871,28 +1913,143 @@ namespace PVZFusionArchipelago
                 if (networkItem.ItemId < maxItems)
                 { unlockedArray[networkItem.ItemId] = true; }
 
-                if (networkItem.ItemId == 200)
+                if (networkItem.ItemId == 200)//bonus sun
                 {
-                    var board = GameObject.Find("Board");
-                    if (board == null)
+                    if (boardGl == null)
                     {
-                        continue;
+                        boardGl = GameObject.Find("Board");
                     }
-                    var boardComp = board.GetComponent(Il2CppType.Of<Board>());
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
+                    for (int i = 0; i < 5; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            GameObject newSun = GameObject.Instantiate(sunPrefabObject, new Vector3((float)i - 3, (float)j - 1, 0), Quaternion.identity);
+                            newSun.transform.SetParent(boardGl.transform);
+                            CoinSun component = newSun.AddComponent<CoinSun>();
+                        }
+                    }
 
-                    var type = boardComp.GetIl2CppType();
-                    var field = type.GetField("theSun");
-                    Il2CppSystem.Object rawValue = field.GetValue(boardComp);
-                    int intValue = Il2CppSystem.Convert.ToInt32(rawValue);
 
-                    field.SetValue(boardComp, intValue + 250);
 
+                    continue;
+
+                    GameObject newPlant = GameObject.Instantiate(droppedCardPrefabObject, new Vector3((float)0.5231, (float)-0.938, 0), Quaternion.identity);
+                    newPlant.transform.SetParent(boardGl.transform);
                 }
 
                 if (networkItem.ItemId == 201)
                 {
                     seedSlots += 1;
                 }
+                if (networkItem.ItemId == 202)//zen garden plant
+                {
+                    GameObject.Instantiate(gardenPlantPrefabObject, new Vector3((float)0.5231, (float)-0.838, 0), Quaternion.identity);
+                }
+
+                if (networkItem.ItemId == 203)//diamond
+                {   if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    { return;
+                    }
+                    GameObject newGem = GameObject.Instantiate(diamondPrefabObject, new Vector3((float)0.5231, (float)-0.838, 0), Quaternion.identity);
+                    newGem.transform.SetParent(boardGl.transform);
+                    CoinMoney component = newGem.AddComponent<CoinMoney>();
+                    var type = component.GetIl2CppType();
+                    var field = type.GetField("moneyPrice");
+                    field.SetValue(component, 1000);
+                }
+
+                if (networkItem.ItemId == 205)//star meteor
+                {
+                    GameObject.Instantiate(starMeteorPrefabObject, new Vector3((float)-8, (float)5, 0), Quaternion.identity);
+                }
+                
+
+                if (networkItem.ItemId == 220)//10x speed trap
+                {
+                    Time.timeScale = 10.0f;
+                }
+                if (networkItem.ItemId == 221)//fuck you
+                {
+
+                    if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    { return;
+                    }
+                        int childCount = boardGl.transform.childCount;
+                    for (int i = 1; i < childCount; i++)
+                    {
+
+                        var child = boardGl.transform.GetChild(i);
+                        GameObject.Destroy(child.gameObject);
+
+                    }//AIMah
+                }
+                if (networkItem.ItemId == 222)//rough economy
+                {
+                    if (canvasGl == null)
+                    { canvasGl = GameObject.Find("Canvas"); }
+                    if (canvasGl == null)
+                    { return; }
+
+                    for (int i = 0; i < 14; i++)
+                    {
+                        var seedPacket = canvasGl.transform.Find(slotPath + "seed" + i.ToString() + "/Packet");
+                        if (seedPacket == null)
+                        {
+                            seedPacket = canvasGl.transform.Find(slotPath + "seed" + i.ToString() + "/Packet ");//stupid bullshit
+
+                            if (seedPacket == null)
+                            {
+                                MelonLogger.Msg("couldnt find seed packet");
+                                MelonLogger.Msg("if theres another space in the name im going to kill myself");
+                                continue;
+                            }
+                        }
+                        GameObject obj = seedPacket.gameObject;
+
+                        var temp = obj.GetComponent(Il2CppType.Of<CardUI>());
+                        if (temp != null)
+                        {
+                                var type = temp.GetIl2CppType();
+                                var field = type.GetField("theSeedCost");
+                                Il2CppSystem.Object rawValue = field.GetValue(temp);
+                                int intValue = Il2CppSystem.Convert.ToInt32(rawValue);
+                                field.SetValue(temp, intValue*2);
+
+
+                        } else
+                        { MelonLogger.Msg("couldnt find card component"); }
+
+                    }
+
+                    if (networkItem.ItemId == 223)
+                    {
+                        if (boardGl == null)
+                        {
+                            boardGl = GameObject.Find("Board");
+                        }
+                        if (boardGl == null)
+                        {
+                            return;
+                        }
+                        var fog = GameObject.Instantiate(fogPrefabObject, new Vector3(2.0f, 2.87f, 0), Quaternion.identity);
+                        fog.transform.SetParent(boardGl.transform.GetChild(0));
+                    }
+
+
+                }
+
             }
         }
 
