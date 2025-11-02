@@ -117,6 +117,8 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
             "Fusion Challenge: Salad-pult (1)",
             "Fusion Challenge: Alchemist Umbrella (1)",
             "Fusion Challenge: Spruce Supershooter (1)",
+            "Fusion Challenge: Jicamagic (1)",
+
 
             "Fusion Challenge: Explod-o-shooter (2)",
             "Fusion Challenge: Chompzilla (2)",
@@ -128,12 +130,13 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
             "Fusion Challenge: Bloverthorn Pumpkin (2)",
             "Fusion Challenge: Salad-pult (2)",
             "Fusion Challenge: Alchemist Umbrella (2)",
-            "Fusion Challenge: Spruce Supershooter (2)"
+            "Fusion Challenge: Spruce Supershooter (2)",
+            "Fusion Challenge: Jicamagic (2)"
 )
+
     if options.showcase_sanity:
         regShow = create_region("Fusion Showcase", player, world)
         create_locs(regShow,
-            "Fusion Showcase: Titan Pea Turret (1)",
             "Fusion Showcase: Explod-o-tato Mine (1)",
             "Fusion Showcase: Pumpkin Bunker (1)",
             "Fusion Showcase: Nugget-shroom (1)",
@@ -146,7 +149,6 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
             "Fusion Showcase: Spike-nut (1)",
             "Fusion Showcase: Leviathan-shroom (1)",
 
-            "Fusion Showcase: Titan Pea Turret (2)",
             "Fusion Showcase: Explod-o-tato Mine (2)",
             "Fusion Showcase: Pumpkin Bunker (2)",
             "Fusion Showcase: Nugget-shroom (2)",
@@ -171,7 +173,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Wall-nut Billiards (1)",
                     "Whack a Zombie (1)",
                     "High Gravity (1)",
-                    "Squash Showdown 2 (1)",
+                    "Squash Showdown! 2 (1)",
                     "Zombies VS Zombies 2 (1)",
                     "Splash and Clash (1)",
                     "Melon Ninja (1)",
@@ -193,7 +195,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Wall-nut Billiards (2)",
                     "Whack a Zombie (2)",
                     "High Gravity (2)",
-                    "Squash Showdown 2 (2)",
+                    "Squash Showdown! 2 (2)",
                     "Zombies VS Zombies 2 (2)",
                     "Splash and Clash (2)",
                     "Melon Ninja (2)",
@@ -223,7 +225,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Attack on Gargantuar! (1)",
                     "Zum-nut! (1)",
                     "Squash Showdown! (1)",
-                    "Hypno-tism! (1)",
+                    "Hypno-nut (1)",
                     "Dr Zomboss' Revenge (1)",
                     "Protect the Gold Magnet (1)",
                     "Compact Planting 2 (1)",
@@ -254,7 +256,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Attack on Gargantuar! (2)",
                     "Zum-nut! (2)",
                     "Squash Showdown! (2)",
-                    "Hypno-tism! (2)",
+                    "Hypno-nut (2)",
                     "Dr Zomboss' Revenge (2)",
                     "Protect the Gold Magnet (2)",
                     "Compact Planting 2 (2)",
