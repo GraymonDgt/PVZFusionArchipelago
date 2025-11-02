@@ -31,20 +31,17 @@ traps_item_data_table:dict[str, PVZFItemData] = {
 "Rough Economy": PVZFItemData(222, ItemClassification.trap),
 "The Fog is Coming": PVZFItemData(223, ItemClassification.trap),
 #Queen Jack in the box
-
 #Sun loss
 #lawn shuffle - randomize every plants location
 #Unplant Lawn - turn every plant on the lawn into a droppedcard
 #extra flag - pushes progress bar back a flag
 #conveyor belt trap
 #bungee ambush
-
 #seed packet shuffle
-
 #grave danger
 #freezing trap
 #ds sounds
-    #lets go gambling
+#lets go gambling
 }
 
 access_item_table: dict[str, PVZFItemData] = {
@@ -211,7 +208,7 @@ minigame_item_table: dict[str, PVZFItemData] = {
     "Attack on Gargantuar!": PVZFItemData(127, ItemClassification.progression),
     "Zum-nut!": PVZFItemData(128, ItemClassification.progression),
     "Squash Showdown!": PVZFItemData(129, ItemClassification.progression),
-    "Hypno-tism!": PVZFItemData(130, ItemClassification.progression),
+    "Hypno-nut": PVZFItemData(130, ItemClassification.progression),
     "Dr Zomboss' Revenge": PVZFItemData(131, ItemClassification.progression),
     "Protect the Gold Magnet": PVZFItemData(132, ItemClassification.progression),
     "Compact Planting 2": PVZFItemData(133, ItemClassification.progression),
@@ -227,7 +224,7 @@ minigame_item_table: dict[str, PVZFItemData] = {
 
     "Chomper Snake": PVZFItemData(143, ItemClassification.progression),
     "Chinese Chezz": PVZFItemData(144, ItemClassification.progression),
-    "Squash Showdown 2": PVZFItemData(145, ItemClassification.progression),
+    "Squash Showdown! 2": PVZFItemData(145, ItemClassification.progression),
     "Zombies VS Zombies 2": PVZFItemData(146, ItemClassification.progression),#yes this is a normal minigame not odyssey for some reason
     "2048: Pea-volution": PVZFItemData(147, ItemClassification.progression),
     "Splash and Clash": PVZFItemData(148, ItemClassification.progression),
