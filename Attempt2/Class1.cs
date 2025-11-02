@@ -31,6 +31,7 @@ using System.Runtime.Intrinsics.X86;
 using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 using UnityEngine.Windows;
@@ -74,6 +75,7 @@ namespace PVZFusionArchipelago
         public static GameObject boardGl;
         public static GameObject canvasGl;
         public static GameObject canvasupGl;
+        public static GameObject GameAPPGl;
         public static Transform levelUIGl;
 
         public AssetBundle bundle;
@@ -152,9 +154,23 @@ namespace PVZFusionArchipelago
 
         public override void OnUpdate()
         {
-            //{
-   
-            //}
+
+            if (GameAPPGl == null)
+            {
+                GameAPPGl = GameObject.Find("GameAPP");
+                if (GameAPPGl != null)
+                {
+                    var component = GameAPPGl.GetComponent(Il2CppType.Of<GameAPP>());
+
+                    var type = component.GetIl2CppType();
+                    var field = type.GetField("advantureLevel");
+                    field.SetValue(component, 46);
+
+
+                }
+            }
+
+
         
         AttachClickHandler("TrophyPrefab");
             if (session == null)
@@ -167,10 +183,6 @@ namespace PVZFusionArchipelago
             {
                 if (ringLinkMode != 0)
                 {
-                    //if (boardGl == null)
-                    //{ }
-
-
                     if (canvasGl == null)
                     { canvasGl = GameObject.Find("Canvas"); }
 
@@ -1111,6 +1123,7 @@ namespace PVZFusionArchipelago
                         checkedArray[96] = true;
                         session.Locations.CompleteLocationChecks(96);
                         session.Locations.CompleteLocationChecks(396);
+                        return;
                     } }//this stupid ass zuma trophy
                 //MelonLogger.Warning("Background not found");
                 return;
@@ -1119,17 +1132,12 @@ namespace PVZFusionArchipelago
             var targetTransform = boardGl.transform.Find("TrophyPrefab");
             if (targetTransform == null)
             {
-
-                targetTransform = boardGl.transform.Find("TrophyZuma(Clone)");
+                targetTransform = boardGl.transform.Find("TrophyPrefab(Clone)");
                 if (targetTransform == null)
-                { return; }
-                else
                 {
-
                     return;
                 }
-                    
-                }
+            }
 
                 GameObject obj = targetTransform.gameObject;
 
@@ -1138,10 +1146,11 @@ namespace PVZFusionArchipelago
                 obj.AddComponent<OnClickHandler2D>();
                 MelonLogger.Msg($"Attached OnClickHandler2D to '{obj.name}'");
                 var canvas = GameObject.Find("CanvasUp");
-                //if (canvas == null)
-                //{
-                //    return;
-                //}
+                if (canvas == null)
+                {
+                    MelonLogger.Warning("Somethings gone horribly wrong ERR1");
+                    return;
+                }
 
                 var leveltext = canvas.transform.Find("LevelName2");
                 if (leveltext == null)
@@ -1149,7 +1158,9 @@ namespace PVZFusionArchipelago
                     leveltext = canvas.transform.Find("LevelName3");
 
                     if (leveltext == null)
-                    { return; }
+                    {
+                        MelonLogger.Warning("Somethings gone horribly wrong ERR2");
+                        return; }
                 }
                     //case "Zum-nut!":
                     //checkedArray[96] = true;
@@ -1157,13 +1168,14 @@ namespace PVZFusionArchipelago
                     //session.Locations.CompleteLocationChecks(396);
                     //break;
                     var textComponent = leveltext.GetComponent<TextMeshProUGUI>();
-                //if (textComponent == null)//dumb error checking thats probably good practice
-                //{
-                //    return;
-                //}
+                if (textComponent == null)//dumb error checking thats probably good practice
+                {
+                    MelonLogger.Warning("Somethings gone horribly wrong ERR3");
+                    return;
+                }
                 string levelName = textComponent.text;
 
-
+                MelonLogger.Msg("Finding level with name: "+levelName);
                 switch (levelName)
                 {
                     case "Adventure Mode: Classic | Level 1":
@@ -1447,7 +1459,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(55);
                         session.Locations.CompleteLocationChecks(355);
                         break;
-                    case "Fusion Challenge: Chomper":
+                    case "Fusion Challenge: Chompzilla":
                         checkedArray[56] = true;
                         session.Locations.CompleteLocationChecks(56);
                         session.Locations.CompleteLocationChecks(356);
@@ -1672,7 +1684,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(104);
                         session.Locations.CompleteLocationChecks(404);
                         break;
-                    case "Wall-nut Billiards":
+                    case "Wall-nut Billiards "://killing myself
                         checkedArray[105] = true;
                         session.Locations.CompleteLocationChecks(105);
                         session.Locations.CompleteLocationChecks(405);
@@ -1712,7 +1724,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(112);
                         session.Locations.CompleteLocationChecks(412);
                         break;
-                    case "Squash Showdown 2":
+                    case "Squash Showdown! 2":
                         checkedArray[113] = true;
                         session.Locations.CompleteLocationChecks(113);
                         session.Locations.CompleteLocationChecks(413);
@@ -1757,7 +1769,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(121);
                         session.Locations.CompleteLocationChecks(421);
                         break;
-                    case "True Art is an Explosion 2":
+                    case "True Art is an  Explosion! 2":
                         checkedArray[122] = true;
                         session.Locations.CompleteLocationChecks(122);
                         session.Locations.CompleteLocationChecks(422);
@@ -1842,12 +1854,22 @@ namespace PVZFusionArchipelago
 
                         {
 
-
-                            foreach (var slotNum in jObject["slots"])
-                            { //MelonLogger.Msg($"slotnum: {(int)slotNum}");
-                                if ((int)slotNum == session.Players.ActivePlayer.Slot)
-                                { goto escape2loops; }//fuck you im using goto
+                            try
+                            {
+                                foreach (var slotNum in jObject["slots"])
+                                { //
+                                    if ((int)slotNum == session.Players.ActivePlayer.Slot)
+                                    {
+                                        return;
                                     }
+                                }
+                            }
+                            catch (System.NullReferenceException)
+                            { MelonLogger.Msg("Ringlink packet recieved from SA1 or SA2"); }
+                            catch (System.Exception)
+                            { MelonLogger.Msg("Ringlink packet recieved from SA1 or SA2 (1)"); }
+                            
+                                
 
                                 var board = GameObject.Find("Board");
                                 if (board == null)
@@ -1868,15 +1890,14 @@ namespace PVZFusionArchipelago
 
                                 prevSun = (intValue/10) + (amount);
                                 field.SetValue(boardComp, intValue + amount*10);
+                               
 
 
 
 
-
-                            }
+                        }
 
                     }
-                escape2loops:
                     break;
 
                 default:
@@ -2021,18 +2042,19 @@ namespace PVZFusionArchipelago
                         var temp = obj.GetComponent(Il2CppType.Of<CardUI>());
                         if (temp != null)
                         {
-                                var type = temp.GetIl2CppType();
-                                var field = type.GetField("theSeedCost");
-                                Il2CppSystem.Object rawValue = field.GetValue(temp);
-                                int intValue = Il2CppSystem.Convert.ToInt32(rawValue);
-                                field.SetValue(temp, intValue*2);
+                            var type = temp.GetIl2CppType();
+                            var field = type.GetField("theSeedCost");
+                            Il2CppSystem.Object rawValue = field.GetValue(temp);
+                            int intValue = Il2CppSystem.Convert.ToInt32(rawValue);
+                            field.SetValue(temp, intValue * 2);
 
 
-                        } else
+                        }
+                        else
                         { MelonLogger.Msg("couldnt find card component"); }
 
                     }
-
+                }
                     if (networkItem.ItemId == 223)
                     {
                         if (boardGl == null)
@@ -2045,10 +2067,15 @@ namespace PVZFusionArchipelago
                         }
                         var fog = GameObject.Instantiate(fogPrefabObject, new Vector3(2.0f, 2.87f, 0), Quaternion.identity);
                         fog.transform.SetParent(boardGl.transform.GetChild(0));
-                    }
+                        var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
 
-
+                        var type = boardComp.GetIl2CppType();
+                        var field = type.GetField("fog");
+                        field.SetValue(boardComp, fog);
                 }
+
+
+               
 
             }
         }
