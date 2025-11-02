@@ -156,6 +156,7 @@ FUSCHAL_table = {
     "Fusion Challenge: Salad-pult (1)": 63,
     "Fusion Challenge: Alchemist Umbrella (1)": 64,
     "Fusion Challenge: Spruce Supershooter (1)": 65,
+    "Fusion Challenge: Jicamagic (1)": 66,
 
     "Fusion Challenge: Explod-o-shooter (2)": 355,
     "Fusion Challenge: Chompzilla (2)": 356,
@@ -168,10 +169,11 @@ FUSCHAL_table = {
     "Fusion Challenge: Salad-pult (2)": 363,
     "Fusion Challenge: Alchemist Umbrella (2)": 364,
     "Fusion Challenge: Spruce Supershooter (2)": 365,
+    "Fusion Challenge: Jicamagic (2)": 366,
 }
 
 FUSSHOW_table = {
-    "Fusion Showcase: Titan Pea Turret (1)": 66,
+
     "Fusion Showcase: Explod-o-tato Mine (1)": 67,
     "Fusion Showcase: Pumpkin Bunker (1)": 68,
     "Fusion Showcase: Nugget-shroom (1)": 69,
@@ -184,7 +186,7 @@ FUSSHOW_table = {
     "Fusion Showcase: Spike-nut (1)": 76,
     "Fusion Showcase: Leviathan-shroom (1)": 77,
 
-    "Fusion Showcase: Titan Pea Turret (2)": 366,
+
     "Fusion Showcase: Explod-o-tato Mine (2)": 367,
     "Fusion Showcase: Pumpkin Bunker (2)": 368,
     "Fusion Showcase: Nugget-shroom (2)": 369,
@@ -198,6 +200,15 @@ FUSSHOW_table = {
     "Fusion Showcase: Leviathan-shroom (2)": 377,
 
 }
+NEWFUSSHOW_table = {
+
+
+
+
+
+
+}
+
 
 #MINIG_table = {
 #}
@@ -224,7 +235,7 @@ MINIGAME_table = {
     "Attack on Gargantuar! (1)":95,
     "Zum-nut! (1)":96,
     "Squash Showdown! (1)":97,
-    "Hypno-tism! (1)":98,
+    "Hypno-nut (1)":98,
     "Dr Zomboss' Revenge (1)":99,
     "Protect the Gold Magnet (1)":100,
     "Compact Planting 2 (1)":101,
@@ -239,7 +250,7 @@ MINIGAME_table = {
     "High Gravity (1)":110,
     "Chomper Snake (1)":111,
     "Chinese Chezz (1)":112,
-    "Squash Showdown 2 (1)":113,
+    "Squash Showdown! 2 (1)":113,
     "Zombies VS Zombies 2 (1)":114,
     "2048: Pea-volution (1)":115,
     "Splash and Clash (1)":116,
@@ -277,7 +288,7 @@ MINIGAME_table = {
     "Attack on Gargantuar! (2)":395,
     "Zum-nut! (2)":396,
     "Squash Showdown! (2)":397,
-    "Hypno-tism! (2)":398,
+    "Hypno-nut (2)":398,
     "Dr Zomboss' Revenge (2)":399,
     "Protect the Gold Magnet (2)":400,
     "Compact Planting 2 (2)":401,
@@ -292,7 +303,7 @@ MINIGAME_table = {
     "High Gravity (2)":410,
     "Chomper Snake (2)":411,
     "Chinese Chezz (2)":412,
-    "Squash Showdown 2 (2)":413,
+    "Squash Showdown! 2 (2)":413,
     "Zombies VS Zombies 2 (2)":414,
     "2048: Pea-volution (2)":415,
     "Splash and Clash (2)":416,
@@ -305,11 +316,11 @@ MINIGAME_table = {
     "Capture the Flag (2)":423,
     "Attack on Gargantuar! 2 (2)":424,
 
-    "Graveout (2)": 325,
-    "Graveout 2 (2)": 326,
-    "The Floor is Lava (2)": 327,
-    "Art Challenge: Wall-nut (2)": 328,
-    "I, Zombie (Minigame) (2)": 329,
+    "Graveout (2)": 425,
+    "Graveout 2 (2)": 426,
+    "The Floor is Lava (2)": 427,
+    "Art Challenge: Wall-nut (2)": 428,
+    "I, Zombie (Minigame) (2)": 429,
 
 }
 
