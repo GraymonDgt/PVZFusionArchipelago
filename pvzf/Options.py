@@ -34,7 +34,7 @@ class AdventureExtra(Choice):
     default = 2
 
 class FusionChallengeSanity(Toggle):
-    """Adds the 11 fusion challenge levels as an item/locations"""
+    """Adds the 12 fusion challenge levels as an item/locations"""
     display_name = "Enable Fusion Challenges"
 
 class FusionShowcaseSanity(Toggle):
@@ -61,12 +61,12 @@ class TrapPercentage(Range):
     display_name = "Trap Percentage"
     range_start = 0
     range_end = 100
-    default = 0
+    default = 30
 
 
 class LogicDifficulty(Choice):
     """Logic difficulty
-    simple - lily pad required for pool, flower pot required for roof etc.
+    simple - lily pad required for pool, flower pot required for roof, mushrooms required for night etc.
     normal - pool/roof/snow in logic with the right attackers to deal with everything
     hard - may require tedious/ unreliable/ obscure strategies to beat levels"""
     option_simple = 0
@@ -119,6 +119,7 @@ OptionGroup("Meta Options", [
     CompletionType,
     SeedSlots,
     TrapPercentage,
+    LogicDifficulty,
     RingLink,
     UniquePlantsPreset,
     StartingPlantBlacklist,
@@ -136,6 +137,7 @@ class PVZFOptions(PerGameCommonOptions):
     minigame_sanity: MinigameSanity
     randomize_seed_slots: SeedSlots
     trap_percentage: TrapPercentage
+    logic_difficulty: LogicDifficulty
     ring_link: RingLink
     death_link: DeathLink
     unique_preset: UniquePlantsPreset

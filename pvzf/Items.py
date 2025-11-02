@@ -15,26 +15,33 @@ class PVZFItemData(NamedTuple):
 generic_item_data_table: dict[str, PVZFItemData] = {
     "Seed Slot": PVZFItemData(201, ItemClassification.progression),
     "Bonus Sun": PVZFItemData(200, ItemClassification.filler),
-    "Bonus Starting Sun": PVZFItemData(202, ItemClassification.useful),
+    "Zen Garden Plant": PVZFItemData(202, ItemClassification.filler),
+    "Diamond": PVZFItemData(203, ItemClassification.filler),
+    #"Free Sunflowers": PVZFItemData(204, ItemClassification.filler),
+    "Star Meteor": PVZFItemData(205, ItemClassification.filler),
+    #"Bonus Starting Sun": PVZFItemData(202, ItemClassification.useful),
     #"Lawn Clear":PVZFItemData(201, ItemClassification.filler),
-    #refreshed cooldowns
-    #free plants
-    #star meteor
+    # refreshed cooldowns
+
 }
 traps_item_data_table:dict[str, PVZFItemData] = {
-"Placebo Trap": PVZFItemData(220, ItemClassification.trap),
+#"Placebo Trap": PVZFItemData(220, ItemClassification.trap),
+"10x Game Speed": PVZFItemData(220, ItemClassification.trap),
+"Destroy Everything": PVZFItemData(221, ItemClassification.trap),
+"Rough Economy": PVZFItemData(222, ItemClassification.trap),
+"The Fog is Coming": PVZFItemData(223, ItemClassification.trap),
 #Queen Jack in the box
+
 #Sun loss
-#seed packet shuffle
 #lawn shuffle - randomize every plants location
 #Unplant Lawn - turn every plant on the lawn into a droppedcard
 #extra flag - pushes progress bar back a flag
-#bungee ambush
-#grave danger
-#lawn clear
-#rough economy - doubles all plant costs
 #conveyor belt trap
-#fog trap
+#bungee ambush
+
+#seed packet shuffle
+
+#grave danger
 #freezing trap
 #ds sounds
     #lets go gambling
@@ -54,8 +61,8 @@ access_item_table: dict[str, PVZFItemData] = {
     "TD Day Access": PVZFItemData(100, ItemClassification.progression),
     "TD Night Access": PVZFItemData(101, ItemClassification.progression),
     "TD Pool Access": PVZFItemData(102, ItemClassification.progression),
-    "TD Fog Access": PVZFItemData(103, ItemClassification.progression),
-    "TD Roof Access": PVZFItemData(104, ItemClassification.progression),
+    #"TD Fog Access": PVZFItemData(103, ItemClassification.progression),
+    #"TD Roof Access": PVZFItemData(104, ItemClassification.progression),
     "Fusion Showcase Day Plants": PVZFItemData(105, ItemClassification.progression),
     "Fusion Showcase Night Plants": PVZFItemData(106, ItemClassification.progression),
     "Fusion Showcase Pool Plants": PVZFItemData(107, ItemClassification.progression),
@@ -245,13 +252,13 @@ minigame_item_table: dict[str, PVZFItemData] = {
 
 progressives_item_data_table: dict[str, PVZFItemData] = {
 
-    "Progressive Compact Planting": PVZFItemData(154, ItemClassification.progression),
-    "Progressive Wall-nut Billiards": PVZFItemData(156, ItemClassification.progression),
-    "Progressive Squash Showdown": PVZFItemData(157, ItemClassification.progression),
+    #"Progressive Compact Planting": PVZFItemData(154, ItemClassification.progression),
+    #"Progressive Wall-nut Billiards": PVZFItemData(156, ItemClassification.progression),
+    #"Progressive Squash Showdown": PVZFItemData(157, ItemClassification.progression),
 
     #odyssey exclusive
-    "Progressive Wack-a-Zombie": PVZFItemData(158, ItemClassification.progression),
-    "Progressive Zombies VS Zombies": PVZFItemData(159, ItemClassification.progression),
+    #"Progressive Wack-a-Zombie": PVZFItemData(158, ItemClassification.progression),
+    #"Progressive Zombies VS Zombies": PVZFItemData(159, ItemClassification.progression),
 }
 
 

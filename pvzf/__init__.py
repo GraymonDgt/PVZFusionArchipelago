@@ -125,7 +125,7 @@ class PVZFWorld(World):
         if self.options.adventure_extra==2:
             max_locations += 18
         if self.options.challenge_sanity:
-            max_locations += 22
+            max_locations += 24
         if self.options.showcase_sanity:
             max_locations += 176
         if self.options.minigame_sanity != 0:
@@ -267,18 +267,31 @@ class PVZFWorld(World):
             if slots_to_fill!= 0:
                 trap_slots = int(slots_to_fill*self.options.trap_percentage/100)
                 while trap_slots != 0:
-                    trapnum = random.randrange(3)
-                    if trapnum<3:
-                        self.multiworld.itempool += [self.create_item("Placebo Trap")]#4
+                    trapnum = random.randrange(11)
+                    if trapnum<4:
+                        self.multiworld.itempool += [self.create_item("10x Game Speed")]#4
+                    elif trapnum<7:
+                        self.multiworld.itempool += [self.create_item("Rough Economy")]
+                    elif trapnum<11:
+                        self.multiworld.itempool += [self.create_item("The Fog is Coming")]
+                    else:
+                        self.multiworld.itempool += [self.create_item("Destroy Everything")]
                     trap_slots-=1
                     slots_to_fill-=1
 
             if slots_to_fill != 0:
                 filler_slots = slots_to_fill
                 while filler_slots != 0:
-                    fillernum = random.randrange(8)
-                    if fillernum<8:
+                    fillernum = random.randrange(11)
+                    if fillernum<4:
                         self.multiworld.itempool += [self.create_item("Bonus Sun")]
+                    elif fillernum<6:
+                        self.multiworld.itempool += [self.create_item("Zen Garden Plant")]
+                    elif fillernum<9:
+                        self.multiworld.itempool += [self.create_item("Star Meteor")]
+                    else:
+                        self.multiworld.itempool += [self.create_item("Diamond")]
+
                     filler_slots-=1
                     slots_to_fill-=1
 
