@@ -14,3 +14,7 @@ Download PVZFusionArchipelago.zip and extract its contents into the same folder 
 making sure that Archipelago.MultiClient.Net.dll is in UserLibs and PVZFusionArchipelago.dll is in Mods
 
 To connect to a game, edit config.json which will be in the same folder as PVZFusionArchipelago.dll
+
+Once you are in game, before doing anything, go into the settings and double click "complete all levels" (back up your save file beforehand if you care about it)
+Also make sure "Dave picks cards on adventure NG+" is set to "does not select cards"
+You will play the adventure through the challenges menu
