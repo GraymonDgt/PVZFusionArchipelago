@@ -44,7 +44,7 @@ namespace PVZFusionArchipelago
     public class Class1 : MelonMod
     {
         public const int maxItems = 180; // holy shit good programming practice?\
-        public const int maxLocations = 500;
+        public const int maxLocations = 999;
         public int seedSlots = 0;
         public static ArchipelagoSession session;
         public static int currentPlayerSlot;
@@ -62,22 +62,28 @@ namespace PVZFusionArchipelago
         const string minigamePage1 = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page1/";
         const string minigamePage2 = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page2/";
         const string minigamePage3  = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page3/";
+        const string minigamePage4 = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page4/";
 
+        const string odysseyadvanturePage1 = "TravelAdvantureMenu(Clone)/Levels/PageUltimateExprience/Page1/";
 
         const string showcasePage = "ExploreMenu(Clone)/Level/Line1/";
         const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
         const string slotPath = "InGameUI(Clone)/SeedBank/SeedGroup/";
         public int ringLinkMode = 0;
+        public int deathLinkMode = 0;
         public bool adventureExtraEnabled = false;
         public static int prevSun;
         public static bool sunExists = false;
         public static int goalType = 0;
+        public static int numOdysseyLevels = 0;
+        public static bool lostThisFrame = false;
         public static GameObject boardGl;
         public static GameObject canvasGl;
         public static GameObject canvasupGl;
         public static GameObject GameAPPGl;
         public static Transform levelUIGl;
 
+        public PlayerHelper playerInfo;
         public AssetBundle bundle;
         public GameObject sunflowerPrefabObject;
         public GameObject droppedCardPrefabObject;
@@ -86,6 +92,9 @@ namespace PVZFusionArchipelago
         public GameObject sunPrefabObject;
         public GameObject starMeteorPrefabObject;
         public GameObject fogPrefabObject;
+        public GameObject loseMenuObject;
+        public GameObject zombieStarObject;
+        public GameObject normalZombieObject;
         readonly IConnectionInfoProvider connectionInfoProvider;
 
 
@@ -112,12 +121,18 @@ namespace PVZFusionArchipelago
             sunPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "Sun");
             starMeteorPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "BigSuperStar");
             fogPrefabObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "Fog");
+            loseMenuObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "LoseMenu");
+            zombieStarObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "BigStar");
+            normalZombieObject = Resources.LoadAll<GameObject>("").First(obj => obj.name == "NormalZombie");
+
+
+
 
             //foreach (GameObject obj in Resources.LoadAll<GameObject>(""))
             //{
             //    MelonLogger.Msg(obj.name);
-            //    if (obj.name == "SunflowerPrefab")
-            //     { sunflowerPrefabObject = obj; }
+            //    //if (obj.name == "SunflowerPrefab")
+            //    // { sunflowerPrefabObject = obj; }
             //}
 
 
@@ -179,6 +194,54 @@ namespace PVZFusionArchipelago
                 return;
             }
             CheckForNewItems();
+
+
+            if (deathLinkMode != 0)
+            {
+
+                if (canvasupGl == null)
+                { canvasupGl = GameObject.Find("CanvasUp"); }
+                if (canvasGl != null)
+                {
+                    var loseMenu = canvasupGl.transform.Find("LoseMenu(Clone)");
+
+                    if (loseMenu != null)//im too lazy to use the deathlink helper
+                    {
+                        if (lostThisFrame == false)
+                        {
+                            lostThisFrame = true;
+                            MelonLogger.Msg("fuck");
+                            string deathMessage = "PVZFusion had their brains eaten";
+                            //send deathlink packet
+                            var dataDict = new Dictionary<string, JToken>
+                        {
+                            { "time", JToken.FromObject(System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()) },
+                            { "source", JToken.FromObject(session.Players.ActivePlayer.Slot) },
+                            { "cause", JToken.FromObject(deathMessage) }
+                        };
+
+                                session.Socket.SendPacket(new BouncePacket()
+                                {
+                                    Tags = new List<string> { "DeathLink" },
+                                    Slots = new List<int> { session.Players.ActivePlayer.Slot },
+                                    Data = dataDict
+                                });
+                            
+                        }
+
+
+                    } else
+                    {
+                        lostThisFrame = false;
+                    }
+
+
+
+                }
+
+            }
+
+
             try
             {
                 if (ringLinkMode != 0)
@@ -395,7 +458,8 @@ namespace PVZFusionArchipelago
                 { HideTargetObjectChildren(canvasupGl, page2 + "PassionFruit"); }
                 if (unlockedArray[67] == false)
                 { HideTargetObjectChildren(canvasupGl, page2 + "LuckyBlover"); }
-
+                if (unlockedArray[68] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "DiamondImitater"); }
             } 
 
 
@@ -420,6 +484,12 @@ namespace PVZFusionArchipelago
             { canvasGl = GameObject.Find("Canvas"); }
             if (canvasGl != null)
             {
+
+
+                if (unlockedArray[71] == false)//fertilizer2
+                { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/FertilizeBank"); }
+
+
                 if (unlockedArray[72] == false)//gloves
                 {
                     HideTargetObject("Canvas", "InGameUI(Clone)/GloveBank");
@@ -448,7 +518,7 @@ namespace PVZFusionArchipelago
 
 
 
-            if (unlockedArray[90] == false)
+                if (unlockedArray[90] == false)
             {   HideTargetObject("Canvas", advanturePage1 + "Lv1");
                 HideTargetObject("Canvas", advanturePage1 + "Lv2");
                 HideTargetObject("Canvas", advanturePage1 + "Lv3");
@@ -614,6 +684,13 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[77]) { HideTargetObject("Canvas", showcasePage + "Lv12/Window/Trophy"); }
 
             }
+            if (unlockedArray[98] == false)
+            {
+                HideTargetObject("MainMenuCanvas", "MainMenu(Clone)/Grave/Btn/Shop");
+            }
+
+
+
             if (unlockedArray[110] == false)
             { HideTargetObject("Canvas", minigamePage1 + "Lv25"); }
             else { if (!checkedArray[80]) { HideTargetObject("Canvas", minigamePage1 + "Lv25/Window/Trophy"); } }
@@ -777,6 +854,65 @@ namespace PVZFusionArchipelago
             if (unlockedArray[162] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv163"); }
             else { if (!checkedArray[130]) { HideTargetObject("Canvas", minigamePage3 + "Lv163/Window/Trophy"); } }
+            if (unlockedArray[163] == false)
+            { HideTargetObject("Canvas", minigamePage3 + "Lv164"); }
+            else { if (!checkedArray[131]) { HideTargetObject("Canvas", minigamePage3 + "Lv164/Window/Trophy"); } }
+            if (unlockedArray[164] == false)
+            { HideTargetObject("Canvas", minigamePage4 + "Lv133"); }
+            else { if (!checkedArray[132]) { HideTargetObject("Canvas", minigamePage4 + "Lv133/Window/Trophy"); } }
+            if (unlockedArray[165] == false)
+            { HideTargetObject("Canvas", minigamePage4 + "Lv166"); }
+            else { if (!checkedArray[133]) { HideTargetObject("Canvas", minigamePage4 + "Lv166/Window/Trophy"); } }
+
+
+            if (numOdysseyLevels < 1)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_1"); }
+            else { if (!checkedArray[601]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_1/Window/Trophy"); } }
+            if (numOdysseyLevels < 2)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_2"); }
+            else { if (!checkedArray[602]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_2/Window/Trophy"); } }
+            if (numOdysseyLevels < 3)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_3"); }
+            else { if (!checkedArray[603]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_3/Window/Trophy"); } }
+            if (numOdysseyLevels < 4)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_4"); }
+            else { if (!checkedArray[604]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_4/Window/Trophy"); } }
+            if (numOdysseyLevels < 5)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_5"); }
+            else { if (!checkedArray[605]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_5/Window/Trophy"); } }
+            if (numOdysseyLevels < 6)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_6"); }
+            else { if (!checkedArray[606]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_6/Window/Trophy"); } }
+            if (numOdysseyLevels < 7)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_7"); }
+            else { if (!checkedArray[607]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_7/Window/Trophy"); } }
+            if (numOdysseyLevels < 8)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_8"); }
+            else { if (!checkedArray[608]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_8/Window/Trophy"); } }
+            if (numOdysseyLevels < 9)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_9"); }
+            else { if (!checkedArray[609]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_9/Window/Trophy"); } }
+            if (numOdysseyLevels < 10)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_10"); }
+            else { if (!checkedArray[610]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_10/Window/Trophy"); } }
+            if (numOdysseyLevels < 11)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_11"); }
+            else { if (!checkedArray[611]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_11/Window/Trophy"); } }
+            if (numOdysseyLevels < 12)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_12"); }
+            else { if (!checkedArray[612]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_12/Window/Trophy"); } }
+            if (numOdysseyLevels < 13)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_13"); }
+            else { if (!checkedArray[613]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_13/Window/Trophy"); } }
+            if (numOdysseyLevels < 14)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_14"); }
+            else { if (!checkedArray[614]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_14/Window/Trophy"); } }
+            if (numOdysseyLevels < 15)
+            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_15"); }
+            else { if (!checkedArray[315]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_15/Window/Trophy"); } }
+
+
+
 
             //const string showcasePage = "ExploreMenu(Clone)/Level/Line1";
             //const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
@@ -1109,7 +1245,7 @@ namespace PVZFusionArchipelago
 
         private void AttachClickHandler(string path)
         {
-
+            //SaveCache();
 
             if (boardGl == null)
             { boardGl = GameObject.Find("Board"); }
@@ -1809,7 +1945,108 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(129);
                         session.Locations.CompleteLocationChecks(429);
                         break;
+                    case "Archduke's Revenge":
+                        checkedArray[130] = true;
+                        session.Locations.CompleteLocationChecks(130);
+                        session.Locations.CompleteLocationChecks(430);
+                        break;
+                    case "Beghouled 2: Botany Crush":
+                        checkedArray[131] = true;
+                        session.Locations.CompleteLocationChecks(131);
+                        session.Locations.CompleteLocationChecks(431);
+                        break;
+                    case "Nut-o-mite":
+                        checkedArray[132] = true;
+                        session.Locations.CompleteLocationChecks(132);
+                        session.Locations.CompleteLocationChecks(432);
+                        break;
+
                         
+
+
+                    case "Odyssey Adventure: Level 1":
+                        checkedArray[601] = true;
+                        session.Locations.CompleteLocationChecks(601);
+                        session.Locations.CompleteLocationChecks(901);
+                        break;
+                    case "Odyssey Adventure: Level 2":
+                        checkedArray[602] = true;
+                        session.Locations.CompleteLocationChecks(602);
+                        session.Locations.CompleteLocationChecks(902);
+                        break;
+                    case "Odyssey Adventure: Level 3":
+                        checkedArray[603] = true;
+                        session.Locations.CompleteLocationChecks(603);
+                        session.Locations.CompleteLocationChecks(903);
+                        break;
+                    case "Odyssey Adventure: Level 4":
+                        checkedArray[604] = true;
+                        session.Locations.CompleteLocationChecks(604);
+                        session.Locations.CompleteLocationChecks(904);
+                        break;
+                    case "Odyssey Adventure: Level 5":
+                        checkedArray[605] = true;
+                        session.Locations.CompleteLocationChecks(605);
+                        session.Locations.CompleteLocationChecks(905);
+                        break;
+                    case "Odyssey Adventure: Level 6":
+                        checkedArray[606] = true;
+                        session.Locations.CompleteLocationChecks(606);
+                        session.Locations.CompleteLocationChecks(906);
+                        break;
+                    case "Odyssey Adventure: Level 7":
+                        checkedArray[607] = true;
+                        session.Locations.CompleteLocationChecks(607);
+                        session.Locations.CompleteLocationChecks(907);
+                        break;
+                    case "Odyssey Adventure: Level 8":
+                        checkedArray[608] = true;
+                        session.Locations.CompleteLocationChecks(608);
+                        session.Locations.CompleteLocationChecks(908);
+                        break;
+
+                    case "Odyssey Adventure: Level 9":
+                        checkedArray[609] = true;
+                        session.Locations.CompleteLocationChecks(609);
+                        session.Locations.CompleteLocationChecks(909);
+                        break;
+                    case "Odyssey Adventure: Level 10":
+                        checkedArray[610] = true;
+                        session.Locations.CompleteLocationChecks(610);
+                        session.Locations.CompleteLocationChecks(910);
+                        break;
+                    case "Odyssey Adventure: Level 11":
+                        checkedArray[611] = true;
+                        session.Locations.CompleteLocationChecks(611);
+                        session.Locations.CompleteLocationChecks(911);
+                        break;
+                    case "Odyssey Adventure: Level 12":
+                        checkedArray[612] = true;
+                        session.Locations.CompleteLocationChecks(612);
+                        session.Locations.CompleteLocationChecks(912);
+                        break;
+                    case "Odyssey Adventure: Level 13":
+                        checkedArray[613] = true;
+                        session.Locations.CompleteLocationChecks(613);
+                        session.Locations.CompleteLocationChecks(913);
+                        break;
+                    case "Odyssey Adventure: Level 14":
+                        checkedArray[614] = true;
+                        session.Locations.CompleteLocationChecks(614);
+                        session.Locations.CompleteLocationChecks(914);
+                        break;
+                    case "Odyssey Adventure: Level 15":
+                        checkedArray[615] = true;
+                        session.Locations.CompleteLocationChecks(615);
+                        session.Locations.CompleteLocationChecks(915);
+                        if (goalType == 2)
+                        { session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal }); }
+                        break;
+
+
+
+
+
                     case "Dr. Zomboss' Revenge":
                         checkedArray[99] = true;
                         session.Locations.CompleteLocationChecks(99);
@@ -1817,6 +2054,11 @@ namespace PVZFusionArchipelago
                         if (goalType == 0)
                         { session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal }); }
                         break;
+
+
+
+
+
                     default:
                         MelonLogger.Msg("Level not implemented");
                         break;
@@ -1850,7 +2092,46 @@ namespace PVZFusionArchipelago
                     foreach (var tag in jObject["tags"])
                     {
 
-                        if ((string)tag == "RingLink")
+
+
+
+
+                        if ((string)tag == "DeathLink")
+                        {
+                            if (boardGl == null)
+                            {
+                                boardGl = GameObject.Find("Board");
+                            }
+                            if (boardGl == null)
+                            {
+                                continue;
+                            }
+                            MelonLogger.Msg("received deathlink");
+                            GameObject newZombie = GameObject.Instantiate(normalZombieObject, new Vector3((float)-8.0, (float)0, 0), Quaternion.identity);
+                            var zombComp = newZombie.GetComponent(Il2CppType.Of<BasicZombie>());
+
+                            var type = zombComp.GetIl2CppType();
+                            var field = type.GetField("board");
+
+
+                            var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
+                            var typeB = boardComp.GetIl2CppType();
+                            var fieldB = type.GetField("Board");
+
+                            field.SetValue(zombComp, fieldB);
+
+                            lostThisFrame = true;
+
+                            newZombie.transform.SetParent(boardGl.transform);//todo error checking
+                                    MelonLogger.Msg("got through deathlink code");
+
+                            //BoxType Grass
+                            //Column
+
+
+                        }
+
+                            if ((string)tag == "RingLink")
 
                         {
 
@@ -1933,6 +2214,12 @@ namespace PVZFusionArchipelago
                 //{ continue; }
                 if (networkItem.ItemId < maxItems)
                 { unlockedArray[networkItem.ItemId] = true; }
+
+                if (networkItem.ItemId == 89)//progressive odyssey adventure
+                { numOdysseyLevels++;  }
+
+
+
 
                 if (networkItem.ItemId == 200)//bonus sun
                 {
@@ -2055,7 +2342,7 @@ namespace PVZFusionArchipelago
 
                     }
                 }
-                    if (networkItem.ItemId == 223)
+                    if (networkItem.ItemId == 223)//the fog is coming
                     {
                         if (boardGl == null)
                         {
@@ -2074,8 +2361,19 @@ namespace PVZFusionArchipelago
                         field.SetValue(boardComp, fog);
                 }
 
+                if (networkItem.ItemId == 224)
+                {
+                    var evilStar = GameObject.Instantiate(zombieStarObject, new Vector3((float)18, (float)5, 0), Quaternion.identity);
 
-               
+
+                    var boardComp = evilStar.GetComponent(Il2CppType.Of<BigStar>());
+
+                    var type = boardComp.GetIl2CppType();
+                    var field = type.GetField("zombie");
+                    field.SetValue(boardComp, true);
+
+                }
+
 
             }
         }
@@ -2196,16 +2494,32 @@ namespace PVZFusionArchipelago
             //slotData.TryGetValue("RingLink",out object value);//use this instead when you can tolerate json objects
 
             foreach (KeyValuePair<string, object> arg in slotData)
-            { if (arg.Key == "RingLink" && arg.Value.ToString() != "0") 
+            {
+
+                if (arg.Key == "DeathLink" && arg.Value.ToString() != "0")
                 {
-                    session.ConnectionInfo.UpdateConnectionOptions(new[] { "RingLink" });
+
+                    deathLinkMode = 1;//add more later
+                }
+
+                if (arg.Key == "RingLink" && arg.Value.ToString() != "0") 
+                {
+                    
                     ringLinkMode = 1;//add more later
                 }
 
-                if (arg.Key == "CompletionType" && arg.Value.ToString() != "0")
+                if (arg.Key == "CompletionType")
                 {
-                    goalType = 1;//add more later
+                    if (arg.Value.ToString() == "1")
+                    {
+                        goalType = 1;//add more later
+                    }
+                    else if (arg.Value.ToString() == "2")
+                    {
+                        goalType = 2;
+                    }
                 }
+
                 if (arg.Key == "AdventureExtra" && arg.Value.ToString() == "2")
                 {
                     adventureExtraEnabled = true;
@@ -2213,7 +2527,19 @@ namespace PVZFusionArchipelago
                 
 
             }
-            session.Socket.PacketReceived += OnPacketReceived;
+            if (ringLinkMode != 0)
+            {
+                if (deathLinkMode != 0) { session.ConnectionInfo.UpdateConnectionOptions(new[] { "DeathLink", "RingLink" }); }
+                else { session.ConnectionInfo.UpdateConnectionOptions(new[] { "RingLink" }); }
+                
+            } else if (deathLinkMode != 0)
+            {
+                session.ConnectionInfo.UpdateConnectionOptions(new[] { "DeathLink" });
+            }
+
+
+
+                session.Socket.PacketReceived += OnPacketReceived;
 
 
 
