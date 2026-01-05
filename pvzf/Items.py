@@ -13,6 +13,7 @@ class PVZFItemData(NamedTuple):
 
 
 generic_item_data_table: dict[str, PVZFItemData] = {
+    "Trophy": PVZFItemData(206, ItemClassification.progression_skip_balancing),
     "Seed Slot": PVZFItemData(201, ItemClassification.progression),
     "Bonus Sun": PVZFItemData(200, ItemClassification.filler),
     "Zen Garden Plant": PVZFItemData(202, ItemClassification.filler),
@@ -30,6 +31,7 @@ traps_item_data_table:dict[str, PVZFItemData] = {
 "Destroy Everything": PVZFItemData(221, ItemClassification.trap),
 "Rough Economy": PVZFItemData(222, ItemClassification.trap),
 "The Fog is Coming": PVZFItemData(223, ItemClassification.trap),
+"Zombie Meteor": PVZFItemData(224, ItemClassification.trap),
 #Queen Jack in the box
 #Sun loss
 #lawn shuffle - randomize every plants location
@@ -37,14 +39,15 @@ traps_item_data_table:dict[str, PVZFItemData] = {
 #extra flag - pushes progress bar back a flag
 #conveyor belt trap
 #bungee ambush
-#seed packet shuffle
+#seed packet shuffle// better idea: randomly changes your entire loadout to be different seeds
 #grave danger
 #freezing trap
 #ds sounds
-#lets go gambling
+#lets go gambling (slot machine)
 }
 
 access_item_table: dict[str, PVZFItemData] = {
+    "Progressive Odyssey Adventure": PVZFItemData(89, ItemClassification.progression),
     "Day Access": PVZFItemData(90, ItemClassification.progression),
     "Night Access": PVZFItemData(91, ItemClassification.progression),
     "Pool Access": PVZFItemData(92, ItemClassification.progression),
@@ -52,20 +55,38 @@ access_item_table: dict[str, PVZFItemData] = {
     "Roof Access": PVZFItemData(94, ItemClassification.progression),
     "Snow Access": PVZFItemData(95, ItemClassification.progression),
     "Fusion Challenge Access": PVZFItemData(96, ItemClassification.progression),
-    "Fusion Showcase Access": PVZFItemData(97, ItemClassification.progression),
-    "Odyssey Mode": PVZFItemData(98, ItemClassification.progression),
-    "Abyss Mode": PVZFItemData(99, ItemClassification.progression),
-    "TD Day Access": PVZFItemData(100, ItemClassification.progression),
-    "TD Night Access": PVZFItemData(101, ItemClassification.progression),
-    "TD Pool Access": PVZFItemData(102, ItemClassification.progression),
+    #"Fusion Showcase Access": PVZFItemData(97, ItemClassification.progression),
+    "Odyssey Key": PVZFItemData(98, ItemClassification.progression),
+    #"Abyss Mode": PVZFItemData(99, ItemClassification.progression),
+    #"TD Day Access": PVZFItemData(100, ItemClassification.progression),
+    #"TD Night Access": PVZFItemData(101, ItemClassification.progression),
+    #"TD Pool Access": PVZFItemData(102, ItemClassification.progression),
     #"TD Fog Access": PVZFItemData(103, ItemClassification.progression),
     #"TD Roof Access": PVZFItemData(104, ItemClassification.progression),
-    "Fusion Showcase Day Plants": PVZFItemData(105, ItemClassification.progression),
-    "Fusion Showcase Night Plants": PVZFItemData(106, ItemClassification.progression),
-    "Fusion Showcase Pool Plants": PVZFItemData(107, ItemClassification.progression),
-    "Fusion Showcase Fog Plants": PVZFItemData(108, ItemClassification.progression),
-    "Fusion Showcase Roof Plants": PVZFItemData(109, ItemClassification.progression),
+    #"Fusion Showcase Day Plants": PVZFItemData(105, ItemClassification.progression),
+    #"Fusion Showcase Night Plants": PVZFItemData(106, ItemClassification.progression),
+    #"Fusion Showcase Pool Plants": PVZFItemData(107, ItemClassification.progression),
+    #"Fusion Showcase Fog Plants": PVZFItemData(108, ItemClassification.progression),
+    #"Fusion Showcase Roof Plants": PVZFItemData(109, ItemClassification.progression),
+    "Vasebreaker Access": PVZFItemData(200, ItemClassification.progression),
+    #"Ten-Flag Challenge Access": PVZFItemData(201, ItemClassification.progression),
+    #"Garden Defense Access": PVZFItemData(202, ItemClassification.progression),
+    "Survival Day": PVZFItemData(250, ItemClassification.progression),
+    "Survival Night": PVZFItemData(251, ItemClassification.progression),
+    "Survival Pool": PVZFItemData(252, ItemClassification.progression),
+    "Survival Fog": PVZFItemData(253, ItemClassification.progression),
+    "Survival Roof": PVZFItemData(254, ItemClassification.progression),
 
+
+
+}
+
+endless_item_table:dict[str, PVZFItemData] = {
+    "Survival Snow (Endless)": PVZFItemData(255, ItemClassification.filler),
+    "Survival Inverted Pool (Endless)": PVZFItemData(256, ItemClassification.filler),
+    "Survival Pool: Crisis (Endless)": PVZFItemData(257, ItemClassification.filler),
+    "Survival Lake (Endless)": PVZFItemData(258, ItemClassification.filler),
+    "Survival Mesa River (Endless)": PVZFItemData(259, ItemClassification.filler),
 }
 
 
@@ -76,7 +97,7 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Wall-nut": PVZFItemData(4, ItemClassification.progression),
     "Potato Mine": PVZFItemData(5, ItemClassification.progression),
     "Chomper": PVZFItemData(6, ItemClassification.progression),
-    "Plant Giftbox": PVZFItemData(7, ItemClassification.useful),
+    "Plant Giftbox": PVZFItemData(7, ItemClassification.progression),
     "Tall-nut": PVZFItemData(8, ItemClassification.progression),
     "EndoFlame": PVZFItemData(9, ItemClassification.useful),
     "Puff-shroom": PVZFItemData(10, ItemClassification.progression),
@@ -132,32 +153,33 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Queen Endoflame": PVZFItemData(59, ItemClassification.progression),#odyssey exclusive
     "Coldsnap Bean": PVZFItemData(60, ItemClassification.progression),
     "Amp-nion": PVZFItemData(61, ItemClassification.progression),
-    "Sniper Pea": PVZFItemData(62, ItemClassification.progression),#odyssey exclusive
+    "Snipea": PVZFItemData(62, ItemClassification.progression),#odyssey exclusive
     "Chrysanctum": PVZFItemData(63, ItemClassification.progression),
     "Icetip Lily": PVZFItemData(64, ItemClassification.progression),
     "Pearmafrost": PVZFItemData(65, ItemClassification.progression),
     "Doubleblast Passionfruit": PVZFItemData(66, ItemClassification.progression),
     "Lucky Blover": PVZFItemData(67, ItemClassification.useful),
+    "Diamond Imitater": PVZFItemData(68, ItemClassification.useful),
 
 }
 
 td_plants_item_data_table: dict[str, PVZFItemData] = {
-    "Solar Shooter (TD)": PVZFItemData(500, ItemClassification.progression),
-    "Sunrise-shroom (TD)": PVZFItemData(501, ItemClassification.progression),
-    "Explod-o-shooter (TD)": PVZFItemData(502, ItemClassification.progression),
-    "Star-nut (TD)": PVZFItemData(503, ItemClassification.progression),
-    "Solar Mine (TD)": PVZFItemData(504, ItemClassification.progression),
-    "Frost Gloom-shroom (TD)": PVZFItemData(505, ItemClassification.progression),
-    "Cherry Chomper (TD)": PVZFItemData(506, ItemClassification.progression),
-    "Amp-nion (TD)": PVZFItemData(507, ItemClassification.progression),
-    "Pea-shroom (TD)": PVZFItemData(508, ItemClassification.progression),
-    "Sun-shroom (TD)": PVZFItemData(509, ItemClassification.progression),
-    "Soot-shroom (TD)": PVZFItemData(510, ItemClassification.progression),
-    "Grave Buster (TD)": PVZFItemData(511, ItemClassification.progression),
-    "Gutsy-shroom (TD)": PVZFItemData(512, ItemClassification.progression),
-    "Breeze Blover (TD)": PVZFItemData(513, ItemClassification.progression),
-    "Death Star (TD)": PVZFItemData(514, ItemClassification.progression),
-    "Drippy Pitcher (TD)": PVZFItemData(515, ItemClassification.progression),
+    #"Solar Shooter (TD)": PVZFItemData(500, ItemClassification.progression),
+    #"Sunrise-shroom (TD)": PVZFItemData(501, ItemClassification.progression),
+    #"Explod-o-shooter (TD)": PVZFItemData(502, ItemClassification.progression),
+    #"Star-nut (TD)": PVZFItemData(503, ItemClassification.progression),
+    #"Solar Mine (TD)": PVZFItemData(504, ItemClassification.progression),
+    #"Frost Gloom-shroom (TD)": PVZFItemData(505, ItemClassification.progression),
+    #"Cherry Chomper (TD)": PVZFItemData(506, ItemClassification.progression),
+    #"Amp-nion (TD)": PVZFItemData(507, ItemClassification.progression),
+    #"Pea-shroom (TD)": PVZFItemData(508, ItemClassification.progression),
+    #"Sun-shroom (TD)": PVZFItemData(509, ItemClassification.progression),
+    #"Soot-shroom (TD)": PVZFItemData(510, ItemClassification.progression),
+    #"Grave Buster (TD)": PVZFItemData(511, ItemClassification.progression),
+    #"Gutsy-shroom (TD)": PVZFItemData(512, ItemClassification.progression),
+    #"Breeze Blover (TD)": PVZFItemData(513, ItemClassification.progression),
+    #"Death Star (TD)": PVZFItemData(514, ItemClassification.progression),
+    #"Drippy Pitcher (TD)": PVZFItemData(515, ItemClassification.progression),
 }
 
 tools_item_data_table: dict[str, PVZFItemData] = {
@@ -172,9 +194,10 @@ tools_item_data_table: dict[str, PVZFItemData] = {
     "Phonograph": PVZFItemData(77, ItemClassification.filler),
     "Bug Spray": PVZFItemData(78, ItemClassification.filler),
     "Wheelbarrow": PVZFItemData(79, ItemClassification.filler),
+    #"Slow Mode": PVZFItemData(80, ItemClassification.useful),
     #"Advanced Fusions": PVZFItemData(80, ItemClassification.progression),
-    #"Lawnmowers": PVZFItemData(159, ItemClassification.progression),
-    #"Pool Cleaners": PVZFItemData(160, ItemClassification.progression),
+    "Lawnmowers": PVZFItemData(82, ItemClassification.progression),
+    "Pool Cleaners": PVZFItemData(83 , ItemClassification.progression),
 
 
 
@@ -243,9 +266,16 @@ minigame_item_table: dict[str, PVZFItemData] = {
     "The Floor is Lava": PVZFItemData(160, ItemClassification.progression),
     "Art Challenge: Wall-nut": PVZFItemData(161, ItemClassification.progression),
     "I, Zombie (Minigame)": PVZFItemData(162, ItemClassification.progression),
+    "Archduke's Revenge": PVZFItemData(163, ItemClassification.progression),
+    "Beghouled 2: Botany Crush": PVZFItemData(164, ItemClassification.progression),#short minigame
+    "Nut-o-mite": PVZFItemData(165, ItemClassification.progression),
+}
+
+ten_flag_item_table: dict[str, PVZFItemData] = {
 
 
 }
+
 
 progressives_item_data_table: dict[str, PVZFItemData] = {
 
@@ -260,7 +290,7 @@ progressives_item_data_table: dict[str, PVZFItemData] = {
 
 
 item_data_table = {
-    **generic_item_data_table,**traps_item_data_table,**plants_item_data_table,**tools_item_data_table,**access_item_table,**minigame_item_table
+    **generic_item_data_table,**traps_item_data_table,**plants_item_data_table,**tools_item_data_table,**access_item_table,**minigame_item_table,**endless_item_table, **ten_flag_item_table
 }
 
 item_table = {name: data.code for name, data in item_data_table.items() if data.code is not None}
