@@ -29,11 +29,11 @@ using System;
 using System.Linq.Expressions;
 using System.Runtime.Intrinsics.X86;
 using System.Security.Cryptography;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 using UnityEngine.Windows;
 using static Il2CppSystem.Globalization.CultureInfo;
 using static UnityEngine.GraphicsBuffer;
@@ -43,9 +43,11 @@ namespace PVZFusionArchipelago
 {
     public class Class1 : MelonMod
     {
-        public const int maxItems = 180; // holy shit good programming practice?\
+        public const int maxItems = 280; // holy shit good programming practice?\
         public const int maxLocations = 999;
         public int seedSlots = 0;
+        public int trophyCount = 0;
+        public int trophiesForGoal = 0;
         public static ArchipelagoSession session;
         public static int currentPlayerSlot;
         public static bool[] unlockedArray = new bool[maxItems];
@@ -64,10 +66,15 @@ namespace PVZFusionArchipelago
         const string minigamePage3  = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page3/";
         const string minigamePage4 = "ChallengeMenu(Clone)/Levels/PageMiniGames/Pages/Page4/";
 
+        const string survivalPage1 = "SurvivalMenu(Clone)/Level/Page1/";
+        const string survivalPage2 = "SurvivalMenu(Clone)/Level/Page2/";
+
+
         const string odysseyadvanturePage1 = "TravelAdvantureMenu(Clone)/Levels/PageUltimateExprience/Page1/";
 
         const string showcasePage = "ExploreMenu(Clone)/Level/Line1/";
         const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
+        const string vasePage = "ChallengeMenu(Clone)/Levels/PageScaryPot/Pages/Page1/";
         const string slotPath = "InGameUI(Clone)/SeedBank/SeedGroup/";
         public int ringLinkMode = 0;
         public int deathLinkMode = 0;
@@ -466,19 +473,59 @@ namespace PVZFusionArchipelago
             if (unlockedArray[70] == false)//shovel
             { HideTargetObject("Canvas", "InGameUI(Clone)/ShovelBank");}
 
-            if (unlockedArray[71] == false)//fertilizer
-            {
+
 
                 if (boardGl == null)
                 { boardGl = GameObject.Find("Board"); }
-                if (boardGl != null)
+            if (boardGl != null)
+            {
+                if (unlockedArray[71] == false)//fertilizer
                 {
                     var fertilizerTransform = boardGl.transform.Find("Ferilize(Clone)");
 
                     if (fertilizerTransform != null)
                     { GameObject.Destroy(fertilizerTransform.gameObject); }
                 }
+
+
+                if (unlockedArray[82] == false)//mowers
+                {
+                    var lawnmower = boardGl.transform.Find("LawnMowerPrefab_0");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_1");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_2");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_3");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_4");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_5");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                }
+                if (unlockedArray[83] == false)//pool cleaners
+                {
+                    var poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_0");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                    poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_1");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                    poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_2");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                    poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_3");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                }
             }
+            
 
             if (canvasGl == null)
             { canvasGl = GameObject.Find("Canvas"); }
@@ -665,7 +712,18 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[65]) { HideTargetObject("Canvas", challengePage + "Lv128/Window/Trophy"); }
                 if (!checkedArray[66]) { HideTargetObject("Canvas", challengePage + "Lv162/Window/Trophy"); }
             }
-            if (unlockedArray[97] == false)
+            if (unlockedArray[200] == false)
+            {
+                HideTargetObject("Canvas", "ChallengeMenu(Clone)/Levels/FirstBtns/ScaryPot");
+            }
+            else
+            {
+                if (!checkedArray[200]) { HideTargetObject("Canvas", vasePage + "Lv102/Window/Trophy"); }
+                if (!checkedArray[201]) { HideTargetObject("Canvas", vasePage + "Lv103/Window/Trophy"); }
+                if (!checkedArray[202]) { HideTargetObject("Canvas", vasePage + "Lv104/Window/Trophy"); }
+
+            }
+                if (unlockedArray[97] == false)
             {
                 HideTargetObject("MainMenuCanvas", "MainMenu(Clone)/NewAdv");
             } else
@@ -864,6 +922,88 @@ namespace PVZFusionArchipelago
             { HideTargetObject("Canvas", minigamePage4 + "Lv166"); }
             else { if (!checkedArray[133]) { HideTargetObject("Canvas", minigamePage4 + "Lv166/Window/Trophy"); } }
 
+
+            if (canvasGl != null)
+            {
+
+                if (unlockedArray[250] == false)
+                {
+                    HideTargetChildByID(canvasGl, survivalPage1, 0);
+                    HideTargetChildByID(canvasGl, survivalPage1, 3);
+                    HideTargetChildByID(canvasGl, survivalPage1, 9);
+                }
+                else
+                {
+                    if (!checkedArray[280]) { HideTrophyIconById(canvasGl, survivalPage1, 0); }
+                    if (!checkedArray[281]) { HideTrophyIconById(canvasGl, survivalPage1, 3); }
+                }
+                if (unlockedArray[251] == false)
+                {
+                    HideTargetChildByID(canvasGl, survivalPage1, 1);
+                    HideTargetChildByID(canvasGl, survivalPage1, 4);
+                    HideTargetChildByID(canvasGl, survivalPage1, 8);
+                }
+                else
+                {
+                    if (!checkedArray[282]) { HideTrophyIconById(canvasGl, survivalPage1, 1); }
+                    if (!checkedArray[283]) { HideTrophyIconById(canvasGl, survivalPage1, 4); }
+                }
+                if (unlockedArray[252] == false)
+                {
+                    HideTargetChildByID(canvasGl, survivalPage1, 2);
+                    HideTargetChildByID(canvasGl, survivalPage1, 5);
+                    HideTargetChildByID(canvasGl, survivalPage1, 6);
+                }
+                else
+                {
+                    if (!checkedArray[284]) { HideTrophyIconById(canvasGl, survivalPage1, 2); }
+                    if (!checkedArray[285]) { HideTrophyIconById(canvasGl, survivalPage1, 5); }
+                }
+                if (unlockedArray[253] == false)
+                {
+                    HideTargetChildByID(canvasGl, survivalPage1, 14);
+                    HideTargetChildByID(canvasGl, survivalPage1, 15);
+                    HideTargetChildByID(canvasGl, survivalPage1, 10);
+                }
+                else
+                {
+                    if (!checkedArray[286]) { HideTrophyIconById(canvasGl, survivalPage1, 14); }
+                    if (!checkedArray[287]) { HideTrophyIconById(canvasGl, survivalPage1, 15); }
+                }
+                if (unlockedArray[254] == false)
+                {
+                    HideTargetChildByID(canvasGl, survivalPage1, 12);
+                    HideTargetChildByID(canvasGl, survivalPage1, 13);
+                    HideTargetChildByID(canvasGl, survivalPage1, 11);
+                }
+                else
+                {
+                    if (!checkedArray[288]) { HideTrophyIconById(canvasGl, survivalPage1, 12); }
+                    if (!checkedArray[289]) { HideTrophyIconById(canvasGl, survivalPage1, 13); }
+                }
+
+            }
+
+            if (unlockedArray[255] == false)
+            {
+                HideTargetChildByID(canvasGl, survivalPage1, 16);
+            }
+            if (unlockedArray[256] == false)
+            {
+                HideTargetChildByID(canvasGl, survivalPage1, 7);
+            }
+            if (unlockedArray[257] == false)
+            {
+                HideTargetChildByID(canvasGl, survivalPage1, 17);
+            }
+            if (unlockedArray[258] == false)
+            {
+                HideTargetChildByID(canvasGl, survivalPage2, 0);
+            }
+            if (unlockedArray[259] == false)
+            {
+                HideTargetChildByID(canvasGl, survivalPage2, 1);
+            }
 
             if (numOdysseyLevels < 1)
             { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_1"); }
@@ -1961,7 +2101,76 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(432);
                         break;
 
-                        
+                    case "Vasebreaker":
+                        checkedArray[200] = true;
+                        session.Locations.CompleteLocationChecks(200);
+                        session.Locations.CompleteLocationChecks(500);
+                        break;
+                    case "Vasebreaker 2":
+                        checkedArray[201] = true;
+                        session.Locations.CompleteLocationChecks(201);
+                        session.Locations.CompleteLocationChecks(501);
+                        break;
+                    case "Chain Reaction":
+                        checkedArray[202] = true;
+                        session.Locations.CompleteLocationChecks(202);
+                        session.Locations.CompleteLocationChecks(502);
+                        break;
+
+
+
+
+                    case "Survival: Day | Round 5":
+                        checkedArray[280] = true;
+                        session.Locations.CompleteLocationChecks(280);
+                        session.Locations.CompleteLocationChecks(580);
+                        break;
+                    case "Survival: Day(Hard) | Round 5":
+                        checkedArray[281] = true;
+                        session.Locations.CompleteLocationChecks(281);
+                        session.Locations.CompleteLocationChecks(581);
+                        break;
+                    case "Survival: Night | Round 5":
+                        checkedArray[282] = true;
+                        session.Locations.CompleteLocationChecks(282);
+                        session.Locations.CompleteLocationChecks(582);
+                        break;
+                    case "Survival: Night(Hard) | Round 5":
+                        checkedArray[283] = true;
+                        session.Locations.CompleteLocationChecks(283);
+                        session.Locations.CompleteLocationChecks(583);
+                        break;
+                    case "Survival: Pool | Round 5":
+                        checkedArray[284] = true;
+                        session.Locations.CompleteLocationChecks(284);
+                        session.Locations.CompleteLocationChecks(584);
+                        break;
+                    case "Survival: Pool(Hard) | Round 5":
+                        checkedArray[285] = true;
+                        session.Locations.CompleteLocationChecks(285);
+                        session.Locations.CompleteLocationChecks(585);
+                        break;
+                    case "Survival: Fog | Round 5":
+                        checkedArray[286] = true;
+                        session.Locations.CompleteLocationChecks(286);
+                        session.Locations.CompleteLocationChecks(586);
+                        break;
+                    case "Survival: Fog(Hard) | Round 5":
+                        checkedArray[287] = true;
+                        session.Locations.CompleteLocationChecks(287);
+                        session.Locations.CompleteLocationChecks(587);
+                        break;
+                    case "Survival: Roof | Round 5":
+                        checkedArray[288] = true;
+                        session.Locations.CompleteLocationChecks(288);
+                        session.Locations.CompleteLocationChecks(588);
+                        break;
+                    case "Survival: Roof(Hard) | Round 5":
+                        checkedArray[289] = true;
+                        session.Locations.CompleteLocationChecks(289);
+                        session.Locations.CompleteLocationChecks(589);
+                        break;
+
 
 
                     case "Odyssey Adventure: Level 1":
@@ -2195,10 +2404,19 @@ namespace PVZFusionArchipelago
                 //{ continue; }
                 if (networkItem.ItemId < maxItems)
                 { unlockedArray[networkItem.ItemId] = true; }
-
+                if (networkItem.ItemId == 89)//progressive odyssey adventure
+                { numOdysseyLevels++; } 
                 if (networkItem.ItemId == 201)
                 {
                     seedSlots += 1;
+                }
+                if (networkItem.ItemId == 206)
+                {
+                    trophyCount += 1;
+                    if (trophyCount >= trophiesForGoal && goalType == 3)
+                    {
+                        session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
+                    }
                 }
 
             }
@@ -2278,7 +2496,19 @@ namespace PVZFusionArchipelago
                 {
                     GameObject.Instantiate(starMeteorPrefabObject, new Vector3((float)-8, (float)5, 0), Quaternion.identity);
                 }
-                
+                if (networkItem.ItemId == 206)//trophy
+                {
+                    trophyCount += 1;
+                    if (trophyCount>=trophiesForGoal && goalType == 3)
+                    {
+                        session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
+
+                    }
+                }
+
+
+
+
 
                 if (networkItem.ItemId == 220)//10x speed trap
                 {
@@ -2424,6 +2654,48 @@ namespace PVZFusionArchipelago
 
         }
 
+        private void HideTargetChildByID(GameObject canvas, string target,int id)
+        {
+            if (canvas == null)
+            {
+                //LoggerInstance.Warning($"{canvasname} not found");
+                return;
+            }
+
+            var inGameUI = canvas.transform.Find(target);
+            if (inGameUI == null)
+            {
+                return;
+            }
+            var child = inGameUI.GetChild(id);
+            child.gameObject.SetActive(false);
+
+
+        }
+
+        private void HideTrophyIconById(GameObject canvas, string target, int id)
+        {
+            if (canvas == null)
+            {
+                //LoggerInstance.Warning($"{canvasname} not found");
+                return;
+            }
+
+            var inGameUI = canvas.transform.Find(target);
+            if (inGameUI == null)
+            {
+                return;
+            }
+            var child = inGameUI.GetChild(id);
+
+            var transformChild = child.transform.Find("Window/Trophy");
+
+            transformChild.gameObject.SetActive(false);
+
+
+        }
+
+
         public void CheckForGoalType1()
         {
             if (goalType != 1)
@@ -2518,14 +2790,23 @@ namespace PVZFusionArchipelago
                     {
                         goalType = 2;
                     }
+                    else if (arg.Value.ToString() == "3")
+                    {
+                        goalType = 3;
+                    }
                 }
 
                 if (arg.Key == "AdventureExtra" && arg.Value.ToString() == "2")
                 {
                     adventureExtraEnabled = true;
                 }
-                
 
+                if (arg.Key == "GoalTrophies")
+                {
+                    trophiesForGoal = System.Convert.ToInt32(arg.Value.ToString());
+
+                    
+                }
             }
             if (ringLinkMode != 0)
             {
