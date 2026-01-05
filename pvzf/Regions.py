@@ -27,8 +27,11 @@ class PVZFRegion(Region):
 
 def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
     regMM = Region("Menu", player, world, "Level Select")
+
     #create_default_locs(regMM, locSS_table)#TODO this might break something
     world.regions.append(regMM)
+
+
 
 
     regDay = create_region("Day", player, world)
@@ -132,34 +135,34 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
             "Fusion Challenge: Alchemist Umbrella (2)",
             "Fusion Challenge: Spruce Supershooter (2)",
             "Fusion Challenge: Jicamagic (2)"
-)
+        )
 
-    if options.showcase_sanity:
-        regShow = create_region("Fusion Showcase", player, world)
-        create_locs(regShow,
-            "Fusion Showcase: Explod-o-tato Mine (1)",
-            "Fusion Showcase: Pumpkin Bunker (1)",
-            "Fusion Showcase: Nugget-shroom (1)",
-            "Fusion Showcase: Spuddy-shroom (1)",
-            "Fusion Showcase: Chomper Maw (1)",
-            "Fusion Showcase: Foul-shroom (1)",
-            "Fusion Showcase: Mind-blover (1)",
-            "Fusion Showcase: Boomwood (1)",
-            "Fusion Showcase: Bamboom (1)",
-            "Fusion Showcase: Spike-nut (1)",
-            "Fusion Showcase: Leviathan-shroom (1)",
-
-            "Fusion Showcase: Explod-o-tato Mine (2)",
-            "Fusion Showcase: Pumpkin Bunker (2)",
-            "Fusion Showcase: Nugget-shroom (2)",
-            "Fusion Showcase: Spuddy-shroom (2)",
-            "Fusion Showcase: Chomper Maw (2)",
-            "Fusion Showcase: Foul-shroom (2)",
-            "Fusion Showcase: Mind-blover (2)",
-            "Fusion Showcase: Boomwood (2)",
-            "Fusion Showcase: Bamboom (2)",
-            "Fusion Showcase: Spike-nut (2)",
-            "Fusion Showcase: Leviathan-shroom (2)")
+    #if options.showcase_sanity:
+    #    regShow = create_region("Fusion Showcase", player, world)
+    #    create_locs(regShow,
+    #        "Fusion Showcase: Explod-o-tato Mine (1)",
+    #        "Fusion Showcase: Pumpkin Bunker (1)",
+    #        "Fusion Showcase: Nugget-shroom (1)",
+    #        "Fusion Showcase: Spuddy-shroom (1)",
+    #        "Fusion Showcase: Chomper Maw (1)",
+    #        "Fusion Showcase: Foul-shroom (1)",
+    #        "Fusion Showcase: Mind-blover (1)",
+    #        "Fusion Showcase: Boomwood (1)",
+    #        "Fusion Showcase: Bamboom (1)",
+    #        "Fusion Showcase: Spike-nut (1)",
+    #        "Fusion Showcase: Leviathan-shroom (1)",
+#
+    #        "Fusion Showcase: Explod-o-tato Mine (2)",
+    #        "Fusion Showcase: Pumpkin Bunker (2)",
+    #        "Fusion Showcase: Nugget-shroom (2)",
+    #        "Fusion Showcase: Spuddy-shroom (2)",
+    #        "Fusion Showcase: Chomper Maw (2)",
+    #        "Fusion Showcase: Foul-shroom (2)",
+    #        "Fusion Showcase: Mind-blover (2)",
+    #        "Fusion Showcase: Boomwood (2)",
+    #        "Fusion Showcase: Bamboom (2)",
+    #        "Fusion Showcase: Spike-nut (2)",
+    #        "Fusion Showcase: Leviathan-shroom (2)")
 
     if options.minigame_sanity!=0:
         regMini = create_region("Minigames", player, world)
@@ -184,6 +187,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Graveout (1)",
                     "The Floor is Lava (1)",
                     "Art Challenge: Wall-nut (1)",
+                    "Beghouled 2: Botany Crush (1)",
 
                     "Compact Planting (2)",
                     "Newspaper War (2)",
@@ -206,6 +210,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Graveout (2)",
                     "The Floor is Lava (2)",
                     "Art Challenge: Wall-nut (2)",
+                    "Beghouled 2: Botany Crush (2)",
                     )
 
         if options.minigame_sanity>1:
@@ -240,7 +245,8 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Attack on Gargantuar! 2 (1)",
                     "Graveout 2 (1)",
                     "I, Zombie (Minigame) (1)",
-
+                    "Archduke's Revenge (1)",
+                    "Nut-o-mite (1)",
 
                     "Scaredy's Dream (2)",
                     "Pole Vaulting Disco (2)",
@@ -271,7 +277,87 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Attack on Gargantuar! 2 (2)",
                     "Graveout 2 (2)",
                     "I, Zombie (Minigame) (2)",
-                    )
+                    "Archduke's Revenge (2)",
+
+                    "Nut-o-mite (2)"
+
+                        )
+
+
+    regVB = create_region("Vasebreaker",player, world)
+    if options.vasebreaker_sanity:
+        create_locs(regVB,"Vasebreaker (1)",
+    "Vasebreaker 2 (1)",
+    "Chain Reaction (1)",
+    "Vasebreaker (2)",
+    "Vasebreaker 2 (2)",
+    "Chain Reaction (2)")
+
+
+    regSu = create_region("Survival",player, world)
+    if options.survival_sanity:
+        create_locs(regVB,
+                    "Survival: Day (1)",
+        "Survival: Day (Hard) (1)",
+        "Survival: Night (1)",
+        "Survival: Night (Hard) (1)",
+        "Survival: Pool (1)",
+        "Survival: Pool (Hard) (1)",
+        "Survival: Fog (1)",
+        "Survival: Fog (Hard) (1)",
+        "Survival: Roof (1)",
+        "Survival: Roof (Hard) (1)",
+
+        "Survival: Day (2)",
+        "Survival: Day (Hard) (2)",
+        "Survival: Night (2)",
+        "Survival: Night (Hard) (2)",
+        "Survival: Pool (2)",
+        "Survival: Pool (Hard) (2)",
+        "Survival: Fog (2)",
+        "Survival: Fog (Hard) (2)",
+        "Survival: Roof (2)",
+        "Survival: Roof (Hard) (2)",
+        )
+
+
+
+    regOM = create_region("Odyssey Menu", player, world)
+
+
+    if options.adventure_odyssey or options.goal_type == 2:
+            create_locs(regOM,
+            "Odyssey Adventure: Level 1 (1)",
+            "Odyssey Adventure: Level 2 (1)",
+            "Odyssey Adventure: Level 3 (1)",
+            "Odyssey Adventure: Level 4 (1)",
+            "Odyssey Adventure: Level 5 (1)",
+            "Odyssey Adventure: Level 6 (1)",
+            "Odyssey Adventure: Level 7 (1)",
+            "Odyssey Adventure: Level 8 (1)",
+            "Odyssey Adventure: Level 9 (1)",
+            "Odyssey Adventure: Level 10 (1)",
+            "Odyssey Adventure: Level 11 (1)",
+            "Odyssey Adventure: Level 12 (1)",
+            "Odyssey Adventure: Level 13 (1)",
+            "Odyssey Adventure: Level 14 (1)",
+            "Odyssey Adventure: Level 15 (1)",
+
+            "Odyssey Adventure: Level 1 (2)",
+            "Odyssey Adventure: Level 2 (2)",
+            "Odyssey Adventure: Level 3 (2)",
+            "Odyssey Adventure: Level 4 (2)",
+            "Odyssey Adventure: Level 5 (2)",
+            "Odyssey Adventure: Level 6 (2)",
+            "Odyssey Adventure: Level 7 (2)",
+            "Odyssey Adventure: Level 8 (2)",
+            "Odyssey Adventure: Level 9 (2)",
+            "Odyssey Adventure: Level 10 (2)",
+            "Odyssey Adventure: Level 11 (2)",
+            "Odyssey Adventure: Level 12 (2)",
+            "Odyssey Adventure: Level 13 (2)",
+            "Odyssey Adventure: Level 14 (2)",
+            "Odyssey Adventure: Level 15 (2)")
 
 
 
