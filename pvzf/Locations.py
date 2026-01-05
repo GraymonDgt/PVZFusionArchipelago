@@ -212,7 +212,34 @@ NEWFUSSHOW_table = {
 
 #MINIG_table = {
 #}
+TENFLAG_table = {
+"Ten-Flag Day (1)",
+"Ten-Flag Night (1)",
+"Ten-Flag Pool (1)",
+"Ten-Flag Fog (1)",
+"Ten-Flag Roof (1)",
+"Ten-Flag Zombie Gacha (1)",
+"Ten-Flag Zombotany (1)",
+"Ten-Flag Night Disco (1)",
+"Ten-Flag Scaredy's Dream (1)",
+"Ten-Flag Plant Gacha (1)",
+"Ten-Flag Equivalent Exchange (1)",
+"Ten-Flag Multi Gacha (1)",
 
+"Ten-Flag Day (2)",
+"Ten-Flag Night (2)",
+"Ten-Flag Pool (2)",
+"Ten-Flag Fog (2)",
+"Ten-Flag Roof (2)",
+"Ten-Flag Zombie Gacha (2)",
+"Ten-Flag Zombotany (2)",
+"Ten-Flag Night Disco (2)",
+"Ten-Flag Scaredy's Dream (2)",
+"Ten-Flag Plant Gacha (2)",
+"Ten-Flag Equivalent Exchange (2)",
+"Ten-Flag Multi Gacha (2)",
+
+}
 
 
 
@@ -262,13 +289,16 @@ MINIGAME_table = {
     "True Art is an Explosion 2 (1)":122,
     "Capture the Flag (1)":123,
     "Attack on Gargantuar! 2 (1)":124,
+
     "Graveout (1)":125,
     "Graveout 2 (1)":126,
     "The Floor is Lava (1)":127,
     "Art Challenge: Wall-nut (1)":128,
     "I, Zombie (Minigame) (1)":129,
 
-
+    "Archduke's Revenge (1)":130,
+    "Beghouled 2: Botany Crush (1)":131,
+    "Nut-o-mite (1)":132,
 
     "Scaredy's Dream (2)":380,
     "Pole Vaulting Disco (2)":381,
@@ -322,10 +352,80 @@ MINIGAME_table = {
     "Art Challenge: Wall-nut (2)": 428,
     "I, Zombie (Minigame) (2)": 429,
 
+    "Archduke's Revenge (2)": 430,
+    "Beghouled 2: Botany Crush (2)": 431,
+    "Nut-o-mite (2)": 432,
+}
+
+vase_table = {
+    "Vasebreaker (1)": 200,
+    "Vasebreaker 2 (1)": 201,
+    "Chain Reaction (1)": 202,
+    "Vasebreaker (2)": 500,
+    "Vasebreaker 2 (2)": 501,
+    "Chain Reaction (2)": 502,
+}
+
+survival_table = {
+    "Survival: Day (1)": 280,
+    "Survival: Day (Hard) (1)": 281,
+    "Survival: Night (1)": 282,
+    "Survival: Night (Hard) (1)": 283,
+    "Survival: Pool (1)": 284,
+    "Survival: Pool (Hard) (1)": 285,
+    "Survival: Fog (1)": 286,
+    "Survival: Fog (Hard) (1)": 287,
+    "Survival: Roof (1)": 288,
+    "Survival: Roof (Hard) (1)": 289,
+
+    "Survival: Day (2)": 580,
+    "Survival: Day (Hard) (2)": 581,
+    "Survival: Night (2)": 582,
+    "Survival: Night (Hard) (2)": 583,
+    "Survival: Pool (2)": 584,
+    "Survival: Pool (Hard) (2)": 585,
+    "Survival: Fog (2)": 586,
+    "Survival: Fog (Hard) (2)": 587,
+    "Survival: Roof (2)": 588,
+    "Survival: Roof (Hard) (2)": 589,
 }
 
 
 
+ODYSSEY_table = {
+    "Odyssey Adventure: Level 1 (1)": 601,
+    "Odyssey Adventure: Level 2 (1)": 602,
+    "Odyssey Adventure: Level 3 (1)": 603,
+    "Odyssey Adventure: Level 4 (1)": 604,
+    "Odyssey Adventure: Level 5 (1)": 605,
+    "Odyssey Adventure: Level 6 (1)": 606,
+    "Odyssey Adventure: Level 7 (1)": 607,
+    "Odyssey Adventure: Level 8 (1)": 608,
+    "Odyssey Adventure: Level 9 (1)": 609,
+    "Odyssey Adventure: Level 10 (1)": 610,
+    "Odyssey Adventure: Level 11 (1)": 611,
+    "Odyssey Adventure: Level 12 (1)": 612,
+    "Odyssey Adventure: Level 13 (1)": 613,
+    "Odyssey Adventure: Level 14 (1)": 614,
+    "Odyssey Adventure: Level 15 (1)": 615,
+
+    "Odyssey Adventure: Level 1 (2)": 901,
+    "Odyssey Adventure: Level 2 (2)": 902,
+    "Odyssey Adventure: Level 3 (2)": 903,
+    "Odyssey Adventure: Level 4 (2)": 904,
+    "Odyssey Adventure: Level 5 (2)": 905,
+    "Odyssey Adventure: Level 6 (2)": 906,
+    "Odyssey Adventure: Level 7 (2)": 907,
+    "Odyssey Adventure: Level 8 (2)": 908,
+    "Odyssey Adventure: Level 9 (2)": 909,
+    "Odyssey Adventure: Level 10 (2)": 910,
+    "Odyssey Adventure: Level 11 (2)": 911,
+    "Odyssey Adventure: Level 12 (2)": 912,
+    "Odyssey Adventure: Level 13 (2)": 913,
+    "Odyssey Adventure: Level 14 (2)": 914,
+    "Odyssey Adventure: Level 15 (2)": 915,
+}
+
 # TODO shields, act clears
 # Correspond to 3626000 + course index * 7 + star index, then secret stars, then keys, then 100 Coin Stars
-location_table = {**DAY_table,**NIGHT_table,**POOL_table,**FOG_table,**ROOF_table,**SNOW_table,**FUSCHAL_table,**MINIGAME_table,**FUSSHOW_table}
+location_table = {**DAY_table,**NIGHT_table,**POOL_table,**FOG_table,**ROOF_table,**SNOW_table,**FUSCHAL_table,**MINIGAME_table,**FUSSHOW_table,**ODYSSEY_table,**vase_table,**survival_table}
