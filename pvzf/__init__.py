@@ -1,7 +1,7 @@
 import typing
 import os
 import json
-from .Items import (item_data_table, generic_item_data_table,traps_item_data_table,plants_item_data_table,tools_item_data_table, minigame_item_table, item_table, access_item_table, PVZFItem)
+from .Items import (item_data_table, generic_item_data_table,traps_item_data_table,plants_item_data_table,tools_item_data_table, minigame_item_table, item_table, access_item_table, endless_item_table, PVZFItem)
 from .Locations import location_table #GFZ_table, THZ_table, DSZ_table, CEZ_table,ACZ_table,RVZ_table,ERZ_table,BCZ_table,FHZ_table,PTZ_table,FFZ_table,HHZ_table,AGZ_table,ATZ_table,FFSP_table,TPSP_table,FCSP_table,CFSP_table,DWSP_table,MCSP_table,ESSP_table,BHSP_table,CCSP_table,DHSP_table,APSP_table,EXTRA_table,tokens_table,oneupcoords_table,ringmonitors_table, SRB2Location
 from .Options import pvzf_options_groups,PVZFOptions
 from .Rules import set_rules
@@ -52,15 +52,12 @@ class PVZFWorld(World):
     item_name_to_id = item_table
     location_name_to_id = location_table
 
-    #item_name_groups = {
-    #    "Zone":zones_item_data_table,
-    #    "Character":character_item_data_table,
-    #    "Match Zone":mpmatch_item_table,
-    #    "Trap":traps_item_data_table,
-    #    "Shield":other_item_table,
-    #    "Powerup":nights_item_table,
-    #    "Nights Stage":special_item_data_table
-    #}
+    item_name_groups = {
+        "Level Access":access_item_table,
+        "Plant":plants_item_data_table,
+        "Minigame":minigame_item_table,
+        "Trap":traps_item_data_table,
+    }
 
     #location_name_groups = {
     #    "Greenflower Zone":GFZ_table,
@@ -107,7 +104,7 @@ class PVZFWorld(World):
     number_of_locations: int
     filler_count: int
     star_costs: typing.Dict[str, int]
-
+    number_of_trophies = 0
     # Spoiler specific variable(s)
     star_costs_spoiler_key_maxlen = len(max([
         'First Floor Big Star Door',
@@ -118,6 +115,9 @@ class PVZFWorld(World):
         'Endless Stairs',
     ], key=len))
 
+    def pre_fill(self) -> None:
+            #self.multiworld.local_items[self.player]["Trophy"] = 1
+            pass
 
     def generate_early(self):
 
@@ -126,12 +126,19 @@ class PVZFWorld(World):
             max_locations += 18
         if self.options.challenge_sanity:
             max_locations += 24
-        if self.options.showcase_sanity:
-            max_locations += 176
+        #if self.options.showcase_sanity:
+        #    max_locations += 176
+        if self.options.vasebreaker_sanity:
+            max_locations += 6
+        if self.options.survival_sanity:
+            max_locations += 20
+
         if self.options.minigame_sanity != 0:
-            max_locations += 42
+            max_locations += 44
             if self.options.minigame_sanity == 2:
-                max_locations += 58
+                max_locations += 62
+        if self.options.adventure_odyssey or self.options.goal_type == 2:
+            max_locations+= 30
         #if not self.options.time_emblems:
         #    max_locations -= 27
         self.number_of_locations = max_locations
@@ -181,6 +188,9 @@ class PVZFWorld(World):
             else:
                 for i in range(9):
                     self.multiworld.push_precollected(self.create_item("Seed Slot"))
+            if not self.options.randomizer_mowers:
+                self.multiworld.push_precollected(self.create_item("Lawnmowers"))
+                self.multiworld.push_precollected(self.create_item("Pool Cleaners"))
 
 
             self.multiworld.itempool += [self.create_item("Night Access")]
@@ -196,19 +206,19 @@ class PVZFWorld(World):
                 self.multiworld.itempool += [self.create_item("Fusion Challenge Access")]
                 slots_to_fill -= 1
 
-            if self.options.showcase_sanity:
-                self.multiworld.itempool += [self.create_item("Fusion Showcase Day Plants")]
-                self.multiworld.itempool += [self.create_item("Fusion Showcase Night Plants")]
-                self.multiworld.itempool += [self.create_item("Fusion Showcase Pool Plants")]
-                self.multiworld.itempool += [self.create_item("Fusion Showcase Fog Plants")]
-                self.multiworld.itempool += [self.create_item("Fusion Showcase Roof Plants")]
-                slots_to_fill -= 5
+            #if self.options.showcase_sanity:
+            #    self.multiworld.itempool += [self.create_item("Fusion Showcase Day Plants")]
+            #    self.multiworld.itempool += [self.create_item("Fusion Showcase Night Plants")]
+            #    self.multiworld.itempool += [self.create_item("Fusion Showcase Pool Plants")]
+            #    self.multiworld.itempool += [self.create_item("Fusion Showcase Fog Plants")]
+            #    self.multiworld.itempool += [self.create_item("Fusion Showcase Roof Plants")]
+            #    slots_to_fill -= 5
 
             if self.options.minigame_sanity != 0:
                 short_minigames = ["Compact Planting","Newspaper War", "Matryoshka", "Pogo Party!", "Bungee Blitz", "Beghouled","Seeing Stars",
                                    "Wall-nut Billiards", "Whack a Zombie", "High Gravity", "Squash Showdown 2","Zombies VS Zombies 2",
                                    "Splash and Clash", "Melon Ninja", "Eclipse", "Wall-nut Bowling","Big Trouble Little Zombie",
-                                   "True Art is an Explosion 2", "Graveout", "The Floor is Lava","Art Challenge: Wall-nut"]
+                                   "True Art is an Explosion 2", "Graveout", "The Floor is Lava","Art Challenge: Wall-nut","Beghouled 2: Botany Crush"]
                 for minigame in minigame_item_table.keys():
 
                     if self.options.minigame_sanity == 1:
@@ -223,6 +233,21 @@ class PVZFWorld(World):
 
                     self.multiworld.itempool += [self.create_item(minigame)]
                     slots_to_fill -= 1
+
+            if self.options.vasebreaker_sanity:
+                self.multiworld.itempool += [self.create_item("Vasebreaker Access")]
+                slots_to_fill -= 1
+
+
+            if self.options.survival_sanity:
+                self.multiworld.itempool += [self.create_item("Survival Day")]
+                self.multiworld.itempool += [self.create_item("Survival Night")]
+                self.multiworld.itempool += [self.create_item("Survival Pool")]
+                self.multiworld.itempool += [self.create_item("Survival Fog")]
+                self.multiworld.itempool += [self.create_item("Survival Roof")]
+                for i in endless_item_table:
+                    self.multiworld.itempool += [self.create_item(i)]
+                slots_to_fill -= 10
 
 
             for plant in plants_item_data_table.keys():
@@ -239,8 +264,8 @@ class PVZFWorld(World):
 
                 if self.options.unique_preset == 2:
                     valid_keys = ["Cattail Girl", "Swordmaster Starfruit", "Nyan Squash", "Burger Blaster",
-                                  "Queen Endoflame", "Coldsnap Bean", "Amp-nion", "Sniper Pea", "Chrysanctum",
-                                  "Icetip Lily", "Pearmafrost", "Doubleblast Passionfruit"]
+                                  "Queen Endoflame", "Coldsnap Bean", "Amp-nion", "Snipea", "Chrysanctum",
+                                  "Icetip Lily", "Pearmafrost", "Doubleblast Passionfruit","Lucky Blover","Diamond Imitater"]
                     if plant in valid_keys:
                         continue
 
@@ -250,30 +275,66 @@ class PVZFWorld(World):
                     if plant in valid_keys:
                         continue
 
+                if not (self.options.adventure_odyssey or self.options.goal_type == 2):#only add these if odyssey mode is enabled
+                    valid_keys = ["Snipea","Queen Endoflame"]
+                    if plant in valid_keys:
+                        continue
+                #if (no odyssey modes enabled) then disable snipea and queen endoflame
+
+
                 self.multiworld.itempool += [self.create_item(plant)]
                 slots_to_fill -=1
 
 
+            if self.options.adventure_odyssey or self.options.goal_type == 2:#seperate for when odyssey minigames can be included seperartely
+                self.multiworld.itempool += [self.create_item("Odyssey Key")]
+                slots_to_fill -=1
 
-
-
-
+            if self.options.adventure_odyssey or self.options.goal_type == 2:
+                for i in range(15):
+                    self.multiworld.itempool += [self.create_item("Progressive Odyssey Adventure")]
+                    slots_to_fill -=1
 
 
             for item in tools_item_data_table.keys():
+                if item == "Lawnmowers" or item == "Pool Cleaners":
+                    if self.options.randomizer_mowers:
+                        self.multiworld.itempool += [self.create_item(item)]
+                        slots_to_fill -= 1
+                        continue
+                    else:
+                        continue
                 self.multiworld.itempool += [self.create_item(item)]
                 slots_to_fill -=1
+
+
+
+
+            if self.options.goal_type == 3:
+                if self.options.trophy_number > slots_to_fill:
+                    num_trophies = slots_to_fill
+                else:
+                    num_trophies = self.options.trophy_number
+                for i in range(num_trophies):
+                    self.multiworld.itempool += [self.create_item("Trophy")]
+                    slots_to_fill -= 1
+                self.number_of_trophies = int(num_trophies * (self.options.trophy_percentage/100))
+
+
+
 
             if slots_to_fill!= 0:
                 trap_slots = int(slots_to_fill*self.options.trap_percentage/100)
                 while trap_slots != 0:
-                    trapnum = random.randrange(11)
+                    trapnum = random.randrange(15)
                     if trapnum<4:
                         self.multiworld.itempool += [self.create_item("10x Game Speed")]#4
                     elif trapnum<7:
                         self.multiworld.itempool += [self.create_item("Rough Economy")]
                     elif trapnum<11:
                         self.multiworld.itempool += [self.create_item("The Fog is Coming")]
+                    elif trapnum<15:
+                        self.multiworld.itempool += [self.create_item("Zombie Meteor")]
                     else:
                         self.multiworld.itempool += [self.create_item("Destroy Everything")]
                     trap_slots-=1
@@ -310,7 +371,8 @@ class PVZFWorld(World):
             "CompletionType": self.options.goal_type.value,
             "RingLink": self.options.ring_link.value,
             "DeathLink": self.options.death_link.value,
-            "AdventureExtra": self.options.adventure_extra.value
+            "AdventureExtra": self.options.adventure_extra.value,
+            "GoalTrophies":self.number_of_trophies
             #"CompletionType": self.options.completion_type.value,
         }
 
