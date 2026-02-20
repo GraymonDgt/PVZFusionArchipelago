@@ -12,40 +12,31 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppInterop.Common">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppInterop.Runtime">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\net6\MelonLoader.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.InputModule">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.InputModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\Desktop\PvZF.3.0.1.Multi-lang.Release.1.By.Blooms.hotfix\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\PvZF.3.3.1.Multi-lang.Release.1.By.Blooms\Game Files\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

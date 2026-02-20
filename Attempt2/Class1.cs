@@ -1,11 +1,4 @@
 ﻿
-
-
-
-
-
-
-
 using Archipelago;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Enums;
@@ -52,7 +45,7 @@ namespace PVZFusionArchipelago
         public static int currentPlayerSlot;
         public static bool[] unlockedArray = new bool[maxItems];
         public static bool[] checkedArray = new bool[maxLocations];
-
+        public static bool negativeSun = false;
 
         const string page1 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/Pages/Page1/";
         const string page2 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/ColorfulCards/Page1/";
@@ -2379,8 +2372,20 @@ namespace PVZFusionArchipelago
                                 int amount = data.Value<int>("amount");
 
                                 prevSun = (intValue/10) + (amount);
-                                field.SetValue(boardComp, intValue + amount*10);
-                               
+                            if (!negativeSun)//lazy ahh programming
+                            {
+                                if (prevSun < 0)
+                                {
+                                    prevSun = 0;
+                                    field.SetValue(boardComp, 0);
+                                }
+                                else
+                                {
+                                    field.SetValue(boardComp, intValue + amount * 10);
+                                }
+                            }
+                            else { field.SetValue(boardComp, intValue + amount * 10); }
+
 
 
 
@@ -2800,7 +2805,10 @@ namespace PVZFusionArchipelago
                 {
                     adventureExtraEnabled = true;
                 }
-
+                if (arg.Key == "NegativeSun" && arg.Value.ToString() != "0")
+                {
+                    negativeSun = true;
+                }
                 if (arg.Key == "GoalTrophies")
                 {
                     trophiesForGoal = System.Convert.ToInt32(arg.Value.ToString());
