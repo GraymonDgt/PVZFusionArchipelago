@@ -1,6 +1,6 @@
 import typing
 from dataclasses import dataclass
-from Options import DefaultOnToggle, Range, Toggle, DeathLink, Choice, PerGameCommonOptions, OptionSet, OptionGroup, OptionList
+from Options import DefaultOnToggle, Range, Toggle, DeathLink, Choice, PerGameCommonOptions, OptionSet, OptionGroup, OptionList, OptionCounter
 
 
 
@@ -15,6 +15,7 @@ class CompletionType(Choice):
     option_odyssey_adventure = 2
     option_trophy_hunt = 3
     default = 0
+    display_name = "Victory Condition"
     #Odyssey Adventure - Complete Odyssey Adventure (not implemented)
     #Level Percentage - complete the specified percentage of levels (not implemented)
     #Trophy Collectathon - find the specified number of trophies
@@ -47,6 +48,7 @@ class AdventureExtra(Choice):
     option_shuffle_plants = 1
     option_on = 2
     default = 2
+    display_name = "Enable Adventure Extra"
 
 class FusionChallengeSanity(Toggle):
     """Adds the 12 fusion challenge levels as an item/locations"""
@@ -61,15 +63,16 @@ class TenFlagSanity(Toggle):
     display_name = "Enable Ten-flag challenges"
 
 class MinigameSanity(Choice):
-    """Short: Adds 22 shorter 2-flag Minigames as items/locations
-    All: Adds all 50 normal mini-games as items/locations"""
+    """Short: Adds 23 shorter 2-flag Minigames as items/locations
+    All: Adds all 55 normal mini-games as items/locations"""
     option_off = 0
     option_short = 1
     option_all = 2
     default = 0
+    display_name = "Enable Mini-games"
 
 class VasebreakerSanity(Toggle):
-    """Adds the 3 vasebreaker levels as an item/locations"""
+    """Adds the 6 vasebreaker levels as an item/locations"""
     display_name = "Enable Vasebreaker"
 
 
@@ -84,14 +87,25 @@ class AdventureOdyssey(Toggle):
     display_name = "Enable Adventure Odyssey"
 
     #display_name = "Enable Mini-games"
+class OdysseyMinigames(Choice):
+    """Short - Adds 14 shorter Odyssey mini-games as items/locations
+    All - Adds all 40 Odyssey mini-games as items/locations"""
+    option_off = 0
+    option_short = 1
+    option_all = 2
+    default = 0
+    display_name = "Enable Odyssey Mini-games"
+
+
+
 
 class SeedSlots(DefaultOnToggle):
     """Randomize seed slots"""
-    display_name = "Seed Slots"
+    display_name = "Randomize Seed Slots"
 
 class LawnCleaners(Toggle):
     """Randomize lawnmowers/pool cleaners"""
-    display_name = "Lawnmowers"
+    display_name = "Randomize Lawnmowers"
 
 class TrapPercentage(Range):
     """Percentage of filler items to replace with traps"""
@@ -110,6 +124,40 @@ class LogicDifficulty(Choice):
     option_normal = 1
     #option_hard = 2
     default = 1
+    display_name = "Logic Difficulty"
+
+class TrapWeights(OptionCounter):
+    """
+    Determines the ratio of each trap
+    """
+    default = {
+        "10x Game Speed": 10,
+        "Rough Economy": 10,
+        "The Fog is Coming": 10,
+        "Zombie Meteor": 10,
+        #"Conveyor Belt Trap":10,
+        "Destroy Everything": 0,
+        'Grave Danger':10,
+        'Mystery Box Ambush': 10,
+        'Extra Flag': 10
+
+    }
+    display_name = "Trap Weights"
+
+class FillerWeights(OptionCounter):
+    """
+    Determines the ratio of each filler item
+    """
+    default = {
+        "Bonus Sun": 16,
+        "Zen Garden Plant": 8,
+        "Diamond": 4,
+        "Star Meteor": 10,
+        "Free Sunflowers": 10,
+        "Refreshed Cooldowns": 10,
+    }
+    display_name = "Filler Weights"
+
 
 
 
@@ -118,21 +166,30 @@ class RingLink(Choice):
     Normal - Sun resets locally between levels"""
     option_off = 0
     option_normal = 1
+    display_name = "Ring Link"
+
+class NegativeSun(Toggle):
+    """Allow sun to go negative from ringlink
+    Why do I have negative 50 thousand sun? """
+    display_name = "Allow Negative Sun From Ring Link"
 
 class StartingPlantBlacklist(OptionList):
     """Blacklist for starting plants
-     valid keys: {"Peashooter","Fume-shroom","Scaredy-shroom","Threepeater","Cactus","Starfruit","Cabbage-pult","Kernel-pult","Spruce Sharpshooter"}"""
+     valid keys: {"Peashooter","Fume-shroom","Scaredy-shroom","Threepeater","Cactus","Starfruit","Cabbage-pult","Kernel-pult","Spruce Sharpshooter","Chomper"}"""
     display_name = "Starting Plant Blacklist"
-    valid_keys = {"Peashooter","Fume-shroom","Scaredy-shroom","Threepeater","Cactus","Starfruit","Cabbage-pult","Kernel-pult","Spruce Sharpshooter"}
+    valid_keys = {"Peashooter","Fume-shroom","Scaredy-shroom","Threepeater","Cactus","Starfruit","Cabbage-pult","Kernel-pult","Spruce Sharpshooter","Chomper"}
 
 class UniquePlantsPreset(Choice):
     """On - all unique plants are in the pool (these tend to be very overpowered so use at your own risk)
     Exclude Overpowered - removes unique plants that are considered overpowered
+    Adventure Friendly - Curated list to ensure decent item pool when only playing adventure
     None - removes all unique plants from the pool
     """
     option_on = 0
     option_exclude_overpowered = 1
-    option_none = 2
+    option_adventure_friendly = 2
+    option_none = 3
+    default = 1
 
 class UniquePlantBlacklist(OptionList):
     """Blacklist for unique plants, keys are by almanac entry
@@ -150,7 +207,8 @@ OptionGroup("Location Toggles", [
         MinigameSanity,
         VasebreakerSanity,
         SurvivalSanity,
-        AdventureOdyssey
+        AdventureOdyssey,
+        OdysseyMinigames
 #        StartingCharacter,
 #        OneUpSanity,
 #        SuperRingSanity,
@@ -164,7 +222,10 @@ OptionGroup("Meta Options", [
     LawnCleaners,
     TrapPercentage,
     LogicDifficulty,
+    FillerWeights,
+    TrapWeights,
     RingLink,
+    NegativeSun,
     UniquePlantsPreset,
     StartingPlantBlacklist,
     UniquePlantBlacklist
@@ -185,11 +246,15 @@ class PVZFOptions(PerGameCommonOptions):
     vasebreaker_sanity:VasebreakerSanity
     survival_sanity:SurvivalSanity
     adventure_odyssey: AdventureOdyssey
+    odyssey_minigames: OdysseyMinigames
     randomize_seed_slots: SeedSlots
     randomizer_mowers: LawnCleaners
     trap_percentage: TrapPercentage
     logic_difficulty: LogicDifficulty
+    filler_weights: FillerWeights
+    trap_weights: TrapWeights
     ring_link: RingLink
+    negative_sun: NegativeSun
     death_link: DeathLink
     unique_preset: UniquePlantsPreset
     unique_blacklist: UniquePlantBlacklist
