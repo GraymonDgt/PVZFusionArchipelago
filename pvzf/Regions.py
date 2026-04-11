@@ -109,7 +109,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
     if options.challenge_sanity:
         regChal = create_region("Fusion Challenges", player, world)
         create_locs(regChal,
-            "Fusion Challenge: Explod-o-shooter (1)",
+            "Fusion Challenge: Explode-o-shooter (1)",
             "Fusion Challenge: Chompzilla (1)",
             "Fusion Challenge: Charm-shroom (1)",
             "Fusion Challenge: Doomspike-shroom (1)",
@@ -123,7 +123,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
             "Fusion Challenge: Jicamagic (1)",
 
 
-            "Fusion Challenge: Explod-o-shooter (2)",
+            "Fusion Challenge: Explode-o-shooter (2)",
             "Fusion Challenge: Chompzilla (2)",
             "Fusion Challenge: Charm-shroom (2)",
             "Fusion Challenge: Doomspike-shroom (2)",
@@ -188,6 +188,8 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "The Floor is Lava (1)",
                     "Art Challenge: Wall-nut (1)",
                     "Beghouled 2: Botany Crush (1)",
+                    "Lava Land (1)",
+
 
                     "Compact Planting (2)",
                     "Newspaper War (2)",
@@ -211,6 +213,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "The Floor is Lava (2)",
                     "Art Challenge: Wall-nut (2)",
                     "Beghouled 2: Botany Crush (2)",
+                    "Lava Land (2)"
                     )
 
         if options.minigame_sanity>1:
@@ -218,7 +221,7 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "Scaredy's Dream (1)",
                     "Pole Vaulting Disco (1)",
                     "Compact Planting (1)",
-                    "D-Day (1)",
+                    "Z-Day (1)",
                     "Columns Like You See 'Em (1)",
                     "Mirrors Like You See 'Em (1)",
                     "It's Raining Seeds (1)",
@@ -247,10 +250,11 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "I, Zombie (Minigame) (1)",
                     "Archduke's Revenge (1)",
                     "Nut-o-mite (1)",
+                    "Nutsweeper (1)",
 
                     "Scaredy's Dream (2)",
                     "Pole Vaulting Disco (2)",
-                    "D-Day (2)",
+                    "Z-Day (2)",
                     "Columns Like You See 'Em (2)",
                     "Mirrors Like You See 'Em (2)",
                     "It's Raining Seeds (2)",
@@ -279,8 +283,8 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
                     "I, Zombie (Minigame) (2)",
                     "Archduke's Revenge (2)",
 
-                    "Nut-o-mite (2)"
-
+                    "Nut-o-mite (2)",
+                    "Nutsweeper (2)"
                         )
 
 
@@ -289,15 +293,27 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
         create_locs(regVB,"Vasebreaker (1)",
     "Vasebreaker 2 (1)",
     "Chain Reaction (1)",
+    "The Vase Less Travelled by (1)",
+    "De-vase-tating! (1)",
+    "Potluck (1)",
+
+
+
+
     "Vasebreaker (2)",
     "Vasebreaker 2 (2)",
-    "Chain Reaction (2)")
+    "Chain Reaction (2)",
+    "The Vase Less Travelled by (2)",
+    "De-vase-tating! (2)",
+    "Potluck (2)"
+
+                    )
 
 
     regSu = create_region("Survival",player, world)
     if options.survival_sanity:
-        create_locs(regVB,
-                    "Survival: Day (1)",
+        create_locs(regSu,
+        "Survival: Day (1)",
         "Survival: Day (Hard) (1)",
         "Survival: Night (1)",
         "Survival: Night (Hard) (1)",
@@ -358,6 +374,123 @@ def create_regions(world: MultiWorld, options: PVZFOptions, player: int):
             "Odyssey Adventure: Level 13 (2)",
             "Odyssey Adventure: Level 14 (2)",
             "Odyssey Adventure: Level 15 (2)")
+
+
+    if options.odyssey_minigames!=0:
+        regOddMini = create_region("Odyssey Minigames", player, world)
+        create_locs(regOddMini,
+                    "The Gods 1: Trial of Ascension (1)",
+                    "The Gods 2: Trial of Rebirth (1)",
+                    "The Gods 3: Trial of Endurance (1)",
+                    "The Gods 4: Trial of Valor (1)",
+                    "Solar-nut Bowling (1)",
+                    "The Battle Zombies (1)",
+                    "Solitary Spear (1)",
+                    "The Gods 5: Trial of Radiance (1)",
+                    "Whack-a-Zombie 2 (1)",
+                    "The Gods 7: Trial Resurgence (1)",
+                    "Barley Battle! (1)",
+                    "The Gods 6: Trial of Precision (1)",
+                    "Zombies vs Zombies: Odyssey (1)",
+                    "The Gods 8: Trial of Acclimation (1)",
+
+                    "The Gods 1: Trial of Ascension (2)",
+                    "The Gods 2: Trial of Rebirth (2)",
+                    "The Gods 3: Trial of Endurance (2)",
+                    "The Gods 4: Trial of Valor (2)",
+                    "Solar-nut Bowling (2)",
+                    "The Battle Zombies (2)",
+                    "Solitary Spear (2)",
+                    "The Gods 5: Trial of Radiance (2)",
+                    "Whack-a-Zombie 2 (2)",
+                    "The Gods 7: Trial Resurgence (2)",
+                    "Barley Battle! (2)",
+                    "The Gods 6: Trial of Precision (2)",
+                    "Zombies vs Zombies: Odyssey (2)",
+                    "The Gods 8: Trial of Acclimation (2)",
+                    )
+
+        if options.odyssey_minigames>1:
+            create_locs(regOddMini,
+                        "Odyssey: Last Stand (1)",
+                        "Ten-Flag The Gods 1 (1)",
+                        "Ten-Flag The Gods 2 (1)",
+                        "Ten-Flag The Gods 3 (1)",
+                        "Odyssey: Rush Mode (1)",
+                        "Gacha Battle (1)",
+                        "Odyssey: Randomized (1)",
+                        "Ten-Flag Odyssey Gacha (1)",
+                        "Odyssey Gacha: 12-Lane (1)",
+                        "Ten-Flag Equivalent Exchange 2 (1)",
+                        "Ten-Flag Super Conveyor Belt (1)",
+                        "Odyssey Gacha: Imitater (1)",
+                        "Odyssey Gacha: Unleashed (1)",
+                        "Barley Battle 2! Fission (1)",
+                        "Odyssey Gacha: Fusion Mode (1)",
+                        "Odyssey Gacha: Fusion Mode 2 (1)",
+                        "Odyssey Gacha: Upgrade (1)",
+                        "Odyssey Gacha: Blessings and Curses (1)",
+                        "Odyssey Gacha: Gashapon (1)",
+                        "Odyssey Gacha: Treasure Hunt (1)",
+                        "Odyssey Gacha: Diamond Imitater (1)",
+                        "Odyssey Gacha: Rerolled (1)",
+                        "Purgatory Gacha: Chibi vs. Goliath (1)",
+                        "Fusion Gacha: Chaos (1)",
+                        "Advanced Gacha: Chaos (1)",
+                        "Purgatory Gacha: Chaos (1)",
+
+
+                        "Odyssey: Last Stand (2)",
+                        "Ten-Flag The Gods 1 (2)",
+                        "Ten-Flag The Gods 2 (2)",
+                        "Ten-Flag The Gods 3 (2)",
+                        "Odyssey: Rush Mode (2)",
+                        "Gacha Battle (2)",
+                        "Odyssey: Randomized (2)",
+                        "Ten-Flag Odyssey Gacha (2)",
+                        "Odyssey Gacha: 12-Lane (2)",
+                        "Ten-Flag Equivalent Exchange 2 (2)",
+                        "Ten-Flag Super Conveyor Belt (2)",
+                        "Odyssey Gacha: Imitater (2)",
+                        "Odyssey Gacha: Unleashed (2)",
+                        "Barley Battle 2! Fission (2)",
+                        "Odyssey Gacha: Fusion Mode (2)",
+                        "Odyssey Gacha: Fusion Mode 2 (2)",
+                        "Odyssey Gacha: Upgrade (2)",
+                        "Odyssey Gacha: Blessings and Curses (2)",
+                        "Odyssey Gacha: Gashapon (2)",
+                        "Odyssey Gacha: Treasure Hunt (2)",
+                        "Odyssey Gacha: Diamond Imitater (2)",
+                        "Odyssey Gacha: Rerolled (2)",
+                        "Purgatory Gacha: Chibi vs. Goliath (2)",
+                        "Fusion Gacha: Chaos (2)",
+                        "Advanced Gacha: Chaos (2)",
+                        "Purgatory Gacha: Chaos (2)",
+
+                        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
