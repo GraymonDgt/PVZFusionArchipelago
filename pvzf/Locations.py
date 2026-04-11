@@ -145,7 +145,7 @@ SNOW_table = {
 }
 
 FUSCHAL_table = {
-    "Fusion Challenge: Explod-o-shooter (1)": 55,
+    "Fusion Challenge: Explode-o-shooter (1)": 55,
     "Fusion Challenge: Chompzilla (1)": 56,
     "Fusion Challenge: Charm-shroom (1)": 57,
     "Fusion Challenge: Doomspike-shroom (1)": 58,
@@ -158,7 +158,7 @@ FUSCHAL_table = {
     "Fusion Challenge: Spruce Supershooter (1)": 65,
     "Fusion Challenge: Jicamagic (1)": 66,
 
-    "Fusion Challenge: Explod-o-shooter (2)": 355,
+    "Fusion Challenge: Explode-o-shooter (2)": 355,
     "Fusion Challenge: Chompzilla (2)": 356,
     "Fusion Challenge: Charm-shroom (2)": 357,
     "Fusion Challenge: Doomspike-shroom (2)": 358,
@@ -248,7 +248,7 @@ MINIGAME_table = {
     "Pole Vaulting Disco (1)":81,
     "Compact Planting (1)":82,
     "Newspaper War (1)":83,
-    "D-Day (1)":84,
+    "Z-Day (1)":84,
     "Matryoshka (1)":85,
     "Columns Like You See 'Em (1)":86,
     "Mirrors Like You See 'Em (1)":87,
@@ -300,11 +300,15 @@ MINIGAME_table = {
     "Beghouled 2: Botany Crush (1)":131,
     "Nut-o-mite (1)":132,
 
+    "Lava Land (1)": 133,
+    "Nutsweeper (1)": 134,
+
+
     "Scaredy's Dream (2)":380,
     "Pole Vaulting Disco (2)":381,
     "Compact Planting (2)":382,
     "Newspaper War (2)":383,
-    "D-Day (2)":384,
+    "Z-Day (2)":384,
     "Matryoshka (2)":385,
     "Columns Like You See 'Em (2)":386,
     "Mirrors Like You See 'Em (2)":387,
@@ -355,15 +359,27 @@ MINIGAME_table = {
     "Archduke's Revenge (2)": 430,
     "Beghouled 2: Botany Crush (2)": 431,
     "Nut-o-mite (2)": 432,
+
+    "Lava Land (2)": 433,
+    "Nutsweeper (2)": 434,
+
 }
 
 vase_table = {
     "Vasebreaker (1)": 200,
     "Vasebreaker 2 (1)": 201,
     "Chain Reaction (1)": 202,
+    "The Vase Less Travelled by (1)":203,
+    "De-vase-tating! (1)":204,
+    "Potluck (1)":205,
+
+
     "Vasebreaker (2)": 500,
     "Vasebreaker 2 (2)": 501,
     "Chain Reaction (2)": 502,
+    "The Vase Less Travelled by (2)": 503,
+    "De-vase-tating! (2)": 504,
+    "Potluck (2)": 505,
 }
 
 survival_table = {
@@ -426,6 +442,91 @@ ODYSSEY_table = {
     "Odyssey Adventure: Level 15 (2)": 915,
 }
 
+ODYSSEY_minigame_table = {
+"Odyssey: Last Stand (1)":650,
+"The Gods 1: Trial of Ascension (1)":651,
+"The Gods 2: Trial of Rebirth (1)":652,
+"The Gods 3: Trial of Endurance (1)":653,
+"The Gods 4: Trial of Valor (1)":654,
+"Solar-nut Bowling (1)":655,
+"The Battle Zombies (1)":656,
+"Ten-Flag The Gods 1 (1)":657,
+"Ten-Flag The Gods 2 (1)":658,
+"Ten-Flag The Gods 3 (1)":659,
+"Solitary Spear (1)":660,
+"The Gods 5: Trial of Radiance (1)":661,
+"Whack-a-Zombie 2 (1)":662,
+"Odyssey: Rush Mode (1)":663,
+"The Gods 7: Trial Resurgence (1)":664,
+"Gacha Battle (1)":665,
+"Odyssey: Randomized (1)":666,
+"Ten-Flag Odyssey Gacha (1)":667,
+"Odyssey Gacha: 12-Lane (1)":668,
+"Ten-Flag Equivalent Exchange 2 (1)":669,
+"Ten-Flag Super Conveyor Belt (1)":670,
+"Barley Battle! (1)":671,
+"Odyssey Gacha: Imitater (1)":672,
+"Odyssey Gacha: Unleashed (1)":673,
+"Barley Battle 2! Fission (1)":674,
+"Odyssey Gacha: Fusion Mode (1)":675,
+"Odyssey Gacha: Fusion Mode 2 (1)":676,
+"Odyssey Gacha: Upgrade (1)":677,
+"Odyssey Gacha: Blessings and Curses (1)":678,
+"The Gods 6: Trial of Precision (1)":679,
+"Zombies vs Zombies: Odyssey (1)":680,
+"Odyssey Gacha: Gashapon (1)":681,
+"Odyssey Gacha: Treasure Hunt (1)":682,
+"Odyssey Gacha: Diamond Imitater (1)":683,
+"Odyssey Gacha: Rerolled (1)":684,
+"Purgatory Gacha: Chibi vs. Goliath (1)":685,
+"The Gods 8: Trial of Acclimation (1)":686,
+"Fusion Gacha: Chaos (1)":687,
+"Advanced Gacha: Chaos (1)":688,
+"Purgatory Gacha: Chaos (1)":689,
+
+
+"Odyssey: Last Stand (2)":950,
+"The Gods 1: Trial of Ascension (2)":951,
+"The Gods 2: Trial of Rebirth (2)":952,
+"The Gods 3: Trial of Endurance (2)":953,
+"The Gods 4: Trial of Valor (2)":954,
+"Solar-nut Bowling (2)":955,
+"The Battle Zombies (2)":956,
+"Ten-Flag The Gods 1 (2)":957,
+"Ten-Flag The Gods 2 (2)":958,
+"Ten-Flag The Gods 3 (2)":959,
+"Solitary Spear (2)":960,
+"The Gods 5: Trial of Radiance (2)":961,
+"Whack-a-Zombie 2 (2)":962,
+"Odyssey: Rush Mode (2)":963,
+"The Gods 7: Trial Resurgence (2)":964,
+"Gacha Battle (2)":965,
+"Odyssey: Randomized (2)":966,
+"Ten-Flag Odyssey Gacha (2)":967,
+"Odyssey Gacha: 12-Lane (2)":968,
+"Ten-Flag Equivalent Exchange 2 (2)":969,
+"Ten-Flag Super Conveyor Belt (2)":970,
+"Barley Battle! (2)":971,
+"Odyssey Gacha: Imitater (2)":972,
+"Odyssey Gacha: Unleashed (2)":973,
+"Barley Battle 2! Fission (2)":974,
+"Odyssey Gacha: Fusion Mode (2)":975,
+"Odyssey Gacha: Fusion Mode 2 (2)":976,
+"Odyssey Gacha: Upgrade (2)":977,
+"Odyssey Gacha: Blessings and Curses (2)":978,
+"The Gods 6: Trial of Precision (2)":979,
+"Zombies vs Zombies: Odyssey (2)":980,
+"Odyssey Gacha: Gashapon (2)":981,
+"Odyssey Gacha: Treasure Hunt (2)":982,
+"Odyssey Gacha: Diamond Imitater (2)":983,
+"Odyssey Gacha: Rerolled (2)":984,
+"Purgatory Gacha: Chibi vs. Goliath (2)":985,
+"The Gods 8: Trial of Acclimation (2)":986,
+"Fusion Gacha: Chaos (2)":987,
+"Advanced Gacha: Chaos (2)":988,
+"Purgatory Gacha: Chaos (2)":989,
+}
+
 # TODO shields, act clears
 # Correspond to 3626000 + course index * 7 + star index, then secret stars, then keys, then 100 Coin Stars
-location_table = {**DAY_table,**NIGHT_table,**POOL_table,**FOG_table,**ROOF_table,**SNOW_table,**FUSCHAL_table,**MINIGAME_table,**FUSSHOW_table,**ODYSSEY_table,**vase_table,**survival_table}
+location_table = {**DAY_table,**NIGHT_table,**POOL_table,**FOG_table,**ROOF_table,**SNOW_table,**FUSCHAL_table,**MINIGAME_table,**FUSSHOW_table,**ODYSSEY_table,**vase_table,**survival_table,**ODYSSEY_minigame_table}
