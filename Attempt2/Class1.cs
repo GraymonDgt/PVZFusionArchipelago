@@ -36,7 +36,7 @@ namespace PVZFusionArchipelago
 {
     public class Class1 : MelonMod
     {
-        public const int maxItems = 280; // holy shit good programming practice?\
+        public const int maxItems = 350; // holy shit good programming practice?\
         public const int maxLocations = 999;
         public int seedSlots = 0;
         public int trophyCount = 0;
@@ -47,8 +47,8 @@ namespace PVZFusionArchipelago
         public static bool[] checkedArray = new bool[maxLocations];
         public static bool negativeSun = false;
 
-        const string page1 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/Pages/Page1/";
-        const string page2 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/ColorfulCards/Page1/";
+        const string page1 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/CardPagesContainer/NormalCards/Page1/";
+        const string page2 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/CardPagesContainer/ColorfulCards/Page1/";
   
         const string advanturePage1 = "ChallengeMenu(Clone)/Levels/PageAdvantureLevel/Pages/Page1/";
         const string advanturePage2 = "ChallengeMenu(Clone)/Levels/PageAdvantureLevel/Pages/Page2/";
@@ -65,12 +65,19 @@ namespace PVZFusionArchipelago
 
         const string odysseyadvanturePage1 = "TravelAdvantureMenu(Clone)/Levels/PageUltimateExprience/Page1/";
 
+
+        const string odysseyminigamePage1 = "Canvas/TravelGameMenu(Clone)/Levels/PageNormalTravel/Page1";
+        const string odysseyminigamePage2 = "Canvas/TravelGameMenu(Clone)/Levels/PageNormalTravel/Page2";
+        const string odysseyminigamePage3 = "Canvas/TravelGameMenu(Clone)/Levels/PageNormalTravel/Page3";
+
         const string showcasePage = "ExploreMenu(Clone)/Level/Line1/";
         const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
         const string vasePage = "ChallengeMenu(Clone)/Levels/PageScaryPot/Pages/Page1/";
         const string slotPath = "InGameUI(Clone)/SeedBank/SeedGroup/";
         public int ringLinkMode = 0;
         public int deathLinkMode = 0;
+        public static bool resetCD = false;
+        public static float cdResetTime = 0.0F;
         public bool adventureExtraEnabled = false;
         public static int prevSun;
         public static bool sunExists = false;
@@ -460,11 +467,25 @@ namespace PVZFusionArchipelago
                 { HideTargetObjectChildren(canvasupGl, page2 + "LuckyBlover"); }
                 if (unlockedArray[68] == false)
                 { HideTargetObjectChildren(canvasupGl, page2 + "DiamondImitater"); }
+                if (unlockedArray[69] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "BucketPlant"); }
+                if (unlockedArray[84] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "HelmetPlant"); }
+                if (unlockedArray[85] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "Apple"); }
+                if (unlockedArray[86] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "Firecracker"); }
+                if (unlockedArray[87] == false)
+                { HideTargetObjectChildren(canvasupGl, page2 + "GoldScaryPot"); }
+
+
             } 
 
 
             if (unlockedArray[70] == false)//shovel
-            { HideTargetObject("Canvas", "InGameUI(Clone)/ShovelBank");}
+            { HideTargetObject("Canvas", "InGameUI(Clone)/ShovelBank");
+                HideTargetObject("CanvasUp", "InGameUI(Clone)/ShovelBank");
+            }
 
 
 
@@ -472,6 +493,26 @@ namespace PVZFusionArchipelago
                 { boardGl = GameObject.Find("Board"); }
             if (boardGl != null)
             {
+                if (resetCD)
+                {
+
+
+                    cdResetTime -= Time.deltaTime;
+
+                    if (cdResetTime < 0) { 
+
+
+                    Board component = boardGl.GetComponent<Board>();
+                    var type = component.GetIl2CppType();
+                    var field = type.GetField("freeCD");
+                    field.SetValue(component, false);
+
+                    resetCD = false;
+                }
+                }
+
+
+
                 if (unlockedArray[71] == false)//fertilizer
                 {
                     var fertilizerTransform = boardGl.transform.Find("Ferilize(Clone)");
@@ -501,6 +542,24 @@ namespace PVZFusionArchipelago
                     lawnmower = boardGl.transform.Find("LawnMowerPrefab_5");
                     if (lawnmower != null)
                     { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_6");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_7");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_8");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_9");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_10");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
+                    lawnmower = boardGl.transform.Find("LawnMowerPrefab_11");
+                    if (lawnmower != null)
+                    { GameObject.Destroy(lawnmower.gameObject); }
                 }
                 if (unlockedArray[83] == false)//pool cleaners
                 {
@@ -514,6 +573,18 @@ namespace PVZFusionArchipelago
                     if (poolCleaner != null)
                     { GameObject.Destroy(poolCleaner.gameObject); }
                     poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_3");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                    poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_4");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                    poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_5");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                    poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_6");
+                    if (poolCleaner != null)
+                    { GameObject.Destroy(poolCleaner.gameObject); }
+                    poolCleaner = boardGl.transform.Find("PoolCleanerPrefab_7");
                     if (poolCleaner != null)
                     { GameObject.Destroy(poolCleaner.gameObject); }
                 }
@@ -533,10 +604,13 @@ namespace PVZFusionArchipelago
                 if (unlockedArray[72] == false)//gloves
                 {
                     HideTargetObject("Canvas", "InGameUI(Clone)/GloveBank");
+                    HideTargetObject("CanvasUp", "InGameUI(Clone)/GloveBank");
                     HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/GloveBank");
                 }
                 if (unlockedArray[74] == false)//mallet
-                { HideTargetObject("Canvas", "InGameUI(Clone)/HammerBank"); }
+                { HideTargetObject("Canvas", "InGameUI(Clone)/HammerBank");
+                    HideTargetObject("CanvasUp", "InGameUI(Clone)/HammerBank");
+                }
 
 
                 if (unlockedArray[76] == false)//watering can
@@ -705,7 +779,7 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[65]) { HideTargetObject("Canvas", challengePage + "Lv128/Window/Trophy"); }
                 if (!checkedArray[66]) { HideTargetObject("Canvas", challengePage + "Lv162/Window/Trophy"); }
             }
-            if (unlockedArray[200] == false)
+            if (unlockedArray[249] == false)
             {
                 HideTargetObject("Canvas", "ChallengeMenu(Clone)/Levels/FirstBtns/ScaryPot");
             }
@@ -895,25 +969,32 @@ namespace PVZFusionArchipelago
             else { if (!checkedArray[126]) { HideTargetObject("Canvas", minigamePage3 + "Lv157/Window/Trophy"); } }
             if (unlockedArray[159] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv158"); }
-            else { if (!checkedArray[127]) { HideTargetObject("Canvas", minigamePage3 + "Lv158/Window/Trophy"); } }
+           
             if (unlockedArray[160] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv160"); }
-            else { if (!checkedArray[128]) { HideTargetObject("Canvas", minigamePage3 + "Lv160/Window/Trophy"); } }
+            else { if (!checkedArray[127]) { HideTargetObject("Canvas", minigamePage3 + "Lv160/Window/Trophy"); } }
             if (unlockedArray[161] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv161"); }
-            else { if (!checkedArray[129]) { HideTargetObject("Canvas", minigamePage3 + "Lv161/Window/Trophy"); } }
+            else { if (!checkedArray[128]) { HideTargetObject("Canvas", minigamePage3 + "Lv161/Window/Trophy"); } }
             if (unlockedArray[162] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv163"); }
-            else { if (!checkedArray[130]) { HideTargetObject("Canvas", minigamePage3 + "Lv163/Window/Trophy"); } }
+            else { if (!checkedArray[129]) { HideTargetObject("Canvas", minigamePage3 + "Lv163/Window/Trophy"); } }
             if (unlockedArray[163] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv164"); }
-            else { if (!checkedArray[131]) { HideTargetObject("Canvas", minigamePage3 + "Lv164/Window/Trophy"); } }
+            else { if (!checkedArray[130]) { HideTargetObject("Canvas", minigamePage3 + "Lv164/Window/Trophy"); } }
             if (unlockedArray[164] == false)
             { HideTargetObject("Canvas", minigamePage4 + "Lv133"); }
-            else { if (!checkedArray[132]) { HideTargetObject("Canvas", minigamePage4 + "Lv133/Window/Trophy"); } }
+            else { if (!checkedArray[131]) { HideTargetObject("Canvas", minigamePage4 + "Lv133/Window/Trophy"); } }
             if (unlockedArray[165] == false)
             { HideTargetObject("Canvas", minigamePage4 + "Lv166"); }
-            else { if (!checkedArray[133]) { HideTargetObject("Canvas", minigamePage4 + "Lv166/Window/Trophy"); } }
+            else { if (!checkedArray[132]) { HideTargetObject("Canvas", minigamePage4 + "Lv166/Window/Trophy"); } }
+            if (unlockedArray[166] == false)
+            { HideTargetObject("Canvas", minigamePage4 + "Lv171"); }
+            else { if (!checkedArray[133]) { HideTargetObject("Canvas", minigamePage4 + "Lv171/Window/Trophy"); } }
+            if (unlockedArray[167] == false)
+            { HideTargetObject("Canvas", minigamePage4 + "Lv178"); }
+            else { if (!checkedArray[134 ]) { HideTargetObject("Canvas", minigamePage4 + "Lv178/Window/Trophy"); } }
+
 
 
             if (canvasGl != null)
@@ -1042,15 +1123,158 @@ namespace PVZFusionArchipelago
             else { if (!checkedArray[614]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_14/Window/Trophy"); } }
             if (numOdysseyLevels < 15)
             { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_15"); }
-            else { if (!checkedArray[315]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_15/Window/Trophy"); } }
+            else { if (!checkedArray[615]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_15/Window/Trophy"); } }
+
+
+            GameObject odminipage1 = GameObject.Find(odysseyminigamePage1);
+            if (odminipage1 != null) {
+                if (unlockedArray[300] == false)
+                { HideSpecifiedTargetChild(odminipage1, 0); }
+                else { if (!checkedArray[650]) { HideSpecifiedTargetTrophy(odminipage1, 0); } }
+                if (unlockedArray[301] == false)
+                { HideSpecifiedTargetChild(odminipage1, 1); }
+                else { if (!checkedArray[651]) { HideSpecifiedTargetTrophy(odminipage1, 1); } }
+                if (unlockedArray[302] == false)
+                { HideSpecifiedTargetChild(odminipage1, 4); }
+                else { if (!checkedArray[652]) { HideSpecifiedTargetTrophy(odminipage1, 4); } }
+                if (unlockedArray[303] == false)
+                { HideSpecifiedTargetChild(odminipage1, 6); }
+                else { if (!checkedArray[653]) { HideSpecifiedTargetTrophy(odminipage1, 6); } }
+
+                if (unlockedArray[304] == false)
+                { HideSpecifiedTargetChild(odminipage1, 11); }
+                else { if (!checkedArray[654]) { HideSpecifiedTargetTrophy(odminipage1, 11); } }
+                if (unlockedArray[305] == false)
+                { HideSpecifiedTargetChild(odminipage1, 5); }
+                else { if (!checkedArray[655]) { HideSpecifiedTargetTrophy(odminipage1, 5); } }
+                if (unlockedArray[306] == false)
+                { HideSpecifiedTargetChild(odminipage1, 10); }
+                else { if (!checkedArray[656]) { HideSpecifiedTargetTrophy(odminipage1, 10); } }
+                if (unlockedArray[307] == false)
+                { HideSpecifiedTargetChild(odminipage1, 2); }
+                else { if (!checkedArray[657]) { HideSpecifiedTargetTrophy(odminipage1, 2); } }
+                if (unlockedArray[308] == false)
+                { HideSpecifiedTargetChild(odminipage1, 3); }
+                else { if (!checkedArray[658]) { HideSpecifiedTargetTrophy(odminipage1, 3); } }
+                if (unlockedArray[309] == false)
+                { HideSpecifiedTargetChild(odminipage1, 7); }
+                else { if (!checkedArray[659]) { HideSpecifiedTargetTrophy(odminipage1, 7); } }
+                if (unlockedArray[310] == false)
+                { HideSpecifiedTargetChild(odminipage1, 9); }
+                else { if (!checkedArray[660]) { HideSpecifiedTargetTrophy(odminipage1, 9); } }
+
+                if (unlockedArray[311] == false)
+                { HideSpecifiedTargetChild(odminipage1, 8); }
+
+                if (unlockedArray[312] == false)
+                { HideSpecifiedTargetChild(odminipage1, 12); }
+                else { if (!checkedArray[661]) { HideSpecifiedTargetTrophy(odminipage1, 12); } }
+                if (unlockedArray[313] == false)
+                { HideSpecifiedTargetChild(odminipage1, 13); }
+                else { if (!checkedArray[662]) { HideSpecifiedTargetTrophy(odminipage1, 13); } }
+                if (unlockedArray[314] == false)
+                { HideSpecifiedTargetChild(odminipage1, 14); }
+                else { if (!checkedArray[663]) { HideSpecifiedTargetTrophy(odminipage1, 14); } }
+                if (unlockedArray[315] == false)
+                { HideSpecifiedTargetChild(odminipage1, 15); }
+                else { if (!checkedArray[664]) { HideSpecifiedTargetTrophy(odminipage1, 15); } }
+                if (unlockedArray[316] == false)
+                { HideSpecifiedTargetChild(odminipage1, 16); }
+                else { if (!checkedArray[665]) { HideSpecifiedTargetTrophy(odminipage1, 16); } }
+                HideSpecifiedTargetChild(odminipage1, 17);
+
+
+            }
+            GameObject odminipage2 = GameObject.Find(odysseyminigamePage2);
+            if (odminipage2 != null)
+            {
+                if (unlockedArray[318] == false)
+                { HideSpecifiedTargetChild(odminipage2, 17); }
+                else { if (!checkedArray[666]) { HideSpecifiedTargetTrophy(odminipage2, 17); } }
+                if (unlockedArray[319] == false)
+                { HideSpecifiedTargetChild(odminipage2, 0); }
+                else { if (!checkedArray[667]) { HideSpecifiedTargetTrophy(odminipage2, 0); } }
+                if (unlockedArray[320] == false)
+                { HideSpecifiedTargetChild(odminipage2, 1); }
+                else { if (!checkedArray[668]) { HideSpecifiedTargetTrophy(odminipage2, 1); } }
+                if (unlockedArray[321] == false)
+                { HideSpecifiedTargetChild(odminipage2, 2); }
+                else { if (!checkedArray[669]) { HideSpecifiedTargetTrophy(odminipage2, 2); } }
+                if (unlockedArray[322] == false)
+                { HideSpecifiedTargetChild(odminipage2, 3); }
+                else { if (!checkedArray[670]) { HideSpecifiedTargetTrophy(odminipage2, 3); } }
+                if (unlockedArray[323] == false)
+                { HideSpecifiedTargetChild(odminipage2, 4); }
+                else { if (!checkedArray[671]) { HideSpecifiedTargetTrophy(odminipage2, 4); } }
+                if (unlockedArray[324] == false)
+                { HideSpecifiedTargetChild(odminipage2, 6); }
+                if (unlockedArray[325] == false)
+                { HideSpecifiedTargetChild(odminipage2, 7); }
+                else { if (!checkedArray[672]) { HideSpecifiedTargetTrophy(odminipage2, 7); } }
+                if (unlockedArray[326] == false)
+                { HideSpecifiedTargetChild(odminipage2, 8); }
+                else { if (!checkedArray[673]) { HideSpecifiedTargetTrophy(odminipage2, 8); } }
+                if (unlockedArray[327] == false)
+                { HideSpecifiedTargetChild(odminipage2, 5); }
+                else { if (!checkedArray[674]) { HideSpecifiedTargetTrophy(odminipage2, 5); } }
+                if (unlockedArray[328] == false)
+                { HideSpecifiedTargetChild(odminipage2, 9); }
+                else { if (!checkedArray[675]) { HideSpecifiedTargetTrophy(odminipage2, 9); } }
+                if (unlockedArray[329] == false)
+                { HideSpecifiedTargetChild(odminipage2, 10); }
+                else { if (!checkedArray[676]) { HideSpecifiedTargetTrophy(odminipage2, 10); } }
+                if (unlockedArray[330] == false)
+                { HideSpecifiedTargetChild(odminipage2, 11); }
+                else { if (!checkedArray[677]) { HideSpecifiedTargetTrophy(odminipage2, 11); } }
+                if (unlockedArray[331] == false)
+                { HideSpecifiedTargetChild(odminipage2, 12); }
+                else { if (!checkedArray[678]) { HideSpecifiedTargetTrophy(odminipage2, 12); } }
+                if (unlockedArray[332] == false)
+                { HideSpecifiedTargetChild(odminipage2, 13); }
+                else { if (!checkedArray[679]) { HideSpecifiedTargetTrophy(odminipage2, 13); } }
+                if (unlockedArray[333] == false)
+                { HideSpecifiedTargetChild(odminipage2, 14); }
+                else { if (!checkedArray[680]) { HideSpecifiedTargetTrophy(odminipage2, 14); } }
+                if (unlockedArray[334] == false)
+                { HideSpecifiedTargetChild(odminipage2, 15); }
+                else { if (!checkedArray[681]) { HideSpecifiedTargetTrophy(odminipage2, 15); } }
+                if (unlockedArray[335] == false)
+                { HideSpecifiedTargetChild(odminipage2, 16); }
+                else { if (!checkedArray[682]) { HideSpecifiedTargetTrophy(odminipage2, 16); } }
+            }
+            GameObject odminipage3 = GameObject.Find(odysseyminigamePage3);
+            if (odminipage3 != null)
+            {
+                if (unlockedArray[336] == false)
+                { HideSpecifiedTargetChild(odminipage3, 0); }
+                else { if (!checkedArray[683]) { HideSpecifiedTargetTrophy(odminipage3, 0); } }
+                if (unlockedArray[337] == false)
+                { HideSpecifiedTargetChild(odminipage3, 1); }
+                else { if (!checkedArray[683]) { HideSpecifiedTargetTrophy(odminipage3, 1); } }
+                if (unlockedArray[338] == false)
+                { HideSpecifiedTargetChild(odminipage3, 2); }
+                else { if (!checkedArray[684]) { HideSpecifiedTargetTrophy(odminipage3, 2); } }
+                if (unlockedArray[339] == false)
+                { HideSpecifiedTargetChild(odminipage3, 3); }
+                else { if (!checkedArray[685]) { HideSpecifiedTargetTrophy(odminipage3, 3); } }
+                if (unlockedArray[340] == false)
+                { HideSpecifiedTargetChild(odminipage3, 4); }
+                else { if (!checkedArray[685]) { HideSpecifiedTargetTrophy(odminipage3, 4); } }
+                if (unlockedArray[341] == false)
+                { HideSpecifiedTargetChild(odminipage3, 5); }
+                else { if (!checkedArray[686]) { HideSpecifiedTargetTrophy(odminipage3, 5); } }
+                if (unlockedArray[342] == false)
+                { HideSpecifiedTargetChild(odminipage3, 6); }
+                else { if (!checkedArray[687]) { HideSpecifiedTargetTrophy(odminipage3, 6); } }
+
+            }
 
 
 
+                //const string showcasePage = "ExploreMenu(Clone)/Level/Line1";
+                //const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
 
-            //const string showcasePage = "ExploreMenu(Clone)/Level/Line1";
-            //const string challengePage = "ChallengeMenu(Clone)/Levels/PageUnlockChallenge/Page1/";
-
-            if (seedSlots < 9)
+                if (seedSlots < 9)
             { HideTargetObject("CanvasUp", slotPath + "seed13"); }
             if (seedSlots < 8)
             { HideTargetObject("CanvasUp", slotPath + "seed12"); }
@@ -1152,8 +1376,17 @@ namespace PVZFusionArchipelago
                     case PlantType.Chomper:
                         if (!unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
                         break;
+                    case PlantType.SmallPuff:
+                        if (!unlockedArray[10]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.FumeShroom:
+                        if (!unlockedArray[11]) { GameObject.Destroy(child.gameObject); }
+                        break;
                     case PlantType.HypnoShroom:
                         if (!unlockedArray[12]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.ScaredyShroom:
+                        if (!unlockedArray[13]) { GameObject.Destroy(child.gameObject); }
                         break;
                     case PlantType.IceShroom:
                         if (!unlockedArray[14]) { GameObject.Destroy(child.gameObject); }
@@ -1212,6 +1445,9 @@ namespace PVZFusionArchipelago
                     case PlantType.Cornpult:
                         if (!unlockedArray[39]) { GameObject.Destroy(child.gameObject); }
                         break;
+                    case PlantType.Garlic:
+                        if (!unlockedArray[40]) { GameObject.Destroy(child.gameObject); }
+                        break;
                     case PlantType.Umbrellaleaf:
                         if (!unlockedArray[41]) { GameObject.Destroy(child.gameObject); }
                         break;
@@ -1244,9 +1480,21 @@ namespace PVZFusionArchipelago
                     case PlantType.PortalNut:
                         if (!unlockedArray[4]) { GameObject.Destroy(child.gameObject); }
                         break;
+
+                    case PlantType.IronPuff:
+                        if (!unlockedArray[10]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
                     case PlantType.FireSquash:
                         if (!unlockedArray[20]) { GameObject.Destroy(child.gameObject); }
                         break;
+
+
+                    case PlantType.HypnoEmperor:
+                        if (!unlockedArray[12]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+
 
                     case PlantType.PeaChomper:
                         if (!unlockedArray[1] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
@@ -1255,6 +1503,9 @@ namespace PVZFusionArchipelago
                         if (!unlockedArray[1] || !unlockedArray[10]) { GameObject.Destroy(child.gameObject); }
                         break;
                     case PlantType.SnowGatling:
+                        if (!unlockedArray[1] || !unlockedArray[14]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.IcePuff:
                         if (!unlockedArray[1] || !unlockedArray[14]) { GameObject.Destroy(child.gameObject); }
                         break;
                     case PlantType.SunChomper:
@@ -1275,6 +1526,7 @@ namespace PVZFusionArchipelago
                     case PlantType.NutChomper:
                         if (!unlockedArray[4] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
                         break;
+
                     case PlantType.HypnoNut:
                         if (!unlockedArray[4] || !unlockedArray[12]) { GameObject.Destroy(child.gameObject); }
                         break;
@@ -1300,6 +1552,9 @@ namespace PVZFusionArchipelago
 
                     case PlantType.HypnoSquash:
                         if (!unlockedArray[12] || !unlockedArray[20]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.HypnoMagnet:
+                        if (!unlockedArray[12] || !unlockedArray[34]) { GameObject.Destroy(child.gameObject); }
                         break;
                     case PlantType.IceDoom:
                         if (!unlockedArray[14] || !unlockedArray[15]) { GameObject.Destroy(child.gameObject); }
@@ -1340,6 +1595,12 @@ namespace PVZFusionArchipelago
                     case PlantType.JalaStar:
                         if (!unlockedArray[23] || !unlockedArray[32]) { GameObject.Destroy(child.gameObject); }
                         break;
+                    case PlantType.LanternPumpkin:
+                        if (!unlockedArray[29] || !unlockedArray[33]) { GameObject.Destroy(child.gameObject); }
+                        break;
+                    case PlantType.LanternMagnet:
+                        if (!unlockedArray[29] || !unlockedArray[34]) { GameObject.Destroy(child.gameObject); }
+                        break;
 
                     case PlantType.IronPumpkin:
                         if (!unlockedArray[33] || !unlockedArray[34]) { GameObject.Destroy(child.gameObject); }
@@ -1362,6 +1623,16 @@ namespace PVZFusionArchipelago
 
                     case PlantType.SuperChomper:
                         if (!unlockedArray[1] || !unlockedArray[4] || !unlockedArray[6]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+
+                    case PlantType.HypnoQueen:
+                        if (!unlockedArray[12] || !unlockedArray[3]) { GameObject.Destroy(child.gameObject); }
+                        break;
+
+
+                    case PlantType.UltimateTorch:
+                        if (!unlockedArray[20] || !unlockedArray[23] || !unlockedArray[25]) { GameObject.Destroy(child.gameObject); }
                         break;
                 }
 
@@ -1723,7 +1994,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(354);
                         CheckForGoalType1();
                         break;
-                    case "Fusion Challenge: Explod-o-shooter":
+                    case "Fusion Challenge: Explode-o-shooter":
                         checkedArray[55] = true;
                         session.Locations.CompleteLocationChecks(55);
                         session.Locations.CompleteLocationChecks(355);
@@ -1858,7 +2129,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(83);
                         session.Locations.CompleteLocationChecks(383);
                         break;
-                    case "D-Day":
+                    case "Z-Day":
                         checkedArray[84] = true;
                         session.Locations.CompleteLocationChecks(84);
                         session.Locations.CompleteLocationChecks(384);
@@ -2093,6 +2364,8 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(132);
                         session.Locations.CompleteLocationChecks(432);
                         break;
+                        //location 133 is checked for in default case
+
 
                     case "Vasebreaker":
                         checkedArray[200] = true;
@@ -2109,7 +2382,21 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(202);
                         session.Locations.CompleteLocationChecks(502);
                         break;
-
+                    case "The Vase Less Travelled by":
+                        checkedArray[203] = true;
+                        session.Locations.CompleteLocationChecks(203);
+                        session.Locations.CompleteLocationChecks(503);
+                        break;
+                    case "De-vase-tating!":
+                        checkedArray[204] = true;
+                        session.Locations.CompleteLocationChecks(204);
+                        session.Locations.CompleteLocationChecks(504);
+                        break;
+                    case "Potluck":
+                        checkedArray[205] = true;
+                        session.Locations.CompleteLocationChecks(205);
+                        session.Locations.CompleteLocationChecks(505);
+                        break;
 
 
 
@@ -2246,7 +2533,206 @@ namespace PVZFusionArchipelago
                         break;
 
 
-
+                    case "Odyssey: Last Stand | Round 21":
+                        checkedArray[650] = true;
+                        session.Locations.CompleteLocationChecks(650);
+                        session.Locations.CompleteLocationChecks(950);
+                        break;
+                    case "The Gods 1: Trial of Ascension":
+                        checkedArray[651] = true;
+                        session.Locations.CompleteLocationChecks(651);
+                        session.Locations.CompleteLocationChecks(951);
+                        break;
+                    case "The Gods 2: Trial of Rebirth":
+                        checkedArray[652] = true;
+                        session.Locations.CompleteLocationChecks(652);
+                        session.Locations.CompleteLocationChecks(952);
+                        break;
+                    case "The Gods 3: Trial of Endurance":
+                        checkedArray[653] = true;
+                        session.Locations.CompleteLocationChecks(653);
+                        session.Locations.CompleteLocationChecks(953);
+                        break;
+                    case "The Gods 4: Trial of Valor":
+                        checkedArray[654] = true;
+                        session.Locations.CompleteLocationChecks(654);
+                        session.Locations.CompleteLocationChecks(954);
+                        break;
+                    case "Solar-nut Bowling":
+                        checkedArray[655] = true;
+                        session.Locations.CompleteLocationChecks(655);
+                        session.Locations.CompleteLocationChecks(955);
+                        break;
+                    case "The Battle Zombies":
+                        checkedArray[656] = true;
+                        session.Locations.CompleteLocationChecks(656);
+                        session.Locations.CompleteLocationChecks(956);
+                        break;
+                    case "Flag: The Gods 1: Trial of Ascension":
+                        checkedArray[657] = true;
+                        session.Locations.CompleteLocationChecks(657);
+                        session.Locations.CompleteLocationChecks(957);
+                        break;
+                    case "Ten-Flag: The Gods 2: Trial of Rebirth":
+                        checkedArray[658] = true;
+                        session.Locations.CompleteLocationChecks(658);
+                        session.Locations.CompleteLocationChecks(958);
+                        break;
+                    case "Ten-Flag: The Gods 3: Trial of Endurance":
+                        checkedArray[659] = true;
+                        session.Locations.CompleteLocationChecks(659);
+                        session.Locations.CompleteLocationChecks(959);
+                        break;
+                    case "Solitary Spear":
+                        checkedArray[660] = true;
+                        session.Locations.CompleteLocationChecks(660);
+                        session.Locations.CompleteLocationChecks(960);
+                        break;
+                    case "The Gods 5: Trial of Radiance":
+                        checkedArray[661] = true;
+                        session.Locations.CompleteLocationChecks(661);
+                        session.Locations.CompleteLocationChecks(961);
+                        break;
+                    case "Whack-a-Zombie 2":
+                        checkedArray[662] = true;
+                        session.Locations.CompleteLocationChecks(662);
+                        session.Locations.CompleteLocationChecks(962);
+                        break;
+                    case "Odyssey: Rush Mode | Round 21":
+                        checkedArray[663] = true;
+                        session.Locations.CompleteLocationChecks(663);
+                        session.Locations.CompleteLocationChecks(963);
+                        break;
+                    case "The Gods 7: Trial Resurgence":
+                        checkedArray[664] = true;
+                        session.Locations.CompleteLocationChecks(664);
+                        session.Locations.CompleteLocationChecks(964);
+                        break;
+                    case "Gacha Battle":
+                        checkedArray[665] = true;
+                        session.Locations.CompleteLocationChecks(665);
+                        session.Locations.CompleteLocationChecks(965);
+                        break;
+                    case "Odyssey: Randomized | Round 21":
+                        checkedArray[666] = true;
+                        session.Locations.CompleteLocationChecks(666);
+                        session.Locations.CompleteLocationChecks(966);
+                        break;
+                    case "Super Odyssey Gacha":
+                        checkedArray[667] = true;
+                        session.Locations.CompleteLocationChecks(667);
+                        session.Locations.CompleteLocationChecks(967);
+                        break;
+                    case "Ten-Flag: Odyssey Gacha - 12 Lane":
+                        checkedArray[668] = true;
+                        session.Locations.CompleteLocationChecks(668);
+                        session.Locations.CompleteLocationChecks(968);
+                        break;
+                    case "Ten-Flag: Equivalent Exchange 2":
+                        checkedArray[669] = true;
+                        session.Locations.CompleteLocationChecks(669);
+                        session.Locations.CompleteLocationChecks(969);
+                        break;
+                    case "Ten-Flag: Super Conveyor Belt":
+                        checkedArray[670] = true;
+                        session.Locations.CompleteLocationChecks(670);
+                        session.Locations.CompleteLocationChecks(970);
+                        break;
+                    case "Barley Battle!":
+                        checkedArray[671] = true;
+                        session.Locations.CompleteLocationChecks(671);
+                        session.Locations.CompleteLocationChecks(971);
+                        break;
+                    case "Odyssey Gacha: Imitater":
+                        checkedArray[672] = true;
+                        session.Locations.CompleteLocationChecks(672);
+                        session.Locations.CompleteLocationChecks(972);
+                        break;
+                    case "Odyssey Gacha: Unleashed":
+                        checkedArray[673] = true;
+                        session.Locations.CompleteLocationChecks(673);
+                        session.Locations.CompleteLocationChecks(973);
+                        break;
+                    case "Barley Battle 2! Fission":
+                        checkedArray[674] = true;
+                        session.Locations.CompleteLocationChecks(674);
+                        session.Locations.CompleteLocationChecks(974);
+                        break;
+                    case "Odyssey Gacha: Fusion Mode":
+                        checkedArray[675] = true;
+                        session.Locations.CompleteLocationChecks(675);
+                        session.Locations.CompleteLocationChecks(975);
+                        break;
+                    case "Odyssey Gacha: Fusion Mode 2":
+                        checkedArray[676] = true;
+                        session.Locations.CompleteLocationChecks(676);
+                        session.Locations.CompleteLocationChecks(976);
+                        break;
+                    case "Odyssey Gacha: Upgrade":
+                        checkedArray[677] = true;
+                        session.Locations.CompleteLocationChecks(677);
+                        session.Locations.CompleteLocationChecks(977);
+                        break;
+                    case "Odyssey Gacha: Blessings and Curses":
+                        checkedArray[678] = true;
+                        session.Locations.CompleteLocationChecks(678);
+                        session.Locations.CompleteLocationChecks(978);
+                        break;
+                    case "The Gods 6: Trial of Precision":
+                        checkedArray[679] = true;
+                        session.Locations.CompleteLocationChecks(679);
+                        session.Locations.CompleteLocationChecks(979);
+                        break;
+                    case "Zombies vs Zombies: Odyssey":
+                        checkedArray[680] = true;
+                        session.Locations.CompleteLocationChecks(680);
+                        session.Locations.CompleteLocationChecks(980);
+                        break;
+                    case "Odyssey Gacha: Gashapon":
+                        checkedArray[681] = true;
+                        session.Locations.CompleteLocationChecks(681);
+                        session.Locations.CompleteLocationChecks(981);
+                        break;
+                    case "Odyssey Gacha: Treasure Hunt":
+                        checkedArray[682] = true;
+                        session.Locations.CompleteLocationChecks(682);
+                        session.Locations.CompleteLocationChecks(982);
+                        break;
+                    case "Odyssey Gacha: Diamond Imitater":
+                        checkedArray[683] = true;
+                        session.Locations.CompleteLocationChecks(683);
+                        session.Locations.CompleteLocationChecks(983);
+                        break;
+                    case "Odyssey Gacha: Rerolled":
+                        checkedArray[684] = true;
+                        session.Locations.CompleteLocationChecks(684);
+                        session.Locations.CompleteLocationChecks(984);
+                        break;
+                    case "Purgatory Gacha: Chibi vs. Goliath":
+                        checkedArray[685] = true;
+                        session.Locations.CompleteLocationChecks(685);
+                        session.Locations.CompleteLocationChecks(985);
+                        break;
+                    case "The Gods 8: Trial of Acclimation":
+                        checkedArray[686] = true;
+                        session.Locations.CompleteLocationChecks(686);
+                        session.Locations.CompleteLocationChecks(986);
+                        break;
+                    case "Fusion Gacha: Chaos":
+                        checkedArray[687] = true;
+                        session.Locations.CompleteLocationChecks(687);
+                        session.Locations.CompleteLocationChecks(987);
+                        break;
+                    case "Advanced Gacha: Chaos":
+                        checkedArray[688] = true;
+                        session.Locations.CompleteLocationChecks(688);
+                        session.Locations.CompleteLocationChecks(988);
+                        break;
+                    case "Purgatory Gacha: Chaos":
+                        checkedArray[689] = true;
+                        session.Locations.CompleteLocationChecks(689);
+                        session.Locations.CompleteLocationChecks(989);
+                        break;
 
 
                     case "Dr. Zomboss' Revenge":
@@ -2262,6 +2748,16 @@ namespace PVZFusionArchipelago
 
 
                     default:
+                        if ( levelName.StartsWith("Total num. of Mines"))//nutsweeper
+                        {
+                            checkedArray[133] = true;
+                            session.Locations.CompleteLocationChecks(133);
+                            session.Locations.CompleteLocationChecks(433);
+                            break;
+                        }
+
+
+
                         MelonLogger.Msg("Level not implemented");
                         break;
                 }
@@ -2276,8 +2772,6 @@ namespace PVZFusionArchipelago
             void OnMouseDown()
             {
                 MelonLogger.Msg($"Clicked: {gameObject.name}");
-
-
 
             }
         }
@@ -2439,7 +2933,34 @@ namespace PVZFusionArchipelago
                 { unlockedArray[networkItem.ItemId] = true; }
 
                 if (networkItem.ItemId == 89)//progressive odyssey adventure
-                { numOdysseyLevels++;  }
+                { numOdysseyLevels++; }
+
+
+                if (canvasupGl == null)
+                { canvasupGl = GameObject.Find("CanvasUp"); }
+                if (canvasGl != null)
+                {
+
+
+                    if (networkItem.ItemId < 75 | (networkItem.ItemId > 80 && networkItem.ItemId < 200) | networkItem.ItemId == 201 | networkItem.ItemId > 248)
+
+                    {
+                        var tutor = canvasupGl.transform.Find("Tutor(Clone)");
+
+                        var textMan = tutor.GetComponent<InGameText>();
+
+                        textMan.DebugWarning("Received " + ItemIdToString(networkItem.ItemId));
+
+                    }
+                    //networkItem.Player.Name
+
+
+                }
+
+
+
+
+
 
 
 
@@ -2482,12 +3003,14 @@ namespace PVZFusionArchipelago
                 }
 
                 if (networkItem.ItemId == 203)//diamond
-                {   if (boardGl == null)
+                {
+                    if (boardGl == null)
                     {
                         boardGl = GameObject.Find("Board");
                     }
                     if (boardGl == null)
-                    { return;
+                    {
+                        return;
                     }
                     GameObject newGem = GameObject.Instantiate(diamondPrefabObject, new Vector3((float)0.5231, (float)-0.838, 0), Quaternion.identity);
                     newGem.transform.SetParent(boardGl.transform);
@@ -2497,6 +3020,54 @@ namespace PVZFusionArchipelago
                     field.SetValue(component, 1000);
                 }
 
+                if (networkItem.ItemId == 204)//free sunflowers
+                {
+                    if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
+                    GameObject uiParent = GameObject.Find("CanvasUp/UIParent");
+
+                    if (uiParent == null)
+                    {
+                        return;
+                    }
+
+
+
+                    var boardComp = boardGl.GetComponent<CreateItem>();
+
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        GameObject newCard = boardComp.SetCoin(0, 0, 9, 0);
+                        newCard.transform.SetParent(uiParent.transform);
+
+
+                        CardUI component = newCard.GetComponent<DroppedCard>();
+                        var type = component.GetIl2CppType();
+                        var field = type.GetField("thePlantType");
+                        field.SetValue(component, 1);
+
+
+                        newCard.transform.position = new Vector3(-1 + i, 3, 100);
+                        newCard.transform.localScale = new Vector3(1, 1, 1);
+                    }
+
+
+                }
+
+
+
+
+
+
+
+
                 if (networkItem.ItemId == 205)//star meteor
                 {
                     GameObject.Instantiate(starMeteorPrefabObject, new Vector3((float)-8, (float)5, 0), Quaternion.identity);
@@ -2504,13 +3075,43 @@ namespace PVZFusionArchipelago
                 if (networkItem.ItemId == 206)//trophy
                 {
                     trophyCount += 1;
-                    if (trophyCount>=trophiesForGoal && goalType == 3)
+                    if (trophyCount >= trophiesForGoal && goalType == 3)
                     {
                         session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
 
                     }
                 }
+                if (networkItem.ItemId == 207)//refreshed cooldowns
+                {
+                    if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
+                    if (canvasupGl == null)
+                    { canvasupGl = GameObject.Find("CanvasUp"); }
+                    if (canvasGl != null)
+                    {
+                        var tutor = canvasupGl.transform.Find("Tutor(Clone)");
+                        var textMan = tutor.GetComponent<InGameText>();
+                        textMan.DebugWarning("No planting cooldown for 10 seconds");
+                    }
+                    Board component = boardGl.GetComponent<Board>();
+                    var type = component.GetIl2CppType();
+                    var field = type.GetField("freeCD");
+                    field.SetValue(component, true);
 
+
+
+
+                    cdResetTime = 10.0F;
+                    resetCD = true;
+
+
+                }
 
 
 
@@ -2527,9 +3128,10 @@ namespace PVZFusionArchipelago
                         boardGl = GameObject.Find("Board");
                     }
                     if (boardGl == null)
-                    { return;
+                    {
+                        return;
                     }
-                        int childCount = boardGl.transform.childCount;
+                    int childCount = boardGl.transform.childCount;
                     for (int i = 1; i < childCount; i++)
                     {
 
@@ -2577,26 +3179,44 @@ namespace PVZFusionArchipelago
 
                     }
                 }
-                    if (networkItem.ItemId == 223)//the fog is coming
+                if (networkItem.ItemId == 223)//the fog is coming
+                {
+                    if (boardGl == null)
                     {
-                        if (boardGl == null)
-                        {
-                            boardGl = GameObject.Find("Board");
-                        }
-                        if (boardGl == null)
-                        {
-                            return;
-                        }
-                        var fog = GameObject.Instantiate(fogPrefabObject, new Vector3(2.0f, 2.87f, 0), Quaternion.identity);
-                        fog.transform.SetParent(boardGl.transform.GetChild(0));
-                        var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
 
-                        var type = boardComp.GetIl2CppType();
-                        var field = type.GetField("fog");
-                        field.SetValue(boardComp, fog);
+                    if (canvasupGl == null)
+                    { canvasupGl = GameObject.Find("CanvasUp"); }
+                    if (canvasGl != null)
+                    {
+                        var tutor = canvasupGl.transform.Find("Tutor(Clone)");
+                        var textMan = tutor.GetComponent<InGameText>();
+                        textMan.DebugWarning("The fog is coming...");
+                    }
+
+                    var fog = GameObject.Instantiate(fogPrefabObject, new Vector3(2.0f, 2.87f, 0), Quaternion.identity);
+                    fog.transform.SetParent(boardGl.transform.GetChild(0));
+
+                    fog.transform.position = new Vector3(13, (float)2.87, 100);
+                    var fogmgr = fog.GetComponent<FogMgr>();
+
+
+
+
+                    var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
+
+                    var type = boardComp.GetIl2CppType();
+                    var field = type.GetField("fog");
+                    field.SetValue(boardComp, fog);
+                    fogmgr.FadeFog(new Vector3(2, (float)2.87, 0));
                 }
 
-                if (networkItem.ItemId == 224)
+                if (networkItem.ItemId == 224)//zombie meteor
                 {
                     var evilStar = GameObject.Instantiate(zombieStarObject, new Vector3((float)18, (float)5, 0), Quaternion.identity);
 
@@ -2608,9 +3228,152 @@ namespace PVZFusionArchipelago
                     field.SetValue(boardComp, true);
 
                 }
+                if (networkItem.ItemId == 226)//grave danger
+                {
+                    if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
+
+                    var boardComp = boardGl.GetComponent<Board>();
+                    boardComp.SetGrave();
+
+                }
+
+                if (networkItem.ItemId == 227)//mystery box
+                {
+                    if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
+
+                    var boardComp = boardGl.GetComponent<CreateZombie>();
 
 
+                    for (int i = 0; i < 5; i++)
+                    {
+
+                        if (UnityEngine.Random.Range(0, 5) == 0) { boardComp.SetZombie(i, ZombieType.RandomPlusZombie); }
+                        else { boardComp.SetZombie(i, ZombieType.RandomZombie); }
+
+
+                    }
+
+
+                }
+
+                if (networkItem.ItemId == 228)//Extra flag
+                {
+                    if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
+                    if (canvasupGl == null)
+                    { canvasupGl = GameObject.Find("CanvasUp"); }
+                    if (canvasGl != null)
+                    {
+                        var tutor = canvasupGl.transform.Find("Tutor(Clone)");
+                        var textMan = tutor.GetComponent<InGameText>();
+                        textMan.DebugWarning("Extra Flag");
+                    }
+                    var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
+
+                    var type = boardComp.GetIl2CppType();
+                    var field = type.GetField("theWave");
+                    Il2CppSystem.Object rawValue = field.GetValue(boardComp);
+                    int intValue = Il2CppSystem.Convert.ToInt32(rawValue);
+                    field.SetValue(boardComp, intValue - 10);
+
+                }
+
+                if (networkItem.ItemId == 229)//literature trap
+                {
+
+                    if (canvasupGl == null)
+                    { canvasupGl = GameObject.Find("CanvasUp"); }
+                    if (canvasGl != null)
+                    {
+                        var tutor = canvasupGl.transform.Find("Tutor(Clone)");
+                        var textMan = tutor.GetComponent<InGameText>();
+                        var rand = UnityEngine.Random.Range(0, 4);
+                        switch (rand)
+                        {
+                            case 0:
+                                textMan.DebugWarning("Beware!   There could be\nan invis. wall   around here.\nTry to   go around it.");
+                                break;
+                            case 1://receive a random plant thats not in the game
+                                var temp =  UnityEngine.Random.Range(0, 8);
+                                string plantstring = "";
+                                switch (temp)
+                                {
+                                    case 1: plantstring = "Pokra"; break;
+                                    case 2: plantstring = "Beeshooter"; break;
+                                    case 3: plantstring = "Mildew Flower"; break;
+                                    case 4: plantstring = "Tricarrotops"; break;
+                                    case 5: plantstring = "Garlic Angel"; break;
+                                    case 6: plantstring = "Banana Launcher"; break;
+                                    case 7: plantstring = "Wise Mystical Oak"; break;
+                                    default: plantstring = "Twin Sunflower with slightly larger petals"; break;
+                                }
+                                textMan.DebugWarning("Received "+plantstring);
+                                break;
+
+                            case 2:
+                                textMan.DebugWarning("i love how you are still on about grass sanity\r\nits literally not that bad \r\nalso grass sanity * 20 = 12k\r\nthats less than powerwash max sanity");
+                                break;
+                            case 3:
+                                textMan.DebugWarning("Do not post links to ROM files or other copyrighted content.\r\nThe @Moderator team has been alerted to this incident.\r\nThe potentially problematic file(s) in question were:\r\n- z.json");
+                                break;
+
+                            default:
+                                textMan.DebugWarning("No! Vanilla! Changes!!!");
+                                break;
+
+                        }
+                    }
+
+                }
             }
+        }
+
+        private void HideSpecifiedTargetChild(GameObject obj, int childnum)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+            int childCount = obj.transform.childCount;
+
+                var child = obj.transform.GetChild(childnum);
+                child.gameObject.SetActive(false);
+
+        }
+        private void HideSpecifiedTargetTrophy(GameObject obj, int childnum)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+            int childCount = obj.transform.childCount;
+
+            var child = obj.transform.GetChild(childnum);
+            child = child.transform.GetChild(1);
+            child = child.transform.GetChild(1);
+
+            child.gameObject.SetActive(false);
+
         }
 
 
@@ -2723,6 +3486,101 @@ namespace PVZFusionArchipelago
             }
             return;
         }
+
+        public static string ItemIdToString(long id)
+        {
+            string str = string.Empty;
+            switch (id)
+            {
+
+                case 1: return "Peashooter"; case 2: return "Sunflower";
+                case 3: return "Cherry Bomb"; case 4: return "Wall-nut";
+                case 5: return "Potato Mine"; case 6: return "Chomper";
+                case 7: return "Plant Giftbox"; case 8: return "Tall-nut";
+                case 9: return "Endoflame"; case 10: return "Puff-shroom";
+                case 11: return "Fume-shroom"; case 12: return "Hypno-shroom";
+                case 13: return "Scaredy-shroom"; case 14: return "Ice-shroom";
+                case 15: return "Doom-shroom"; case 16: return "Zombie Giftbox";
+                case 17: return "Gloom-shroom"; case 18: return "Grave Buster";
+                case 19: return "Lily Pad"; case 20: return "Squash";
+                case 21: return "Threepeater"; case 22: return "Tangle Kelp";
+                case 23: return "Jalapeno"; case 24: return "Spikeweed";
+                case 25: return "Torchwood"; case 26: return "Spikerock";
+                case 27: return "Barley"; case 28: return "Sea-shroom";
+                case 29: return "Plantern"; case 30: return "Cactus";
+                case 31: return "Blover"; case 32: return "Starfruit";
+                case 33: return "Pumpkin"; case 34: return "Magnet-shroom";
+                case 35: return "Cattail"; case 36: return "Imitater";
+                case 37: return "Cabbage-pult"; case 38: return "Flower Pot";
+                case 39: return "Kernel-pult"; case 40: return "Garlic";
+                case 41: return "Umbrella Leaf"; case 42: return "Marigold";
+                case 43: return "Melon-pult"; case 44: return "Cob Cannon";
+                case 45: return "Jicamagic"; case 46: return "Firnace";
+                case 47: return "Spruce Sharpshooter"; case 48: return "Saw-me-not";
+                case 49: return "Snow Lotus"; case 50: return "Aloe Aqua";
+                case 51: return "Bamblock"; case 52: return "Frozen Giftbox";
+                case 53: return "Spruce Ballista";
+
+                case 55: return "Cattail Girl"; case 56: return "Swordmaster Starfruit";
+                case 57: return "Nyan Squash"; case 58: return "Burger Blaster";
+                case 59: return "Queen Endoflame"; case 60: return "Coldsnap Bean";
+                case 61: return "Amp-nion"; case 62: return "Snipea";
+                case 63: return "Chrysanctum"; case 64: return "Icetip Lily";
+                case 65: return "Pearmafrost"; case 66: return "Doubleblast Passionfruit";
+                case 67: return "Lucky Blover"; case 68: return "Diamond Imitater";
+                case 69: return "Bucket"; case 84: return "Football Helmet";
+                case 85: return "Hearty Apple"; case 86: return "Bamboom";
+                case 87: return "Golden Recycling Vase";
+
+                case 70: return "Shovel";
+                case 71: return "Fertilizer";
+                case 72: return "Plant Gloves";
+                case 74: return "Mallet";
+
+                case 82: return "Lawnmowers";
+                case 83: return "Pool Cleaners";
+
+                case 89: return "Progressive Odyssey Adventure";
+                case 90: return "Day Access";
+                case 91: return "Night Access";
+                case 92: return "Pool Access";
+                case 93: return "Fog Access";
+                case 94: return "Roof Access";
+                case 95: return "Snow Access";
+                case 96: return "Fusion Challenge Access";
+                case 98: return "Odyssey Key";
+                case 249: return "Vasebreaker Access";
+                case 250: return "Survival Day";
+                case 251: return "Survival Night";
+                case 252: return "Survival Pool";
+                case 253: return "Survival Fog";
+                case 254: return "Survival Roof";
+
+
+                case 201: return "Seed Slot";
+
+                case 206: return "Trophy";
+
+
+                default:
+                    if (id > 99 && id < 170) { return "A New Minigame"; }
+                    if (id >= 300 && id < 350) { return "A New Odyssey Minigame"; }
+
+
+
+                    return "ID NOT FOUND (REPORT THIS TO THE AP DEV)";
+            }
+
+
+
+
+
+
+        }
+
+
+
+
         public void Connect(string server, string user, string pass, ArchipelagoSession session)
         {
             LoginResult result;
@@ -2851,7 +3709,19 @@ namespace PVZFusionArchipelago
         }
     }
 
-    public class APData
+
+    //[HarmonyLib.HarmonyPatch(typeof(InitBoard), "InitMowers")]
+    //public static class ImagineReadingMyCodeLMAO
+    //{
+    //    private static void Prefix()//too lazy to write a new function to do this again
+    //    {
+    //
+    //
+    //    }
+    //
+    // }
+
+        public class APData
     {
         public string serverAddress { get; set; }
         public int serverPort { get; set; }
