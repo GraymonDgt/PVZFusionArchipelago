@@ -15,14 +15,20 @@ class PVZFItemData(NamedTuple):
 generic_item_data_table: dict[str, PVZFItemData] = {
     "Trophy": PVZFItemData(206, ItemClassification.progression_skip_balancing),
     "Seed Slot": PVZFItemData(201, ItemClassification.progression),
+
     "Bonus Sun": PVZFItemData(200, ItemClassification.filler),
     "Zen Garden Plant": PVZFItemData(202, ItemClassification.filler),
     "Diamond": PVZFItemData(203, ItemClassification.filler),
-    #"Free Sunflowers": PVZFItemData(204, ItemClassification.filler),
+    "Free Sunflowers": PVZFItemData(204, ItemClassification.filler),
     "Star Meteor": PVZFItemData(205, ItemClassification.filler),
+    "Refreshed Cooldowns": PVZFItemData(207, ItemClassification.filler),
+
+
+
     #"Bonus Starting Sun": PVZFItemData(202, ItemClassification.useful),
-    #"Lawn Clear":PVZFItemData(201, ItemClassification.filler),
-    # refreshed cooldowns
+
+    # "Tactical Nuke": PVZFItemData(206, ItemClassification.filler), #ghost doomshrooms clear lawn
+    # Flag Skip - Immediately triggers next flag
 
 }
 traps_item_data_table:dict[str, PVZFItemData] = {
@@ -32,15 +38,21 @@ traps_item_data_table:dict[str, PVZFItemData] = {
 "Rough Economy": PVZFItemData(222, ItemClassification.trap),
 "The Fog is Coming": PVZFItemData(223, ItemClassification.trap),
 "Zombie Meteor": PVZFItemData(224, ItemClassification.trap),
+#"Conveyor Belt Trap": PVZFItemData(225, ItemClassification.trap),
+"Grave Danger": PVZFItemData(226, ItemClassification.trap),
+"Mystery Box Ambush": PVZFItemData(227, ItemClassification.trap),
+"Extra Flag": PVZFItemData(228, ItemClassification.trap),
+"Literature Trap": PVZFItemData(229, ItemClassification.trap),
+
 #Queen Jack in the box
 #Sun loss
 #lawn shuffle - randomize every plants location
 #Unplant Lawn - turn every plant on the lawn into a droppedcard
-#extra flag - pushes progress bar back a flag
-#conveyor belt trap
+# manual sun collection
+
 #bungee ambush
 #seed packet shuffle// better idea: randomly changes your entire loadout to be different seeds
-#grave danger
+
 #freezing trap
 #ds sounds
 #lets go gambling (slot machine)
@@ -68,7 +80,7 @@ access_item_table: dict[str, PVZFItemData] = {
     #"Fusion Showcase Pool Plants": PVZFItemData(107, ItemClassification.progression),
     #"Fusion Showcase Fog Plants": PVZFItemData(108, ItemClassification.progression),
     #"Fusion Showcase Roof Plants": PVZFItemData(109, ItemClassification.progression),
-    "Vasebreaker Access": PVZFItemData(200, ItemClassification.progression),
+    "Vasebreaker Access": PVZFItemData(249),
     #"Ten-Flag Challenge Access": PVZFItemData(201, ItemClassification.progression),
     #"Garden Defense Access": PVZFItemData(202, ItemClassification.progression),
     "Survival Day": PVZFItemData(250, ItemClassification.progression),
@@ -106,7 +118,7 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Scaredy-shroom": PVZFItemData(13, ItemClassification.progression),
     "Ice-shroom": PVZFItemData(14, ItemClassification.progression),
     "Doom-shroom": PVZFItemData(15, ItemClassification.progression),
-    "Zombie Giftbox": PVZFItemData(16, ItemClassification.useful),
+    "Zombie Giftbox": PVZFItemData(16, ItemClassification.progression),
     "Gloom-shroom": PVZFItemData(17, ItemClassification.progression),
     "Grave Buster": PVZFItemData(18, ItemClassification.useful),
     "Lily Pad": PVZFItemData(19, ItemClassification.progression),
@@ -160,7 +172,11 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Doubleblast Passionfruit": PVZFItemData(66, ItemClassification.progression),
     "Lucky Blover": PVZFItemData(67, ItemClassification.useful),
     "Diamond Imitater": PVZFItemData(68, ItemClassification.useful),
-
+    "Bucket": PVZFItemData(69, ItemClassification.useful),
+    "Football Helmet": PVZFItemData(84, ItemClassification.useful),
+    "Hearty Apple": PVZFItemData(85, ItemClassification.useful),
+    "Bamboom": PVZFItemData(86, ItemClassification.progression),
+    "Golden Recycling Vase": PVZFItemData(87, ItemClassification.useful),
 }
 
 td_plants_item_data_table: dict[str, PVZFItemData] = {
@@ -210,7 +226,7 @@ minigame_item_table: dict[str, PVZFItemData] = {
     "Pole Vaulting Disco": PVZFItemData(111, ItemClassification.progression),
     "Compact Planting": PVZFItemData(112, ItemClassification.progression),
     "Newspaper War": PVZFItemData(113, ItemClassification.progression),
-    "D-Day": PVZFItemData(114, ItemClassification.progression),
+    "Z-Day": PVZFItemData(114, ItemClassification.progression),
     #"ZombiesTD": PVZFItemData(115, ItemClassification.progression),
     #"ZombiesTD 2": PVZFItemData(116, ItemClassification.progression),
     "Matryoshka": PVZFItemData(115, ItemClassification.progression),
@@ -269,12 +285,69 @@ minigame_item_table: dict[str, PVZFItemData] = {
     "Archduke's Revenge": PVZFItemData(163, ItemClassification.progression),
     "Beghouled 2: Botany Crush": PVZFItemData(164, ItemClassification.progression),#short minigame
     "Nut-o-mite": PVZFItemData(165, ItemClassification.progression),
+    "Lava Land": PVZFItemData(166, ItemClassification.progression),
+    "Nutsweeper": PVZFItemData(167, ItemClassification.progression)
 }
 
 ten_flag_item_table: dict[str, PVZFItemData] = {
 
 
 }
+
+
+odyssey_minigame_item_table: dict[str, PVZFItemData] = {
+
+"Odyssey: Last Stand": PVZFItemData(300, ItemClassification.progression),
+"The Gods 1: Trial of Ascension": PVZFItemData(301, ItemClassification.progression),
+"The Gods 2: Trial of Rebirth": PVZFItemData(302, ItemClassification.progression),
+"The Gods 3: Trial of Endurance": PVZFItemData(303, ItemClassification.progression),
+"The Gods 4: Trial of Valor": PVZFItemData(304, ItemClassification.progression),
+"Solar-nut Bowling": PVZFItemData(305, ItemClassification.progression),
+"The Battle Zombies": PVZFItemData(306, ItemClassification.progression),
+"Ten-Flag The Gods 1": PVZFItemData(307, ItemClassification.progression),
+"Ten-Flag The Gods 2": PVZFItemData(308, ItemClassification.progression),
+"Ten-Flag The Gods 3": PVZFItemData(309, ItemClassification.progression),
+"Solitary Spear": PVZFItemData(310, ItemClassification.progression),
+"Odyssey: Reincarnation (Endless)": PVZFItemData(311, ItemClassification.filler),
+"The Gods 5: Trial of Radiance": PVZFItemData(312, ItemClassification.progression),
+"Whack-a-Zombie 2": PVZFItemData(313, ItemClassification.progression),
+"Odyssey: Rush Mode": PVZFItemData(314, ItemClassification.progression),
+"The Gods 7: Trial Resurgence": PVZFItemData(315, ItemClassification.progression),
+"Gacha Battle": PVZFItemData(316, ItemClassification.progression),
+
+"Odyssey: Randomized": PVZFItemData(318, ItemClassification.progression),
+"Ten-Flag Odyssey Gacha": PVZFItemData(319, ItemClassification.progression),
+"Odyssey Gacha: 12-Lane": PVZFItemData(320, ItemClassification.progression),
+"Ten-Flag Equivalent Exchange 2": PVZFItemData(321, ItemClassification.progression),
+"Ten-Flag Super Conveyor Belt": PVZFItemData(322, ItemClassification.progression),
+"Barley Battle!": PVZFItemData(323, ItemClassification.progression),
+"Odyssey Gacha: Endless": PVZFItemData(324, ItemClassification.filler),
+"Odyssey Gacha: Imitater": PVZFItemData(325, ItemClassification.progression),
+"Odyssey Gacha: Unleashed": PVZFItemData(326, ItemClassification.progression),
+"Barley Battle 2! Fission": PVZFItemData(327, ItemClassification.progression),
+"Odyssey Gacha: Fusion Mode": PVZFItemData(328, ItemClassification.progression),
+"Odyssey Gacha: Fusion Mode 2": PVZFItemData(329, ItemClassification.progression),
+"Odyssey Gacha: Upgrade": PVZFItemData(330, ItemClassification.progression),
+"Odyssey Gacha: Blessings and Curses": PVZFItemData(331, ItemClassification.progression),
+"The Gods 6: Trial of Precision": PVZFItemData(332, ItemClassification.progression),
+"Zombies vs Zombies: Odyssey": PVZFItemData(333, ItemClassification.progression),
+"Odyssey Gacha: Gashapon": PVZFItemData(334, ItemClassification.progression),
+"Odyssey Gacha: Treasure Hunt": PVZFItemData(335, ItemClassification.progression),
+
+"Odyssey Gacha: Diamond Imitater": PVZFItemData(336, ItemClassification.progression),
+"Odyssey Gacha: Rerolled": PVZFItemData(337, ItemClassification.progression),
+"Purgatory Gacha: Chibi vs. Goliath": PVZFItemData(338, ItemClassification.progression),
+"The Gods 8: Trial of Acclimation": PVZFItemData(339, ItemClassification.progression),
+"Fusion Gacha: Chaos": PVZFItemData(340, ItemClassification.progression),
+"Advanced Gacha: Chaos": PVZFItemData(341, ItemClassification.progression),
+"Purgatory Gacha: Chaos": PVZFItemData(342, ItemClassification.progression)
+
+
+}
+
+
+
+
 
 
 progressives_item_data_table: dict[str, PVZFItemData] = {
@@ -290,7 +363,7 @@ progressives_item_data_table: dict[str, PVZFItemData] = {
 
 
 item_data_table = {
-    **generic_item_data_table,**traps_item_data_table,**plants_item_data_table,**tools_item_data_table,**access_item_table,**minigame_item_table,**endless_item_table, **ten_flag_item_table
+    **generic_item_data_table,**traps_item_data_table,**plants_item_data_table,**tools_item_data_table,**access_item_table,**minigame_item_table,**endless_item_table, **ten_flag_item_table, **odyssey_minigame_item_table
 }
 
 item_table = {name: data.code for name, data in item_data_table.items() if data.code is not None}
