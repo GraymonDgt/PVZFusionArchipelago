@@ -15,6 +15,8 @@ class PVZFItemData(NamedTuple):
 generic_item_data_table: dict[str, PVZFItemData] = {
     "Trophy": PVZFItemData(206, ItemClassification.progression_skip_balancing),
     "Seed Slot": PVZFItemData(201, ItemClassification.progression),
+    "+50 Starting Sun": PVZFItemData(208, ItemClassification.useful),
+
 
     "Bonus Sun": PVZFItemData(200, ItemClassification.filler),
     "Zen Garden Plant": PVZFItemData(202, ItemClassification.filler),
@@ -22,17 +24,21 @@ generic_item_data_table: dict[str, PVZFItemData] = {
     "Free Sunflowers": PVZFItemData(204, ItemClassification.filler),
     "Star Meteor": PVZFItemData(205, ItemClassification.filler),
     "Refreshed Cooldowns": PVZFItemData(207, ItemClassification.filler),
+    "Ice-shroom Assist": PVZFItemData(209, ItemClassification.filler),
+
+    #sun capacity
 
 
-
-    #"Bonus Starting Sun": PVZFItemData(202, ItemClassification.useful),
+    #"+1000 Starting Money": PVZFItemData(202, ItemClassification.useful),
+    #3 endoflame coins
+    #Progressive Fusions (normal -> advanced -> odyssey)
 
     # "Tactical Nuke": PVZFItemData(206, ItemClassification.filler), #ghost doomshrooms clear lawn
     # Flag Skip - Immediately triggers next flag
 
 }
 traps_item_data_table:dict[str, PVZFItemData] = {
-#"Placebo Trap": PVZFItemData(220, ItemClassification.trap),
+"Placebo Trap": PVZFItemData(230, ItemClassification.trap),
 "10x Game Speed": PVZFItemData(220, ItemClassification.trap),
 "Destroy Everything": PVZFItemData(221, ItemClassification.trap),
 "Rough Economy": PVZFItemData(222, ItemClassification.trap),
@@ -44,17 +50,22 @@ traps_item_data_table:dict[str, PVZFItemData] = {
 "Extra Flag": PVZFItemData(228, ItemClassification.trap),
 "Literature Trap": PVZFItemData(229, ItemClassification.trap),
 
+
+#Unplant Lawn - turn every plant on the lawn into a droppedcard
+# manual sun collection
+#mower launch trap
+#rv trap
+
+#ds sounds
+
 #Queen Jack in the box
 #Sun loss
 #lawn shuffle - randomize every plants location
-#Unplant Lawn - turn every plant on the lawn into a droppedcard
-# manual sun collection
-
 #bungee ambush
 #seed packet shuffle// better idea: randomly changes your entire loadout to be different seeds
 
 #freezing trap
-#ds sounds
+
 #lets go gambling (slot machine)
 }
 
@@ -99,6 +110,7 @@ endless_item_table:dict[str, PVZFItemData] = {
     "Survival Pool: Crisis (Endless)": PVZFItemData(257, ItemClassification.filler),
     "Survival Lake (Endless)": PVZFItemData(258, ItemClassification.filler),
     "Survival Mesa River (Endless)": PVZFItemData(259, ItemClassification.filler),
+    #new surivial here
 }
 
 
@@ -154,9 +166,9 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Snow Lotus": PVZFItemData(49, ItemClassification.progression),
     "Aloe Aqua": PVZFItemData(50, ItemClassification.progression),
     "Bamblock": PVZFItemData(51, ItemClassification.progression),
-    "Frozen Giftbox": PVZFItemData(52, ItemClassification.useful),
+    "Hoarfrost Lichen": PVZFItemData(52, ItemClassification.progression),
     "Spruce Ballista": PVZFItemData(53, ItemClassification.progression),
-    #"???": PVZFItemData(54, ItemClassification.filler),
+    "Frozen Giftbox": PVZFItemData(54, ItemClassification.progression),
 
     "Cattail Girl": PVZFItemData(55, ItemClassification.progression),
     "Swordmaster Starfruit": PVZFItemData(56, ItemClassification.progression),
@@ -172,8 +184,8 @@ plants_item_data_table: dict[str, PVZFItemData] = {
     "Doubleblast Passionfruit": PVZFItemData(66, ItemClassification.progression),
     "Lucky Blover": PVZFItemData(67, ItemClassification.useful),
     "Diamond Imitater": PVZFItemData(68, ItemClassification.useful),
-    "Bucket": PVZFItemData(69, ItemClassification.useful),
-    "Football Helmet": PVZFItemData(84, ItemClassification.useful),
+    #"Bucket": PVZFItemData(69, ItemClassification.useful),
+    #"Football Helmet": PVZFItemData(84, ItemClassification.progression),
     "Hearty Apple": PVZFItemData(85, ItemClassification.useful),
     "Bamboom": PVZFItemData(86, ItemClassification.progression),
     "Golden Recycling Vase": PVZFItemData(87, ItemClassification.useful),
@@ -209,12 +221,12 @@ tools_item_data_table: dict[str, PVZFItemData] = {
     "Watering Can": PVZFItemData(76, ItemClassification.filler),
     "Phonograph": PVZFItemData(77, ItemClassification.filler),
     "Bug Spray": PVZFItemData(78, ItemClassification.filler),
-    "Wheelbarrow": PVZFItemData(79, ItemClassification.filler),
+    "Wheelbarrow": PVZFItemData(79, ItemClassification.progression),
     #"Slow Mode": PVZFItemData(80, ItemClassification.useful),
-    #"Advanced Fusions": PVZFItemData(80, ItemClassification.progression),
+    #"Advanced Fusions": PVZFItemData(81, ItemClassification.progression),
     "Lawnmowers": PVZFItemData(82, ItemClassification.progression),
     "Pool Cleaners": PVZFItemData(83 , ItemClassification.progression),
-
+    "Coffee Bean": PVZFItemData(88 , ItemClassification.progression),
 
 
 
@@ -238,8 +250,8 @@ minigame_item_table: dict[str, PVZFItemData] = {
     "Advanced Challenge: 12-Lane Day": PVZFItemData(121, ItemClassification.progression),
     "Advanced Challenge: 12-Lane Pool": PVZFItemData(122, ItemClassification.progression),
     #"ZombiesTD 3": PVZFItemData(125, ItemClassification.progression),
-    "Level Edtior": PVZFItemData(123, ItemClassification.filler),
-    "Custom Level": PVZFItemData(124, ItemClassification.filler),
+    #"Level Edtior": PVZFItemData(123, ItemClassification.filler),
+    #"Custom Level": PVZFItemData(124, ItemClassification.filler),
 
 
     "True Art is an Explosion!": PVZFItemData(125, ItemClassification.progression),
@@ -286,7 +298,13 @@ minigame_item_table: dict[str, PVZFItemData] = {
     "Beghouled 2: Botany Crush": PVZFItemData(164, ItemClassification.progression),#short minigame
     "Nut-o-mite": PVZFItemData(165, ItemClassification.progression),
     "Lava Land": PVZFItemData(166, ItemClassification.progression),
-    "Nutsweeper": PVZFItemData(167, ItemClassification.progression)
+    "Nutsweeper": PVZFItemData(167, ItemClassification.progression),
+
+    "Zombie Sorter": PVZFItemData(168, ItemClassification.progression),#short
+    "Explode-O-su!": PVZFItemData(169, ItemClassification.progression),#short
+    "I, Zomboss?": PVZFItemData(170, ItemClassification.progression),  # short
+    "Time Attack": PVZFItemData(171, ItemClassification.progression),  # short
+    "Wheelbarrow Challenge": PVZFItemData(172, ItemClassification.progression),  # short
 }
 
 ten_flag_item_table: dict[str, PVZFItemData] = {
@@ -340,7 +358,10 @@ odyssey_minigame_item_table: dict[str, PVZFItemData] = {
 "The Gods 8: Trial of Acclimation": PVZFItemData(339, ItemClassification.progression),
 "Fusion Gacha: Chaos": PVZFItemData(340, ItemClassification.progression),
 "Advanced Gacha: Chaos": PVZFItemData(341, ItemClassification.progression),
-"Purgatory Gacha: Chaos": PVZFItemData(342, ItemClassification.progression)
+"Purgatory Gacha: Chaos": PVZFItemData(342, ItemClassification.progression),
+
+"Stats VS Mechanics 1": PVZFItemData(343, ItemClassification.progression),
+"Odyssey Gacha: Gacha Box": PVZFItemData(344, ItemClassification.progression)
 
 
 }
