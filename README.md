@@ -23,4 +23,4 @@ You will play the adventure through the challenges menu
 
 Q: When I connect, I have no levels to play and no plants unlocked.
 
-A: You have likely made a typo in config.json, double check your slot name and port.
+A: You have likely made a typo in config.json, double check your slot name and port and check the melonloader console for more info.
