@@ -3,7 +3,7 @@ from typing import Callable, Union, Dict, Set
 
 from BaseClasses import MultiWorld, CollectionState
 from ..generic.Rules import add_rule, set_rule
-from .Locations import location_table
+from .Locations import location_table, common_fusion_table, snow_common_fusion_table, gold_fusion_table
 from .Options import PVZFOptions
 from .Regions import connect_regions,SRB2Zones
 #from .Items import character_item_data_table
@@ -53,6 +53,56 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
     def can_beat_all_last_levels(state: CollectionState):
         return state.can_reach("Day: Level 9 (1)", "Location", player) and state.can_reach("Night: Level 18 (1)", "Location", player) and state.can_reach("Pool: Level 27 (1)", "Location", player) and state.can_reach("Fog: Level 36 (1)", "Location", player) and state.can_reach("Roof: Level 45 (1)", "Location", player) and state.can_reach("Snow: Level 9 (1)", "Location", player)
 
+
+    def fusionsanity_string_check(state:CollectionState, string:str):
+        #unique check here for conveyor levels with flower pots
+        plants = string.split("+")
+        templogic = True
+        for key in plants:
+
+            if key.strip() == "Flower Pot":
+                if not has_pot_access(state,string):
+                    templogic = False
+                    break
+
+            if not state.has(key.strip(),player):
+                templogic = False
+                break
+            if key.strip() == "Sea-shroom" or key.strip() == "Tangle Kelp":
+                if not has_water_access(state):
+                    templogic = False
+                    break
+
+
+            #if its seashroom/ kelp require a water level to be unlocked
+
+        return templogic
+
+
+    def has_water_access(state:CollectionState):
+        return (state.has("Pool Access",player) or state.has("Fog Access",player) or state.has("Fusion Challenge Access",player) or state.has("Survival Pool",player) or state.has("Survival Fog",player) or
+                state.has("Survival Inverted Pool (Endless)",player) or state.has("Survival Pool: Crisis (Endless)",player) or state.has("Survival Lake (Endless)",player) or state.has("Z-Day",player) or state.has("Last Stand",player) or
+                state.has("Air Raid",player) or state.has("Zombie Nimble Zombie Quick",player) or state.has("Time Attack",player) or (state.has("Odyssey Key",player) and False))#false is odyssey adventure count
+
+    def has_pot_access(state:CollectionState, string:str):
+
+        #if "Melon-pult" in string and state.has("Dr Zomboss' Revenge",player):
+        #    return True
+
+
+
+        return (state.has("Roof Access",player) or state.has("Flower Pot",player) or state.has("Survival Roof",player) or state.has("Fusion Challenge Access",player) or state.has("Pogo Party!" ,player) or
+    state.has("Attack on Gargantuar!", player) or state.has("Attack on Gargantuar! 2",player) or state.has("High Gravity",player))
+
+    def has_football_helmet_access(state:CollectionState):
+        return state.has("Night Access", player) or state.has("Magnet-shroom",player) or state.has("Football Helmet",player)
+
+    def has_mecha_fragment_access(state:CollectionState):
+        return state.has("Roof Access", player) or state.has("Magnet-shroom",player)#probably other places
+
+
+
+
     def can_beat_conveyor(state: CollectionState, required_plants, possible_plants, percentage):
         for plant in required_plants:
             if not state.has(plant,player):
@@ -71,7 +121,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
 
     def can_beat_power_level(state: CollectionState, level_strength,  modifier_flags, slots_used):
         #Breaks when it finds the highest possible plant sorted by power
-        free_slots= 4-slots_used#-1 for sunflower
+        free_slots= 3-slots_used#-2 for sunflower
         possible_plants = []
         final_plants = []
         #check for required plants for things like balloon, scuba, cherry newspaper, sunflower, lily pad, pot to take away free_slots
@@ -175,7 +225,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 elif state.has("Cactus",player) and state.has("Starfruit",player):
                     final_plants.append("Cactus")
                     final_plants.append("Starfruit")
-                elif state.has("Cactus",player) and state.has("Blover",player) and state.has("Plant Gloves",player):
+                elif state.has("Cactus",player) and state.has("Blover",player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)):
                     final_plants.append("Cactus")
                     final_plants.append("Blover")
                 elif state.has("Lily Pad", player) and state.has("Cattail", player) and "water" in modifier_flags:
@@ -201,7 +251,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 elif state.has("Cactus",player) and state.has("Starfruit",player) and "water" in modifier_flags:
                     final_plants.append("Cactus")
                     final_plants.append("Starfruit")
-                elif state.has("Cactus",player) and state.has("Blover",player) and state.has("Plant Gloves",player) and "water" in modifier_flags:
+                elif state.has("Cactus",player) and state.has("Blover",player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)) and "water" in modifier_flags:
                     final_plants.append("Cactus")
                     final_plants.append("Blover")
                 elif state.has("Lily Pad", player) and state.has("Cattail", player) and "water" in modifier_flags:
@@ -217,7 +267,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 final_plants.append("Cactus")
                 final_plants.append("Blover")
                 final_plants.append("Pumpkin")
-            elif state.has("Puff-shroom",player) and state.has("Peashooter",player) and state.has("Magnet-shroom",player) and state.has("Plant Gloves",player) and "odyssey" in modifier_flags:
+            elif state.has("Puff-shroom",player) and state.has("Peashooter",player) and state.has("Magnet-shroom",player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)) and "odyssey" in modifier_flags:
                 final_plants.append("Puff-shroom")
                 final_plants.append("Peashooter")
                 final_plants.append("Magnet-shroom")
@@ -326,30 +376,45 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 break
 
 
+
+
+
+
+
+
+
+
+            # kernel three x3 kernel, scuba no lily
+            #cabbage three x3 cabbage, scuba no lily
+
+
+
+
+
             if state.has("Threepeater", player) and state.has("Jalapeno", player) and "odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Phoenix Threepeater", 2000, 700, 800, ["Threepeater", "Jalapeno"], ["straight_shooter"]))
 
-            if state.has("Plantern", player) and state.has("Cactus", player) and state.has("Umbrella Leaf", player) and state.has("Plant Gloves", player) and "odyssey" in modifier_flags:
+            if state.has("Plantern", player) and state.has("Cactus", player) and state.has("Umbrella Leaf", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)) and "odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Pharos Umbrella", 2000, 2000, 2000, ["Plantern", "Cactus","Umbrella Leaf"], []))
 
-            if state.has("Burger Blaster", player) and state.has("Cactus", player) and state.has("Melon-pult", player) and state.has("Ice-shroom", player) and state.has("Plant Gloves", player):  # with sunflower
+            if state.has("Burger Blaster", player) and state.has("Cactus", player) and state.has("Melon-pult", player) and state.has("Ice-shroom", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)):  # with sunflower
                 possible_plants.append(PlantData("Burger Blaster", 2000, 0, 1000, ["Burger Blaster", "Cactus","Melon-pult","Ice-shroom"], ["straight_shooter"]))
             if state.has("Snipea", player) and state.has("Doom-shroom", player) and "odyssey" in modifier_flags:  # with sunflower
                 possible_plants.append(PlantData("Reaper Snipea", 2000, 700, 2000, ["Snipea", "Doom-shroom"], []))
 
-            if state.has("Melon-pult", player) and state.has("Kernel-pult", player) and state.has("Cabbage-pult", player) and state.has("Garlic", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Melon-pult", player) and state.has("Kernel-pult", player) and state.has("Cabbage-pult", player) and state.has("Garlic", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Wither-pult", 2000, 0, 2000, ["Melon-pult", "Kernel-pult","Cabbage-pult","Garlic"], []))
 
-            if state.has("Melon-pult", player) and state.has("Ice-shroom", player) and state.has("Magnet-shroom", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Melon-pult", player) and state.has("Ice-shroom", player) and state.has("Magnet-shroom", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Maelonstrom", 2000, 0, 2000, ["Melon-pult", "Ice-shroom","Magnet-shroom"], ["applies_cryo"]))
 
 
-            if state.has("Chomper", player) and state.has("Wall-nut", player) and state.has("Cherry Bomb", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Chomper", player) and state.has("Wall-nut", player) and state.has("Cherry Bomb", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)) and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Cherrizilla", 2000, 0, 2000, ["Chomper", "Cherry Bomb","Wall-nut"], []))
-            if state.has("Fume-shroom", player) and state.has("Hypno-shroom", player) and state.has("Ice-shroom", player)and state.has("Doom-shroom", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Fume-shroom", player) and state.has("Hypno-shroom", player) and state.has("Ice-shroom", player)and state.has("Doom-shroom", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Doominator", 2000, 0, 2000, ["Fume-shroom", "Hypno-shroom","Ice-shroom","Doom-shroom"], []))
 
-            if state.has("Spruce Sharpshooter", player) and state.has("Aloe Aqua", player) and state.has("Saw-me-not", player)and state.has("Snow Lotus", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Spruce Sharpshooter", player) and state.has("Aloe Aqua", player) and state.has("Saw-me-not", player)and state.has("Snow Lotus", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Lifereaver Spruce", 2000, 0, 2000, ["Spruce Sharpshooter", "Aloe Aqua","Saw-me-not","Snow Lotus"], ["applies_cryo"]))
 
 
@@ -357,35 +422,35 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
 
 
 
-            if state.has("Starfruit", player) and state.has("Plantern", player) and state.has("Magnet-shroom", player)and state.has("Cactus", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Starfruit", player) and state.has("Plantern", player) and state.has("Magnet-shroom", player)and state.has("Cactus", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Magnetar", 1800, 1000, 1000, ["Starfruit", "Plantern","Magnet-shroom","Cactus"], []))
             if state.has("Burger Blaster", player) and state.has("Cactus", player) and state.has("Melon-pult", player):  # with sunflower
                 possible_plants.append(PlantData("Burger Blaster", 1800, 0, 900, ["Burger Blaster", "Cactus", "Melon-pult"],["straight_shooter"]))
             if state.has("Icetip Lily", player):
                 possible_plants.append(PlantData("Icetip Lily", 1600, 1400, 600, ["Icetip Lily"], ["applies_cryo"]))
 
-            if state.has("Peashooter", player) and state.has("Cherry Bomb", player) and state.has("Plant Gloves", player) and "upgrade_odyssey" in modifier_flags:
+            if state.has("Peashooter", player) and state.has("Cherry Bomb", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)) and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Gatling Cherry", 1600, 0, 600, ["Peashooter","Cherry Bomb"], ["straight_shooter"]))
 
-            if state.has("Sunflower", player) and state.has("Cabbage-pult", player) and state.has("Marigold", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Sunflower", player) and state.has("Cabbage-pult", player) and state.has("Marigold", player) and state.has("Coffee Bean", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Helios Cabbage", 1600, 0, 1600, ["Cabbage-pult", "Marigold"], []))
 
             if state.has("Peashooter", player) and state.has("Doom-shroom", player) and "odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Gatling Doom", 1600, 0, 600, ["Peashooter","Doom-shroom"], ["straight_shooter"]))
 
-            if state.has("Kernel-pult", player) and state.has("Puff-shroom", player) and state.has("Magnet-shroom", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Kernel-pult", player) and state.has("Puff-shroom", player) and state.has("Magnet-shroom", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Doominator", 1600, 1000, 1600, ["Kernel-pult", "Puff-shroom","Magnet-shroom"], []))
 
             if state.has("Peashooter", player) and state.has("Wall-nut", player) and state.has("Chomper", player):
                 possible_plants.append(PlantData("Chompzilla", 1500, 0, 1500, ["Peashooter", "Wall-nut","Chomper"], []))
 
-            if state.has("Fume-shroom", player) and state.has("Hypno-shroom", player) and state.has("Scaredy-shroom", player)and state.has("Magnet-shroom", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Fume-shroom", player) and state.has("Hypno-shroom", player) and state.has("Scaredy-shroom", player)and state.has("Magnet-shroom", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Charmitron", 1400, 0, 1400, ["Fume-shroom", "Hypno-shroom","Scaredy-shroom","Magnet-shroom"], []))
 
             if state.has("Snipea", player) and "odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Snipea", 1400, 1400, 1400, ["Snipea"], []))
 
-            if state.has("Peashooter", player) and state.has("Magnet-shroom", player) and state.has("Plantern", player) and state.has("Plant Gloves", player)and "upgrade_odyssey" in modifier_flags:
+            if state.has("Peashooter", player) and state.has("Magnet-shroom", player) and state.has("Plantern", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player))and "upgrade_odyssey" in modifier_flags:
                 possible_plants.append(PlantData("Photon Splitter", 1400, 0, 1400, ["Peashooter", "Plantern","Magnet-shroom"], []))
 
 
@@ -411,12 +476,12 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
             if state.has("Peashooter", player) and state.has("Puff-shroom", player) and state.has("Ice-shroom", player):
                 possible_plants.append(PlantData("Icicle-shroom", 1200, 0, 400, ["Peashooter", "Puff-shroom", "Ice-shroom"],["straight_shooter", "applies_cryo"]))
 
-            if state.has("Kernel-pult", player) and state.has("Marigold", player):
+            if state.has("Kernel-pult", player) and state.has("Marigold", player) and state.has("Coffee Bean", player):
                 possible_plants.append(PlantData("Golden Kernel", 1200, 1200, 1200, ["Kernel-pult","Marigold"], []))
             if state.has("Fume-shroom", player) and state.has("Doom-shroom", player) and state.has("Ice-shroom", player):
-                possible_plants.append(PlantData("Doomspike-shroom", 1200, 0, 800, ["Fume-shroom","Doom-shroom","Ice-shroom"], ["applies_cryo"]))
+                possible_plants.append(PlantData("Doomspike-shroom", 1200, 0, 600, ["Fume-shroom","Doom-shroom","Ice-shroom"], ["applies_cryo"]))
             if state.has("Saw-me-not", player):
-                possible_plants.append(PlantData("Twin Saw-me-not", 1000, 1000, 1000, ["Saw-me-not"], []))
+                possible_plants.append(PlantData("Twin Saw-me-not", 1000, 1000, 500, ["Saw-me-not"], []))
 
             if state.has("Kernel-pult", player) and (state.has("Cob Cannon", player) or state.has("Fertilizer", player)):
                 possible_plants.append(PlantData("Cob Cannon", 1000, 1000, 1000, ["Kernel-pult", "Cob Cannon"],["from_fertilizer","scuba_no_lilypad","doesnt_freeze"]))
@@ -426,6 +491,8 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 possible_plants.append(PlantData("Titan Pea Turret", 1000, 0, 500, ["Peashooter", "Threepeater","Jicamagic"], ["torchwood_usable","straight_shooter","doesnt_freeze"]))
             if state.has("Scaredy-shroom", player) and state.has("Hypno-shroom", player):
                 possible_plants.append(PlantData("Trippy-shroom", 1000, 0, 500, ["Scaredy-shroom", "Hypno-shroom"], ["straight_shooter"]))
+            if state.has("Melon-pult", player) and state.has("Threepeater", player):
+                possible_plants.append(PlantData("Melon Tri-pult", 1000, 400, 1000, ["Melon-pult", "Threepeater"], ["scuba_no_lilypad"]))
             if state.has("Starfruit", player) and state.has("Plantern", player):
                 possible_plants.append(PlantData("Starglow", 1000, 1000, 500, ["Starfruit", "Plantern"], []))
             if state.has("Spruce Ballista", player) and state.has("Aloe Aqua", player) and (state.has("Spruce Sharpshooter", player) or state.has("Fertilizer", player)):
@@ -436,7 +503,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 possible_plants.append(PlantData("Garlic-pult", 900, 0, 900, ["Melon-pult", "Garlic"], []))
             if state.has("Melon-pult", player) and state.has("Jalapeno", player):
                 possible_plants.append(PlantData("Summer Melon", 900, 0, 900, ["Melon-pult", "Jalapeno"], ["removes_cryo"]))
-            if state.has("Melon-pult", player) and state.has("Marigold", player):
+            if state.has("Melon-pult", player) and state.has("Marigold", player) and state.has("Coffee Bean", player):
                 possible_plants.append(PlantData("Golden Melon", 900, 450, 900, ["Melon-pult","Marigold"], ["scuba_no_lilypad"]))
             if state.has("Cactus", player) and state.has("Doom-shroom", player):
                 possible_plants.append(PlantData("Doom Cactus", 900, 100, 300, ["Cactus", "Doom-shroom"], ["straight_shooter"]))
@@ -477,16 +544,16 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 possible_plants.append(PlantData("Foul-shroom", 700, 0, 700, ["Fume-shroom", "Garlic"], []))
             if state.has("Cabbage-pult", player) and state.has("Ice-shroom", player):
                 possible_plants.append(PlantData("Coldslaw", 700, 0, 700, ["Cabbage-pult", "Ice-shroom"], []))
-
-
-
-
+            if state.has("Threepeater", player) and state.has("Doom-shroom", player):
+                possible_plants.append(PlantData("Doom-spreader", 600, 200, 200, ["Threepeater", "Doom-shroom"], ["straight_shooter"]))
             if state.has("Cabbage-pult", player) and state.has("Jicamagic", player):
                 possible_plants.append(PlantData("Cab-barrage", 600, 600, 600, ["Cabbage-pult", "Jicamagic"], ["scuba_no_lilypad"]))
             if state.has("Fume-shroom", player) and state.has("Starfruit", player):
                 possible_plants.append(PlantData("Starburst-shroom", 600, 0, 600, ["Fume-shroom", "Starfruit"], []))
-
-
+            if state.has("Cabbage-pult", player) and state.has("Threepeater", player):
+                possible_plants.append(PlantData("Cabbage Tri-pult", 600, 200, 600, ["Cabbage-pult", "Threepeater"], ["scuba_no_lilypad"]))
+            if state.has("Kernel-pult", player) and state.has("Threepeater", player):
+                possible_plants.append(PlantData("Kernel Tri-pult", 600, 200, 600, ["Kernel-pult", "Threepeater"], ["scuba_no_lilypad"]))
             if state.has("Threepeater", player) and state.has("Peashooter", player):
                 possible_plants.append(PlantData("Multipeater", 600, 300, 300, ["Threepeater", "Peashooter"], ["straight_shooter","torchwood_usable"]))
             if state.has("Threepeater", player) and state.has("Cherry Bomb", player):
@@ -501,14 +568,16 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 possible_plants.append(PlantData("Cracked Melon", 600, 0, 600, ["Melon-pult", "Cabbage-pult"], []))
             if state.has("Puff-shroom", player) and state.has("Melon-pult", player):
                 possible_plants.append(PlantData("Slice-pult", 600, 0, 600, ["Melon-pult", "Puff-shroom"], []))
+            if state.has("Melon-pult", player) and state.has("Doom-shroom", player):
+                possible_plants.append(PlantData("Doom-pult", 550, 0, 550, ["Melon-pult","Doom-shroom"], []))
             if state.has("Cactus", player) and state.has("Plantern", player):
                 possible_plants.append(PlantData("Lumos Cactus", 500, 0, 250, ["Cactus","Plantern"], ["targets_air"]))
             if state.has("Melon-Pult", player) and state.has("Squash", player):
                 possible_plants.append(PlantData("Gourd-pult", 500, 0, 250, ["Melon-Pult","Squash"], []))
             if state.has("Peashooter", player) and state.has("Plantern", player):
                 possible_plants.append(PlantData("Gatling Beam", 500, 0, 500, ["Peashooter","Plantern"], []))
-
-
+            if state.has("Melon-pult", player) and state.has("Marigold", player):
+                possible_plants.append(PlantData("Silver Melon", 500, 0, 500, ["Melon-pult","Marigold"], []))
             if state.has("Starfruit", player) and state.has("Magnet-shroom", player):
                 possible_plants.append(PlantData("Starmorph", 500, 300, 250, ["Starfruit","Magnet-shroom"], []))
             if state.has("Fume-shroom", player) and state.has("Jalapeno", player):
@@ -526,6 +595,9 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
             if state.has("Puff-shroom", player) and state.has("Kernel-pult", player):
                 possible_plants.append(PlantData("Popcorn-pult", 500, 0, 500, ["Kernel-pult", "Puff-shroom"], []))
 
+            # jala cabbage - 400
+            if state.has("Cabbage-pult", player) and state.has("Jalapeno", player):
+                possible_plants.append(PlantData("Kimchi-pult", 400, 0, 400, ["Cabbage-pult","Jalapeno"], ["doesnt_freeze","removes_cryo"]))
             if state.has("Scaredy-shroom", player) and state.has("Cherry Bomb", player):
                 possible_plants.append(PlantData("Blasty-shroom", 400, 0, 200, ["Scaredy-shroom","Cherry Bomb"], ["straight_shooter"]))
 
@@ -540,6 +612,12 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
             if state.has("Threepeater", player) and state.has("Plantern", player):
                 possible_plants.append(PlantData("Ray-shroom", 300, 0, 300, ["Fume-shroom","Plantern"], []))
 
+            if state.has("Cabbage-pult", player) and state.has("Doom-shroom", player):
+                possible_plants.append(PlantData("Damage-pult", 300, 0, 300, ["Cabbage-pult","Doom-shroom"], []))
+            if state.has("Kernel-pult", player) and state.has("Jalapeno", player):
+                possible_plants.append(PlantData("Popcorn-pult", 300, 0, 300, ["Kernel-pult","Jalapeno"], ["doesnt_freeze","removes_cryo"]))
+            if state.has("Cabbage-pult", player) and state.has("Marigold", player) and state.has("Coffee Bean", player):
+                possible_plants.append(PlantData("Golden Cabbage", 300, 300, 300, ["Cabbage-pult","Marigold"], ["scuba_no_lilypad"]))
             if state.has("Peashooter", player) and state.has("Doom-shroom", player):
                 possible_plants.append(PlantData("Doom Pea", 300, 0, 150, ["Peashooter","Doom-shroom"], ["straight_shooter"]))
             if state.has("Fume-shroom", player) and state.has("Magnet-shroom", player):
@@ -552,7 +630,10 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 possible_plants.append(PlantData("Butternut-pult", 300, 0, 300, ["Squash", "Kernel-pult"], []))
             if state.has("Cabbage-pult", player) and state.has("Squash", player):
                 possible_plants.append(PlantData("Lettuce-pult", 250, 0, 250, ["Cabbage-pult","Squash"], []))
-
+            if state.has("Fume-shroom", player) and state.has("Cactus", player):
+                possible_plants.append(PlantData("Saguaro-shroom", 250, 0, 250, ["Fume-shroom","Cactus"], ["targets_air"]))
+            if state.has("Fume-shroom", player) and state.has("Cherry Bomb", player):
+                possible_plants.append(PlantData("Trigger-shroom", 250, 0, 250, ["Fume-shroom","Cherry Bomb"], []))
             if state.has("Fume-shroom", player) and state.has("Potato Mine", player):
                 possible_plants.append(PlantData("Starch-shroom", 250, 0, 250, ["Fume-shroom","Potato Mine"], []))
             if state.has("Cabbage-pult", player) and state.has("Kernel-pult", player):  # with sunflower
@@ -566,13 +647,19 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
             if state.has("Fume-shroom", player) and (state.has("Gloom-shroom", player) or state.has("Fertilizer", player)):
                 possible_plants.append(PlantData("Gloom-shroom", 250, 250, 125, ["Fume-shroom","Gloom-shroom"], []))
             if state.has("Cabbage-pult", player) and state.has("Marigold", player):
-                possible_plants.append(PlantData("Golden Cabbage", 200, 200, 200, ["Cabbage-pult","Marigold"], ["scuba_no_lilypad"]))
+                possible_plants.append(PlantData("Silver Cabbage", 200, 0, 200, ["Cabbage-pult","Marigold"], []))
             if state.has("Magnet-shroom", player) and state.has("Cactus", player):
                 possible_plants.append(PlantData("Magnethorn", 200, 0, 100, ["Cactus","Magnet-shroom"], ["targets_air","straight_shooter"]))
+            if state.has("Kernel-pult", player) and state.has("Marigold", player):
+                possible_plants.append(PlantData("Silver Corn", 200, 0, 200, ["Kernel-pult","Marigold"], []))
+            if state.has("Kernel-pult", player) and state.has("Doom-shroom", player):
+                possible_plants.append(PlantData("Doom Kernel", 200, 0, 200, ["Kernel-pult","Doom-shroom"], []))
+            if state.has("Cactus", player) and state.has("Ice-shroom", player):
+                possible_plants.append(PlantData("Ice Cactus", 200, 0, 100, ["Cactus","Ice-shroom"], ["applies_cryo"]))
             if state.has("Spruce Sharpshooter", player):
-                possible_plants.append(PlantData("Spruce Sharpshooter", 200, 0, 100, ["Spruce Sharpshooter"], []))
+                possible_plants.append(PlantData("Spruce Sharpshooter", 200, 0, 100, ["Spruce Sharpshooter"], ["doesnt_freeze"]))
             if state.has("Kernel-pult", player) and state.has("Ice-shroom", player):
-                possible_plants.append(PlantData("Cobsicle", 150, 0, 150, ["Kernel-pult","Ice-shroom"], []))
+                possible_plants.append(PlantData("Cobsicle", 150, 0, 150, ["Kernel-pult","Ice-shroom"], ["applies_cryo"]))
             if state.has("Puff-shroom", player):
                 possible_plants.append(PlantData("Puff-shroom", 150, 0, 150, ["Puff-shroom"], ["straight_shooter"]))
             if state.has("Fume-shroom", player):
@@ -636,6 +723,11 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                             final_plants.append("Sea-shroom")
                             final_plants.append("Cactus")
                             pool_bonus = 400
+                            break
+                        elif state.has("Fume-shroom",player) and state.has("Tangle Kelp",player):
+                            final_plants.append("Fume-shroom")
+                            final_plants.append("Tangle Kelp")
+                            pool_bonus = 350
                             break
                         elif state.has("Threepeater",player) and state.has("Tangle Kelp",player):
                             final_plants.append("Threepeater")
@@ -882,71 +974,68 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                     return False
                 #add a plant that satisfies cpl
                 cpl = 200
-                if cpl_requirement<200:
-                    if state.has("Peashooter", player):
-                        final_plants.append("Peashooter")
-                        cpl = 100
-                    elif state.has("Starfruit", player):
-                        final_plants.append("Starfruit")
-                        cpl = 100
-                    elif state.has("Cabbage-pult", player):
-                        final_plants.append("Cabbage-pult")
-                        cpl = 100
-                    elif state.has("Kernel-pult", player):
-                        final_plants.append("Kernel-pult")
-                        cpl = 100
-                    elif cpl_requirement<100:
-                        if state.has("Fume-shroom", player):
-                            final_plants.append("Fume-shroom")
-                            cpl = 75
-                        elif state.has("Hypno-shroom", player):
-                            final_plants.append("Hypno-shroom")
-                            cpl = 75
-                        elif cpl_requirement<75:
-                            if state.has("Wall-nut", player):
-                                final_plants.append("Wall-nut")
-                                cpl = 50
-                            elif state.has("Doom-shroom", player):
-                                final_plants.append("Doom-shroom")
-                                cpl = 50
-                            elif state.has("Squash", player):
-                                final_plants.append("Squash")
-                                cpl = 50
-                            elif state.has("Bamblock", player):
-                                final_plants.append("Bamblock")
-                                cpl = 50
-                            elif state.has("Nyan Squash", player):
-                                final_plants.append("Nyan Squash")
-                                cpl = 50
-                            elif cpl<50:
-                                if state.has("Potato Mine", player):
-                                    final_plants.append("Potato Mine")
-                                    cpl = 25
-                                elif state.has("Puff-shroom", player):
-                                    final_plants.append("Puff-shroom")
-                                    cpl = 0
-                                elif state.has("Scaredy-shroom", player):
-                                    final_plants.append("Scaredy-shroom")
-                                    cpl = 25
-                                elif state.has("Sea-shroom", player) and "water" in modifier_flags:
-                                    final_plants.append("Sea-shroom")
-                                    cpl = 0
-                                elif state.has("Lily Pad",player) and "water" in modifier_flags and state.has("Fertilizer",player):
-                                    final_plants.append("Lily Pad")
-                                    cpl = 0
-                                elif len(final_plants) > free_slots+1 and state.has("Lily Pad",player) and "water" in modifier_flags and state.has("Cattail",player):
-                                    final_plants.append("Cattail")
-                                    final_plants.append("Lily Pad")
-                                    cpl = 25
-                                elif state.has("Cattail Girl",player) and "water" in modifier_flags:
-                                    final_plants.append("Cattail Girl")
-                                    cpl = 25
-                if cpl < cpl_requirement:
-                    if state.has("Lawnmowers",player) and "water" not in modifier_flags and cpl < 100:
-                            pass
-                    elif state.has("Lawnmowers",player) and state.has("Pool Cleaners",player) and "water" in modifier_flags and cpl < 100:
-                            pass
-                    else:
+
+
+                if state.has("Puff-shroom", player):
+                    final_plants.append("Puff-shroom")
+                    cpl = 0
+                elif state.has("Sea-shroom", player) and "water" in modifier_flags:
+                    final_plants.append("Sea-shroom")
+                    cpl = 0
+                elif state.has("Lily Pad",player) and "water" in modifier_flags and state.has("Fertilizer",player):
+                    final_plants.append("Lily Pad")
+                    cpl = 0
+                elif state.has("Scaredy-shroom", player):
+                    final_plants.append("Scaredy-shroom")
+                    cpl = 25
+                elif state.has("Cattail Girl", player) and "water" in modifier_flags:
+                    final_plants.append("Cattail Girl")
+                    cpl = 25
+                elif len(final_plants) > free_slots+1 and state.has("Lily Pad",player) and "water" in modifier_flags and state.has("Cattail",player):
+                    final_plants.append("Cattail")
+                    final_plants.append("Lily Pad")
+                    cpl = 25
+                elif state.has("Potato Mine", player):
+                    final_plants.append("Potato Mine")
+                    cpl = 25
+                elif state.has("Wall-nut", player):
+                    final_plants.append("Wall-nut")
+                    cpl = 50
+                elif state.has("Doom-shroom", player):
+                    final_plants.append("Doom-shroom")
+                    cpl = 50
+                elif state.has("Squash", player):
+                    final_plants.append("Squash")
+                    cpl = 50
+                elif state.has("Bamblock", player):
+                    final_plants.append("Bamblock")
+                    cpl = 50
+                elif state.has("Nyan Squash", player):
+                    final_plants.append("Nyan Squash")
+                    cpl = 50
+                elif state.has("Fume-shroom", player):
+                    final_plants.append("Fume-shroom")
+                    cpl = 75
+                elif state.has("Hypno-shroom", player):
+                    final_plants.append("Hypno-shroom")
+                    cpl = 75
+
+                elif state.has("Peashooter", player):
+                    final_plants.append("Peashooter")
+                    cpl = 100
+                elif state.has("Starfruit", player):
+                    final_plants.append("Starfruit")
+                    cpl = 100
+                elif state.has("Cabbage-pult", player):
+                    final_plants.append("Cabbage-pult")
+                    cpl = 100
+                elif state.has("Kernel-pult", player):
+                    final_plants.append("Kernel-pult")
+                    cpl = 100
+
+
+
+                if cpl > cpl_requirement:
                         return False
                 #if you cant then return false
 
@@ -1027,7 +1116,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 if state.has("Chomper", player):
                     if "Chomper" not in final_plants:
                         final_plants.append("Chomper")
-                        level_strength -= 200
+                        level_strength -= 150
                         continue
                 if state.has("Jalapeno", player):
                     if "Jalapeno" not in final_plants:
@@ -1057,6 +1146,11 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 if state.has("Squash", player):
                     if "Squash" not in final_plants:
                         final_plants.append("Squash")
+                        level_strength -= 100
+                        continue
+                if state.has("Hoarfrost Lichen", player):
+                    if "Hoarfrost Lichen" not in final_plants:
+                        final_plants.append("Hoarfrost Lichen")
                         level_strength -= 100
                         continue
                 # add explosive/ support bonuses
@@ -1275,13 +1369,13 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
     add_rule(world.get_location("Pool: Level 21 (2)", player),
              lambda state: can_beat_power_level(state, 200, ["water","scuba"],0))
     add_rule(world.get_location("Pool: Level 22 (1)", player),
-             lambda state: can_beat_power_level(state, 200, ["water"],0))
+             lambda state: can_beat_power_level(state, 300, ["water"],0))
     add_rule(world.get_location("Pool: Level 22 (2)", player),
-             lambda state: can_beat_power_level(state, 200, ["water"],0))
+             lambda state: can_beat_power_level(state, 300, ["water"],0))
     add_rule(world.get_location("Pool: Level 23 (1)", player),
-             lambda state: can_beat_power_level(state, 200, ["water"],0))
+             lambda state: can_beat_power_level(state, 300, ["water"],0))
     add_rule(world.get_location("Pool: Level 23 (2)", player),
-             lambda state: can_beat_power_level(state, 200, ["water"],0))
+             lambda state: can_beat_power_level(state, 300, ["water"],0))
     add_rule(world.get_location("Pool: Level 24 (1)", player),
              lambda state: can_beat_power_level(state, 300, ["water"],0))
     add_rule(world.get_location("Pool: Level 24 (2)", player),
@@ -1402,6 +1496,14 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                  lambda state: can_beat_conveyor(state, ["Bamblock","Firnace","Spruce Sharpshooter","Aloe Aqua","Snow Lotus","Saw-me-not"], [], 0))
         add_rule(world.get_location("Snow: Level 9 (2)", player),
                  lambda state: can_beat_conveyor(state, ["Bamblock","Firnace","Spruce Sharpshooter","Aloe Aqua","Snow Lotus","Saw-me-not"], [], 0))
+
+
+        add_rule(world.get_location("Snowy Night: Level 1 (1)", player),
+                lambda state: can_beat_power_level(state, 200, ["snow", "night"],0))  # yeti
+        add_rule(world.get_location("Snowy Night: Level 1 (2)", player),
+                lambda state: can_beat_power_level(state, 200, ["snow", "night"], 0))
+
+
 
 #cattail girl carries without sunflowers btw
 
@@ -1736,9 +1838,9 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                  lambda state: can_beat_power_level(state, 800, ["water","balloon","tough_balloon"],0) and state.has("Last Stand",player))
 
             add_rule(world.get_location("Air Raid (1)", player),
-                 lambda state: can_beat_power_level(state, 400, ["water","balloon","tough_balloon","night"],0) and state.has("Air Raid",player))
+                 lambda state: can_beat_power_level(state, 600, ["water","balloon","tough_balloon","night"],0) and state.has("Air Raid",player))
             add_rule(world.get_location("Air Raid (2)", player),
-                 lambda state: can_beat_power_level(state, 400, ["water","balloon","tough_balloon","night"],0) and state.has("Air Raid",player))
+                 lambda state: can_beat_power_level(state, 600, ["water","balloon","tough_balloon","night"],0) and state.has("Air Raid",player))
 
             add_rule(world.get_location("Advanced Challenge: 12-Lane Day (1)", player),
                  lambda state: can_beat_power_level(state, 1000, ["balloon","tough_balloon"],0) and state.has("Advanced Challenge: 12-Lane Day",player))
@@ -1821,9 +1923,9 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                  lambda state: state.has("Chomper Snake", player))
 
             add_rule(world.get_location("Chinese Chezz (1)", player),
-                 lambda state: state.has("Chinese Chezz", player) and state.has("Plant Gloves", player))
+                 lambda state: state.has("Chinese Chezz", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)))
             add_rule(world.get_location("Chinese Chezz (2)", player),
-                 lambda state: state.has("Chinese Chezz", player) and state.has("Plant Gloves", player))
+                 lambda state: state.has("Chinese Chezz", player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)))
 
             add_rule(world.get_location("2048: Pea-volution (1)", player),
                  lambda state: state.has("2048: Pea-volution", player))
@@ -1874,82 +1976,132 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
             add_rule(world.get_location("Nutsweeper (2)", player),
                  lambda state: state.has("Nutsweeper", player))
 
+            add_rule(world.get_location("Zombie Sorter (1)", player),
+                     lambda state: state.has("Zombie Sorter", player))
+            add_rule(world.get_location("Zombie Sorter (2)", player),
+                     lambda state: state.has("Zombie Sorter", player))
+
+            add_rule(world.get_location("Explode-O-su! (1)", player),
+                     lambda state: state.has("Explode-O-su!", player))
+            add_rule(world.get_location("Explode-O-su! (2)", player),
+                     lambda state: state.has("Explode-O-su!", player))
+
+            add_rule(world.get_location("I, Zomboss? (1)", player),
+                     lambda state: state.has("I, Zomboss?", player))
+            add_rule(world.get_location("I, Zomboss? (2)", player),
+                     lambda state: state.has("I, Zomboss?", player))
+
+            add_rule(world.get_location("Time Attack (1)", player),
+                 lambda state:  state.has("Time Attack", player) and can_beat_power_level(state, 800,["water"],0) and state.count("Seed Slot",player) > 4)
+            add_rule(world.get_location("Time Attack (2)", player),
+                 lambda state: state.has("Time Attack", player) and can_beat_power_level(state, 800,["water"],0) and state.count("Seed Slot",player) > 4)
+
+            add_rule(world.get_location("Wheelbarrow Challenge (1)", player),
+                 lambda state:  state.has("Wheelbarrow Challenge", player) and can_beat_power_level(state, 800,[],0) and state.has("Wheelbarrow", player) and state.has("Plant Gloves", player))
+            add_rule(world.get_location("Wheelbarrow Challenge (2)", player),
+                 lambda state: state.has("Wheelbarrow Challenge", player) and can_beat_power_level(state, 800,[],0) and state.has("Wheelbarrow", player) and state.has("Plant Gloves", player))
+            # not marked roof b/c pots are over 50k sun
+
+
 
     if options.adventure_odyssey or options.goal_type == 2:
-            add_rule(world.get_location("Odyssey Adventure: Level 1 (1)", player),
+
+            add_rule(world.get_location("Odyssey Adventure: Gatling Doom (1)", player),
                  lambda state: state.count("Progressive Odyssey Adventure", player)>0)
-            add_rule(world.get_location("Odyssey Adventure: Level 1 (2)", player),
+            add_rule(world.get_location("Odyssey Adventure: Gatling Doom (2)", player),
                  lambda state: state.count("Progressive Odyssey Adventure", player)>0)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 2 (1)", player),
-                 lambda state: can_beat_power_level(state, 1600,["odyssey"],3) and state.count("Progressive Odyssey Adventure", player)>1)
-            add_rule(world.get_location("Odyssey Adventure: Level 2 (2)", player),
-                 lambda state: can_beat_power_level(state, 1600,["odyssey"],3) and state.count("Progressive Odyssey Adventure", player)>1)
+            add_rule(world.get_location("Odyssey Adventure: Gatling Icicle-shroom (1)", player),
+                 lambda state: state.count("Progressive Odyssey Adventure", player)>1)
+            add_rule(world.get_location("Odyssey Adventure: Gatling Icicle-shroom (2)", player),
+                 lambda state: state.count("Progressive Odyssey Adventure", player)>1)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 3 (1)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>2)
-            add_rule(world.get_location("Odyssey Adventure: Level 3 (2)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>2)
+            add_rule(world.get_location("Odyssey Adventure: Big Bang Cherry (1)", player),
+                 lambda state: state.count("Progressive Odyssey Adventure", player)>2 and (state.has("Cherry Bomb", player) and state.has("Squash", player) and state.has("Seed Slot", player)))
+            add_rule(world.get_location("Odyssey Adventure: Big Bang Cherry (2)", player),
+                 lambda state: state.count("Progressive Odyssey Adventure", player)>2 and (state.has("Cherry Bomb", player) and state.has("Squash", player) and state.has("Seed Slot", player)))
 
-            add_rule(world.get_location("Odyssey Adventure: Level 4 (1)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>3)
-            add_rule(world.get_location("Odyssey Adventure: Level 4 (2)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>3)
+            add_rule(world.get_location("Odyssey Adventure: Twin Solar-nut (1)", player),
+                 lambda state: state.count("Progressive Odyssey Adventure", player)>3 and state.has("Wall-nut", player))
+            add_rule(world.get_location("Odyssey Adventure: Twin Solar-nut (2)", player),
+                 lambda state: state.count("Progressive Odyssey Adventure", player)>3 and state.has("Wall-nut", player))
 
-            add_rule(world.get_location("Odyssey Adventure: Level 5 (1)", player),
-                 lambda state: can_beat_power_level(state, 1400,["odyssey"],3) and state.count("Progressive Odyssey Adventure", player)>4)
-            add_rule(world.get_location("Odyssey Adventure: Level 5 (2)", player),
-                 lambda state: can_beat_power_level(state, 1400,["odyssey"],3) and state.count("Progressive Odyssey Adventure", player)>4)
+            add_rule(world.get_location("Odyssey Adventure: Aristocattail (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>4)
+            add_rule(world.get_location("Odyssey Adventure: Aristocattail (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>4)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 6 (1)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>5)
-            add_rule(world.get_location("Odyssey Adventure: Level 6 (2)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>5)
+            add_rule(world.get_location("Odyssey Adventure: Empress-shroom (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>5)
+            add_rule(world.get_location("Odyssey Adventure: Empress-shroom (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>5)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 7 (1)", player),
-                 lambda state: can_beat_power_level(state, 1600,["odyssey","water"],3) and state.count("Progressive Odyssey Adventure", player)>6)
-            add_rule(world.get_location("Odyssey Adventure: Level 7 (2)", player),
-                 lambda state: can_beat_power_level(state, 1600,["odyssey","water"],3) and  state.count("Progressive Odyssey Adventure", player)>6)
+            add_rule(world.get_location("Odyssey Adventure: Cornveyor Weed (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>6)
+            add_rule(world.get_location("Odyssey Adventure: Cornveyor Weed (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>6)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 8 (1)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>7)
-            add_rule(world.get_location("Odyssey Adventure: Level 8 (2)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>7)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 9 (1)", player),#fog, zompellins, 3 slots, trident nut is the strongest
-                 lambda state: can_beat_power_level(state, 1200,["odyssey","water","balloon","tough_balloon","digger","cherry_newspaper"],3) and state.count("Progressive Odyssey Adventure", player)>8)
-            add_rule(world.get_location("Odyssey Adventure: Level 9 (2)", player),
-                 lambda state: can_beat_power_level(state, 1200,["odyssey","water","balloon","tough_balloon","digger","cherry_newspaper"],3) and state.count("Progressive Odyssey Adventure", player)>8)
+            add_rule(world.get_location("Odyssey Adventure: Phoenix Threepeater (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>7)
+            add_rule(world.get_location("Odyssey Adventure: Phoenix Threepeater (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>7)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 10 (1)", player),#cherry newspaper, flat roof
-                 lambda state: can_beat_power_level(state, 1200,["odyssey","roof","cherry_newspaper"],3) and state.count("Progressive Odyssey Adventure", player)>9)
-            add_rule(world.get_location("Odyssey Adventure: Level 10 (2)", player),
-                 lambda state: can_beat_power_level(state, 1200,["odyssey","roof","cherry_newspaper"],3) and state.count("Progressive Odyssey Adventure", player)>9)
+            add_rule(world.get_location("Odyssey Adventure: Obsidian Spikerock (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>8)
+            add_rule(world.get_location("Odyssey Adventure: Obsidian Spikerock (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>8)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 11 (1)", player),#gladiantuar, flat roof, require peashooter?
-                lambda state: can_beat_power_level(state, 1800, ["odyssey", "roof", "cherry_newspaper"],3) and state.count("Progressive Odyssey Adventure",player) > 10 and state.has("Peashooter",player))
-            add_rule(world.get_location("Odyssey Adventure: Level 11 (2)", player),
-                 lambda state: can_beat_power_level(state, 1800, ["odyssey", "roof", "cherry_newspaper"],3) and state.count("Progressive Odyssey Adventure",player) > 10 and state.has("Peashooter",player))
+            add_rule(world.get_location("Odyssey Adventure: Omni Pumpkin (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>9)
+            add_rule(world.get_location("Odyssey Adventure: Omni Pumpkin (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>9)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 12 (1)", player),#tougher balloon
-                 lambda state: can_beat_power_level(state, 1000, ["odyssey", "roof", "balloon","tough_balloon"],3) and state.count("Progressive Odyssey Adventure",player) > 11)
-            add_rule(world.get_location("Odyssey Adventure: Level 12 (2)", player),
-                 lambda state: can_beat_power_level(state, 1000, ["odyssey", "roof", "balloon","tough_balloon"],3) and state.count("Progressive Odyssey Adventure",player) > 11)
+            add_rule(world.get_location("Odyssey Adventure: Pharos Umbrella (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>10)
+            add_rule(world.get_location("Odyssey Adventure: Pharos Umbrella (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>10)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 13 (1)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>12 and state.has("Lily Pad",player))
-            add_rule(world.get_location("Odyssey Adventure: Level 13 (2)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>12 and state.has("Lily Pad",player))
+            add_rule(world.get_location("Odyssey Adventure: Buck-shroom Squad (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>11)
+            add_rule(world.get_location("Odyssey Adventure: Buck-shroom Squad (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>11)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 14 (1)", player),#none
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>13)
-            add_rule(world.get_location("Odyssey Adventure: Level 14 (2)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>13)
+            add_rule(world.get_location("Odyssey Adventure: Calamity-shroom (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>12)
+            add_rule(world.get_location("Odyssey Adventure: Calamity-shroom (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>12)
 
-            add_rule(world.get_location("Odyssey Adventure: Level 15 (1)", player),#probably 800 power? 3 slots taken
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>14 and can_beat_power_level(state, 800, ["odyssey"],3))
-            add_rule(world.get_location("Odyssey Adventure: Level 15 (2)", player),
-                 lambda state: state.count("Progressive Odyssey Adventure", player)>14 and can_beat_power_level(state, 800, ["odyssey"],3))
+            add_rule(world.get_location("Odyssey Adventure: Tesla Magnet (1)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>13)
+            add_rule(world.get_location("Odyssey Adventure: Tesla Magnet (2)", player),
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>13)
+
+            add_rule(world.get_location("Odyssey Adventure: Radiant Pot (1)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 14)
+            add_rule(world.get_location("Odyssey Adventure: Radiant Pot (2)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 14)
+
+            add_rule(world.get_location("Odyssey Adventure: Midas Umbrella (1)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 15)
+            add_rule(world.get_location("Odyssey Adventure: Midas Umbrella (2)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 15)
+
+            add_rule(world.get_location("Odyssey Adventure: Tycoonwood (1)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 16)
+            add_rule(world.get_location("Odyssey Adventure: Tycoonwood (2)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 16)
+
+            add_rule(world.get_location("Odyssey Adventure: Grim Arbiter (1)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 17)
+            add_rule(world.get_location("Odyssey Adventure: Grim Arbiter (2)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 17)
+
+            add_rule(world.get_location("Odyssey Adventure: Dragonbreath Torcher (1)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 18)
+            add_rule(world.get_location("Odyssey Adventure: Dragonbreath Torcher (2)", player),
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 18)
+
 
 
     if options.odyssey_minigames>0:
@@ -2160,6 +2312,173 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                 lambda state: state.has("Purgatory Gacha: Chaos", player) and state.has("Plant Gloves", player))
 
 
+            add_rule(world.get_location("Stats VS Mechanics 1 (1)", player),
+                lambda state: state.has("Stats VS Mechanics 1", player) and can_beat_power_level(state, 1400,["hard_cherry","harder_balloon","digger"],0) )
+            add_rule(world.get_location("Stats VS Mechanics 1 (2)", player),
+                lambda state: state.has("Stats VS Mechanics 1", player) and can_beat_power_level(state, 1400,["hard_cherry","harder_balloon","digger"],0) )
+
+            add_rule(world.get_location("Odyssey Gacha: Gacha Box (1)", player),
+             lambda state: state.has("Odyssey Gacha: Gacha Box", player) and (state.has("Plant Gloves", player) or state.has("Wheelbarrow", player) or state.has("Shovel", player)))
+            add_rule(world.get_location("Odyssey Gacha: Gacha Box (2)", player),
+             lambda state: state.has("Odyssey Gacha: Gacha Box", player) and (state.has("Plant Gloves", player) or state.has("Wheelbarrow", player) or state.has("Shovel", player)))
+
+
+
+
+
+    if options.fusionsanity["Common"]>0:
+        for key in common_fusion_table:
+            add_rule(world.get_location(key, player),
+                    lambda state, key2 = key: fusionsanity_string_check(state,key2))#i actually hate lambdas and ai had to fix my shitty mistakes
+        if options.adventure_extra > 0:
+            for key in snow_common_fusion_table:
+                add_rule(world.get_location(key, player),
+                         lambda state, key2=key: fusionsanity_string_check(state,key2))
+    if options.fusionsanity["Common+"] > 0:
+        add_rule(world.get_location("Peashooter + Bucket", player),
+                 lambda state: state.has("Peashooter", player))#buckets in day 8
+        add_rule(world.get_location("Wall-nut + Bucket", player),
+                 lambda state: state.has("Wall-nut", player))#buckets in day 8
+        add_rule(world.get_location("Tall-nut + Football Helmet", player),
+                 lambda state: state.has("Wall-nut", player) and (state.has("Tall-nut", player) or state.has("Fertilizer", player)) and has_football_helmet_access(state))#
+        add_rule(world.get_location("Starfruit + Magnet-shroom + Jack-in-the-Box", player),
+                 lambda state: state.has("Starfruit", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Starfruit + Magnet-shroom + Pickaxe", player),
+                 lambda state: state.has("Starfruit", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Starfruit + Magnet-shroom + Bucket", player),
+                 lambda state: state.has("Starfruit", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Pumpkin + Magnet-shroom + Jack-in-the-Box", player),
+                 lambda state: state.has("Pumpkin", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Pumpkin + Magnet-shroom + Pickaxe", player),
+                 lambda state: state.has("Pumpkin", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Pumpkin + Magnet-shroom + Bucket", player),
+                 lambda state: state.has("Pumpkin", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Wall-nut + Mecha Fragments", player),
+                 lambda state: state.has("Wall-nut", player) and has_mecha_fragment_access(state))#
+        add_rule(world.get_location("Peashooter + Puff-shroom + Bucket", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Puff-shroom", player))#buckets in day 8
+        add_rule(world.get_location("Fume-shroom + Magnet-shroom + Bucket", player),
+                 lambda state: state.has("Fume-shroom", player) and state.has("Magnet-shroom", player))
+        add_rule(world.get_location("Peashooter + Chrono Core", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Magnet-shroom", player))#i dont even know where you get chrono cores naturally
+        add_rule(world.get_location("Kernel-pult + Magnet-shroom + Chrono Core", player),
+                 lambda state: state.has("Kernel-pult", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Kernel-pult + Magnet-shroom + Bucket", player),
+                 lambda state: state.has("Kernel-pult", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Doom-shroom + Magnet-shroom + Chrono Core", player),
+                 lambda state: state.has("Doom-shroom", player) and state.has("Magnet-shroom", player))#magnet sunflower makes them
+        add_rule(world.get_location("Wall-nut + Chrono Core", player),
+                 lambda state: state.has("Wall-nut", player) and state.has("Magnet-shroom", player))#i dont even know where you get chrono cores naturally
+        add_rule(world.get_location("Doom-shroom + Magnet-shroom + Bucket", player),
+                 lambda state: state.has("Doom-shroom", player) and state.has("Magnet-shroom",player))
+        add_rule(world.get_location("Doom-shroom + Magnet-shroom + Jack-in-the-Box", player),
+                 lambda state: state.has("Doom-shroom", player) and state.has("Magnet-shroom",player))
+        add_rule(world.get_location("Squash + Bucket", player),
+                 lambda state: state.has("Squash", player))#buckets in day 8
+        add_rule(world.get_location("Melon-pult + Magnet-shroom + Bucket", player),
+                 lambda state: state.has("Melon-pult", player) and state.has("Magnet-shroom", player))
+        add_rule(world.get_location("Melon-pult + Magnet-shroom + Chrono Core", player),
+                 lambda state: state.has("Melon-pult", player) and state.has("Magnet-shroom", player))
+
+    if options.fusionsanity["Common+"] > 0:
+        for key in gold_fusion_table:
+            add_rule(world.get_location(key, player),
+                     lambda state, key2=key: fusionsanity_string_check(state, key2))
+
+    if options.fusionsanity["Common+"] > 0:
+        add_rule(world.get_location("Repeater + Cherry Bomb", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Cherry Bomb", player))
+        add_rule(world.get_location("Repeater + Hypno-shroom", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Hypno-shroom", player))
+        add_rule(world.get_location("Repeater + Ice-shroom", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Ice-shroom", player))
+        add_rule(world.get_location("Repeater + Jalapeno", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Jalapeno", player))
+        add_rule(world.get_location("Repeater + Plantern", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Plantern", player))
+        add_rule(world.get_location("Repeater + Garlic", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Garlic", player))
+
+        add_rule(world.get_location("Repeater + Peashooter", player),
+                 lambda state: state.has("Peashooter", player))
+
+        add_rule(world.get_location("Split Pea + Cherry Bomb", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Cherry Bomb", player))
+        add_rule(world.get_location("Split Pea + Hypno-shroom", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Hypno-shroom", player))
+        add_rule(world.get_location("Split Pea + Ice-shroom", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Ice-shroom", player))
+        add_rule(world.get_location("Split Pea + Jalapeno", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Jalapeno", player))
+        add_rule(world.get_location("Split Pea + Plantern", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Plantern", player))
+        add_rule(world.get_location("Split Pea + Garlic", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Garlic", player))
+
+        add_rule(world.get_location("Split Pea + Peashooter", player),
+                 lambda state: state.has("Peashooter", player))
+
+        add_rule(world.get_location("Gatling Pea + Cherry Bomb", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Cherry Bomb", player))
+        add_rule(world.get_location("Gatling Pea + Hypno-shroom", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Hypno-shroom", player))
+        add_rule(world.get_location("Gatling Pea + Ice-shroom", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Ice-shroom", player))
+        add_rule(world.get_location("Gatling Pea + Jalapeno", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Jalapeno", player))
+        add_rule(world.get_location("Gatling Pea + Plantern", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Plantern", player))
+        add_rule(world.get_location("Gatling Pea + Garlic", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Garlic", player))
+
+
+    if options.fusionsanity["Advanced"] > 0:
+        add_rule(world.get_location("Peashooter + Cherry Bomb + Cherry Bomb", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Cherry Bomb", player))
+        add_rule(world.get_location("Peashooter + Wall-nut + Chomper", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Wall-nut", player) and state.has("Chomper", player))
+        add_rule(world.get_location("Fume-shroom + Hypno-shroom + Scaredy-shroom", player),
+                 lambda state: state.has("Fume-shroom", player) and state.has("Hypno-shroom", player) and state.has("Scaredy-shroom", player))
+        add_rule(world.get_location("Fume-shroom + Ice-shroom + Doom-shroom", player),
+                 lambda state: state.has("Fume-shroom", player) and state.has("Ice-shroom", player) and state.has("Doom-shroom", player))
+        add_rule(world.get_location("Jalapeno + Jalapeno + Torchwood", player),
+                 lambda state: state.has("Jalapeno", player) and state.has("Torchwood", player))
+        add_rule(world.get_location("Squash + Threepeater + Tangle Kelp", player),
+                 lambda state: state.has("Squash", player) and state.has("Threepeater", player) and state.has("Tangle Kelp", player) and has_water_access(state))
+        add_rule(world.get_location("Plantern + Starfruit + Magnet-shroom", player),
+                 lambda state: state.has("Plantern", player) and state.has("Starfruit", player) and state.has("Magnet-shroom", player))
+        add_rule(world.get_location("Cactus + Blover + Pumpkin", player),
+                 lambda state: state.has("Cactus", player) and state.has("Blover", player) and state.has("Pumpkin", player))
+        add_rule(world.get_location("Cabbage-pult + Kernel-pult + Melon-pult", player),
+                 lambda state: state.has("Cabbage-pult", player) and state.has("Kernel-pult", player) and state.has("Melon-pult", player))
+        add_rule(world.get_location("Melon-pult [Kernel-pult] Melon-Pult + Jicamagic", player),
+                 lambda state: state.has("Melon-pult", player) and state.has("Kernel-pult", player) and state.has("Jicamagic", player))
+        add_rule(world.get_location("Garlic + Umbrella Leaf + Marigold + Coffee Bean", player),
+                 lambda state: state.has("Garlic", player) and state.has("Umbrella Leaf", player) and state.has("Marigold", player) and state.has("Coffee Bean", player))
+        add_rule(world.get_location("Fume-shroom + Magnet-shroom + Bucket + Football Helmet", player),
+                 lambda state: state.has("Fume-shroom", player) and state.has("Magnet-shroom", player))
+        add_rule(world.get_location("Repeater [Threepeater] Repeater + Jicamagic", player),
+                 lambda state: state.has("Peashooter", player) and state.has("Threepeater", player) and state.has("Jicamagic", player))
+        add_rule(world.get_location("Joker Pumpkin [Magnet-shroom] Cherry Pumpkin + Jicamagic", player),
+                 lambda state: state.has("Pumpkin", player) and state.has("Magnet-shroom", player) and state.has("Cherry Bomb", player) and state.has("Jicamagic", player))
+        add_rule(world.get_location("Chomper [Chomper] Chomper + Jicamagic", player),
+                 lambda state: state.has("Chomper", player) and state.has("Jicamagic", player))
+        add_rule(world.get_location("Tangle Kelp [Sea-shroom] Tangle Kelp + Jicamagic", player),
+                 lambda state: state.has("Tangle Kelp", player) and state.has("Sea-shroom", player) and state.has("Jicamagic", player))
+        add_rule(world.get_location("Spruce Sharpshooter + Saw-me-not + Aloe Aqua", player),
+                 lambda state: state.has("Spruce Sharpshooter", player) and state.has("Saw-me-not", player) and state.has("Aloe Aqua", player))
+        add_rule(world.get_location("Firnace + (Aloe Aqua + Snow Lotus)", player),
+                 lambda state: state.has("Firnace", player) and state.has("Aloe Aqua", player) and state.has("Snow Lotus", player))
+        add_rule(world.get_location("Wall-nut [Tall-nut] Wall-nut + Jicamagic", player),
+                 lambda state: state.has("Wall-nut", player) and (state.has("Tall-nut", player) or state.has("Fertilizer", player)) and state.has("Jicamagic", player))
+        add_rule(world.get_location("Puff-shroom [Gloom-shroom] Puff-shroom + Jicamagic", player),
+                 lambda state: state.has("Puff-shroom", player) and state.has("Fume-shroom", player) and (state.has("Gloom-shroom", player) or state.has("Fertilizer", player)) and state.has("Jicamagic", player))
+        add_rule(world.get_location("Gatling Pea + Football Helmet", player),
+                 lambda state: state.has("Peashooter", player) and has_football_helmet_access(state))
+        add_rule(world.get_location("Cabbage-pult [Cabbage-pult] Cabbage-pult + Jicamagic", player),
+                 lambda state: state.has("Cabbage-pult", player) and state.has("Jicamagic", player))
+
+
 
 
 
@@ -2168,7 +2487,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
 
     if options.goal_type == 0:
         #rf.assign_rule("Dr. Zomboss' Revenge", "POT+KER+CAB+MEL+UMBRE+MARI+GLOV+ICE+JAL+MAL")
-        world.completion_condition[player] = lambda state: state.has("Roof Access", player) and state.has("Flower Pot",player) and state.has("Kernel-pult", player) and state.has("Cabbage-pult", player) and state.has("Melon-pult",player) and state.has("Marigold",player) and state.has("Plant Gloves", player) and state.has("Mallet", player) and state.has("Jalapeno", player) and state.has("Ice-shroom", player)
+        world.completion_condition[player] = lambda state: state.has("Roof Access", player) and state.has("Flower Pot",player) and state.has("Kernel-pult", player) and state.has("Cabbage-pult", player) and state.has("Melon-pult",player) and state.has("Marigold",player) and (state.has("Plant Gloves",player) or state.has("Wheelbarrow",player)) and state.has("Mallet", player) and state.has("Jalapeno", player) and state.has("Ice-shroom", player) and state.has("Coffee Bean", player)
 
     if options.goal_type == 1:
         if options.adventure_extra == 2:
@@ -2176,7 +2495,7 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
         else:
             world.completion_condition[player] = lambda state: state.can_reach("Day: Level 9 (1)", "Location", player) and state.can_reach("Night: Level 18 (1)", "Location", player) and state.can_reach("Pool: Level 27 (1)", "Location", player) and state.can_reach("Fog: Level 36 (1)", "Location", player) and state.can_reach("Roof: Level 45 (1)", "Location",player)
     if options.goal_type == 2:
-        world.completion_condition[player] = lambda state: state.can_reach_location("Odyssey Adventure: Level 15 (1)",player)
+        world.completion_condition[player] = lambda state: state.can_reach_location("Odyssey Adventure: Dragonbreath Torcher (1)",player)
 
     if options.goal_type == 3:
         world.completion_condition[player] = lambda state: state.count("Trophy",player) >= int(options.trophy_number * (options.trophy_percentage/100))
