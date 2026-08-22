@@ -2027,80 +2027,80 @@ def set_rules(world, options: PVZFOptions, player: int, area_connections: dict, 
                  lambda state: state.count("Progressive Odyssey Adventure", player)>3 and state.has("Wall-nut", player))
 
             add_rule(world.get_location("Odyssey Adventure: Aristocattail (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>4)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>4)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Aristocattail (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>4)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>4)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Empress-shroom (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>5)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>5)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Empress-shroom (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>5)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>5)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Cornveyor Weed (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>6)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>6)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Cornveyor Weed (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>6)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>6)and state.count("Seed Slot",player) > 4
 
 
             add_rule(world.get_location("Odyssey Adventure: Phoenix Threepeater (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>7)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>7)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Phoenix Threepeater (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>7)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>7)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Obsidian Spikerock (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>8)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>8)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Obsidian Spikerock (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>8)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>8)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Omni Pumpkin (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>9)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>9)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Omni Pumpkin (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>9)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>9)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Pharos Umbrella (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>10)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>10)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Pharos Umbrella (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>10)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>10)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Buck-shroom Squad (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>11)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>11)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Buck-shroom Squad (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>11)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>11)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Calamity-shroom (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>12)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>12)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Calamity-shroom (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>12)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>12)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Tesla Magnet (1)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>13)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>13)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
             add_rule(world.get_location("Odyssey Adventure: Tesla Magnet (2)", player),
-                 lambda state:state.count("Progressive Odyssey Adventure", player)>13)
+                 lambda state:state.count("Progressive Odyssey Adventure", player)>13)and state.has("Lily Pad", player)and state.count("Seed Slot",player) > 4
 
             add_rule(world.get_location("Odyssey Adventure: Radiant Pot (1)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 14)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 14) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
             add_rule(world.get_location("Odyssey Adventure: Radiant Pot (2)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 14)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 14) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
 
             add_rule(world.get_location("Odyssey Adventure: Midas Umbrella (1)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 15)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 15) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
             add_rule(world.get_location("Odyssey Adventure: Midas Umbrella (2)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 15)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 15) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
 
             add_rule(world.get_location("Odyssey Adventure: Tycoonwood (1)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 16)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 16) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
             add_rule(world.get_location("Odyssey Adventure: Tycoonwood (2)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 16)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 16) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
 
             add_rule(world.get_location("Odyssey Adventure: Grim Arbiter (1)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 17)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 17) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
             add_rule(world.get_location("Odyssey Adventure: Grim Arbiter (2)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 17)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 17) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
 
             add_rule(world.get_location("Odyssey Adventure: Dragonbreath Torcher (1)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 18)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 18) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
             add_rule(world.get_location("Odyssey Adventure: Dragonbreath Torcher (2)", player),
-                     lambda state: state.count("Progressive Odyssey Adventure", player) > 18)
+                     lambda state: state.count("Progressive Odyssey Adventure", player) > 18) and state.has("Flower Pot", player)and state.count("Seed Slot",player) > 5
 
 
 
