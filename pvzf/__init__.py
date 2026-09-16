@@ -123,7 +123,7 @@ class PVZFWorld(World):
 
         max_locations = 90#TODO up this once i have enough locations
         if self.options.adventure_extra==2:
-            max_locations += 18
+            max_locations += 20
         if self.options.challenge_sanity:
             max_locations += 24
         #if self.options.showcase_sanity:
@@ -134,16 +134,28 @@ class PVZFWorld(World):
             max_locations += 20
 
         if self.options.minigame_sanity != 0:
-            max_locations += 46
+            max_locations += 58
             if self.options.minigame_sanity == 2:
                 max_locations += 64
         if self.options.adventure_odyssey or self.options.goal_type == 2:
-            max_locations+= 30
+            max_locations+= 38
 
         if self.options.odyssey_minigames != 0:
-            max_locations += 28
+            max_locations += 26
             if self.options.odyssey_minigames == 2:
-                max_locations += 52
+                max_locations += 56
+        if self.options.fusionsanity["Common"]>0:
+            max_locations += 296
+            if self.options.adventure_extra>0:
+                max_locations += 16#change this to dynamically count locations
+        if self.options.fusionsanity["Common+"] > 0:
+            max_locations += 52
+        if self.options.fusionsanity["Advanced"] > 0:
+            max_locations += 22
+
+
+
+
         #if not self.options.time_emblems:
         #    max_locations -= 27
         self.number_of_locations = max_locations
@@ -223,7 +235,8 @@ class PVZFWorld(World):
                 short_minigames = ["Compact Planting","Newspaper War", "Matryoshka", "Pogo Party!", "Bungee Blitz", "Beghouled","Seeing Stars",
                                    "Wall-nut Billiards", "Whack a Zombie", "High Gravity", "Squash Showdown 2","Zombies VS Zombies 2",
                                    "Splash and Clash", "Melon Ninja", "Eclipse", "Wall-nut Bowling","Big Trouble Little Zombie",
-                                   "True Art is an Explosion 2", "Graveout", "The Floor is Lava","Art Challenge: Wall-nut","Beghouled 2: Botany Crush","Lava Land"]
+                                   "True Art is an Explosion 2", "Graveout", "The Floor is Lava","Art Challenge: Wall-nut","Beghouled 2: Botany Crush","Lava Land","Zombie Sorter","Explode-O-su!",
+                                    "I, Zomboss?","Time Attack","Wheelbarrow Challenge"]
                 for minigame in minigame_item_table.keys():
 
                     if self.options.minigame_sanity == 1:
@@ -291,7 +304,7 @@ class PVZFWorld(World):
 
                 if self.options.adventure_extra == 0:
                     valid_keys = ["Firnace", "Spruce Sharpshooter", "Saw-me-not", "Snow Lotus",
-                                  "Aloe Aqua", "Bamblock", "Frozen Giftbox", "Spruce Ballista"]
+                                  "Aloe Aqua", "Bamblock", "Frozen Giftbox", "Spruce Ballista","Hoarfrost Lichen"]
                     if plant in valid_keys:
                         continue
 
@@ -311,7 +324,7 @@ class PVZFWorld(World):
                 slots_to_fill -=1
 
             if self.options.adventure_odyssey or self.options.goal_type == 2:
-                for i in range(15):
+                for i in range(19):
                     self.multiworld.itempool += [self.create_item("Progressive Odyssey Adventure")]
                     slots_to_fill -=1
 
@@ -339,6 +352,12 @@ class PVZFWorld(World):
                     self.multiworld.itempool += [self.create_item("Trophy")]
                     slots_to_fill -= 1
                 self.number_of_trophies = int(num_trophies * (self.options.trophy_percentage/100))
+
+
+            if slots_to_fill>80:
+                for i in range(int(slots_to_fill/80)):
+                    self.multiworld.itempool += [self.create_item("+50 Starting Sun")]
+                    slots_to_fill -= 1
 
 
 
@@ -377,16 +396,19 @@ class PVZFWorld(World):
 
 
     def get_filler_item_name(self) -> str:
-        return "Sun Bonus"
+        return "Bonus Sun"
 
     def fill_slot_data(self):
+
+
         return {
             "CompletionType": self.options.goal_type.value,
             "RingLink": self.options.ring_link.value,
             "DeathLink": self.options.death_link.value,
             "AdventureExtra": self.options.adventure_extra.value,
             "GoalTrophies":self.number_of_trophies,
-            "NegativeSun":self.options.negative_sun.value
+            "NegativeSun":self.options.negative_sun.value,
+            "Fusionsanity":self.options.fusionsanity["Common"]>0 or self.options.fusionsanity["Common+"]>0 or self.options.fusionsanity["Advanced"]>0 or self.options.fusionsanity["Odyssey"]>0
             #"CompletionType": self.options.completion_type.value,
         }
 

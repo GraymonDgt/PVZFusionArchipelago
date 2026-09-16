@@ -8,7 +8,7 @@ https://discord.gg/kkH4wBUmG9
 # SETUP GUIDE
 
 Download the melonloader version of the PVZ Fusion Multilanguage translation here: https://github.com/Teyliu/PVZF-Translation
-(Currently Multi-Language 3.5 has been tested)
+(Currently Multi-Language 3.8.1 has been tested)
 
 Download PVZFusionArchipelago.zip and extract its contents into the same folder as PlantsVsZombiesRH.exe,
 making sure that Archipelago.MultiClient.Net.dll is in UserLibs and PVZFusionArchipelago.dll is in Mods
@@ -23,4 +23,4 @@ You will play the adventure through the challenges menu
 
 Q: When I connect, I have no levels to play and no plants unlocked.
 
-A: You have likely made a typo in config.json, double check your slot name and port.
+A: You have likely made a typo in config.json, double check your slot name and port and check the melonloader console for more info.
