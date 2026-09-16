@@ -7,6 +7,8 @@ using Archipelago.MultiClient.Net.Packets;
 using Harmony;
 using HarmonyLib;
 using Il2Cpp;
+using Il2CppAutoChess;
+using Il2CppGameLevel.RogueShooting;
 using Il2CppInterop.Runtime;
 using Il2CppSystem;
 using Il2CppSystem.Collections.ObjectModel;
@@ -28,27 +30,29 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Windows;
+using static Il2CppGameLevel.EventNodes.EventNodeInputHandler;
 using static Il2CppSystem.Globalization.CultureInfo;
 using static UnityEngine.GraphicsBuffer;
-
+using System.Diagnostics;
 
 namespace PVZFusionArchipelago
 {
     public class Class1 : MelonMod
     {
         public const int maxItems = 350; // holy shit good programming practice?\
-        public const int maxLocations = 999;
+        public const int maxLocations = 2300;
         public int seedSlots = 0;
         public int trophyCount = 0;
         public int trophiesForGoal = 0;
+        public static int extraStartSun = 0;
         public static ArchipelagoSession session;
         public static int currentPlayerSlot;
         public static bool[] unlockedArray = new bool[maxItems];
         public static bool[] checkedArray = new bool[maxLocations];
         public static bool negativeSun = false;
 
-        const string page1 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/CardPagesContainer/NormalCards/Page1/";
-        const string page2 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/CardPagesContainer/ColorfulCards/Page1/";
+        const string page1 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/CardPagesContainer/NormalCards/";
+        const string page2 = "InGameUI(Clone)/Bottom/SeedLibrary/Grid/CardPagesContainer/ColorCards/";
   
         const string advanturePage1 = "ChallengeMenu(Clone)/Levels/PageAdvantureLevel/Pages/Page1/";
         const string advanturePage2 = "ChallengeMenu(Clone)/Levels/PageAdvantureLevel/Pages/Page2/";
@@ -63,7 +67,7 @@ namespace PVZFusionArchipelago
         const string survivalPage2 = "SurvivalMenu(Clone)/Level/Page2/";
 
 
-        const string odysseyadvanturePage1 = "TravelAdvantureMenu(Clone)/Levels/PageUltimateExprience/Page1/";
+        const string odysseyadvanturePage1 = "Canvas/TravelAdvantureMenu(Clone)/WeakPage/SamplePage(Clone)/";
 
 
         const string odysseyminigamePage1 = "Canvas/TravelGameMenu(Clone)/Levels/PageNormalTravel/Page1";
@@ -79,6 +83,7 @@ namespace PVZFusionArchipelago
         public static bool resetCD = false;
         public static float cdResetTime = 0.0F;
         public bool adventureExtraEnabled = false;
+        public static int fusionsanity = 0;
         public static int prevSun;
         public static bool sunExists = false;
         public static int goalType = 0;
@@ -284,7 +289,7 @@ namespace PVZFusionArchipelago
 
                             if (intValue != prevSun)
                             {
-
+                                MelonLogger.Msg($"{(intValue) - (prevSun)}");
                                 var dataDict = new Dictionary<string, JToken>
                         {
                             { "time", JToken.FromObject(System.DateTimeOffset.UtcNow.ToUnixTimeSeconds()) },
@@ -332,159 +337,163 @@ namespace PVZFusionArchipelago
             if (canvasupGl != null)
             {
                 //MelonLogger.Msg("Found CanvasUp");
-                if (unlockedArray[1] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "PeaShooter"); }
-                if (unlockedArray[2] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "SunFlower"); }
-                if (unlockedArray[3] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "CherryBomb"); }
-                if (unlockedArray[4] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "WallNut"); }
-                if (unlockedArray[5] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "PotatoMine"); }
-                if (unlockedArray[6] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Chomper"); }
-                if (unlockedArray[7] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Present"); }
-                if (unlockedArray[8] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "TallNut"); }
-                if (unlockedArray[9] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "EndoFlame"); }
-                if (unlockedArray[10] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "SmallPuff"); }
-                if (unlockedArray[11] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "FumeShroom"); }
-                if (unlockedArray[12] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "HypnoShroom"); }
-                if (unlockedArray[13] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "ScaredyShroom"); }
-                if (unlockedArray[14] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "IceShroom"); }
-                if (unlockedArray[15] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "DoomShroom"); }
-                if (unlockedArray[16] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "PresentZombie"); }
-                if (unlockedArray[17] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "GloomShroom"); }
-                if (unlockedArray[18] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "GraveBust"); }
-                if (unlockedArray[19] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "LilyPad"); }
-                if (unlockedArray[20] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Squash"); }
-                if (unlockedArray[21] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "ThreePeater"); }
-                if (unlockedArray[22] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Tanglekelp"); }
-                if (unlockedArray[23] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Jalapeno"); }
-                if (unlockedArray[24] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Caltrop"); }
-                if (unlockedArray[25] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "TorchWood"); }
-                if (unlockedArray[26] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Spike"); }
-                if (unlockedArray[27] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Wheat"); }
-                if (unlockedArray[28] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "SeaShroom"); }
-                if (unlockedArray[29] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Plantern"); }
-                if (unlockedArray[30] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Cactus"); }
-                if (unlockedArray[31] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Blover"); }
-                if (unlockedArray[32] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "StarFruit"); }
-                if (unlockedArray[33] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Pumpkin"); }
-                if (unlockedArray[34] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Magnetshroom"); }
-                if (unlockedArray[35] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Cattail"); }
-                if (unlockedArray[36] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Imitater"); }
-                if (unlockedArray[37] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Cabbage"); }
-                if (unlockedArray[38] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Pot"); }
-                if (unlockedArray[39] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Cornpult"); }
-                if (unlockedArray[40] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Garlic"); }
-                if (unlockedArray[41] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Umbrellaleaf"); }
-                if (unlockedArray[42] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Marigold"); }
-                if (unlockedArray[43] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Melonpult"); }
-                if (unlockedArray[44] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "CobCannon"); }
-                if (unlockedArray[45] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "MixBomb"); }
-                if (unlockedArray[46] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "PineFurnace"); }
-                if (unlockedArray[47] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "SpruceShooter"); }
-                if (unlockedArray[48] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "ShulkFlower"); }
-                if (unlockedArray[49] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "IceLotus"); }
-                if (unlockedArray[50] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "WaterAloes"); }
-                if (unlockedArray[51] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "Bamboo"); }
-                if (unlockedArray[52] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "SnowPresent"); }
-                if (unlockedArray[53] == false)
-                { HideTargetObjectChildren(canvasupGl, page1 + "SpruceBallista"); }
+                if (unlockedArray[1] == false) //peashooter
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 0); }
+                if (unlockedArray[2] == false) //sunflower
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 1); }
+                if (unlockedArray[3] == false) // cherry bomb
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 2); }
+                if (unlockedArray[4] == false) //wallnut
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 3); }
+                if (unlockedArray[5] == false) //potato mine
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 4); }
+                if (unlockedArray[6] == false) //chomper
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 5); }
+                if (unlockedArray[7] == false) //giftbox
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 6); }
+                if (unlockedArray[8] == false) //tallnut
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 7); }
+                if (unlockedArray[9] == false) // endoflame
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 8); }
+                if (unlockedArray[10] == false) //puff shroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 9); }
+                if (unlockedArray[11] == false) //fume-shroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 10); }
+                if (unlockedArray[12] == false) // hypnoshroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 11); }
+                if (unlockedArray[13] == false) //scaredy
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 12); }
+                if (unlockedArray[14] == false) //ice shroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 13); }
+                if (unlockedArray[15] == false) //doom shroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 14); }
+                if (unlockedArray[16] == false)// zombie present
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 15); }
+                if (unlockedArray[17] == false)//gloomshroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 16); }
+                if (unlockedArray[18] == false)//grave buster
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 17); }
+                if (unlockedArray[19] == false) //lily pad
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 18); }
+                if (unlockedArray[20] == false)//squash
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 19); }
+                if (unlockedArray[21] == false)//threepeater
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 20); }
+                if (unlockedArray[22] == false)//tangle kelp
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 21); }
+                if (unlockedArray[23] == false)// jalapeno
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 22); }
+                if (unlockedArray[24] == false) //spikeweed
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 23); }
+                if (unlockedArray[25] == false)//torchwood
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 24); }
+                if (unlockedArray[26] == false) //spikerock
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 25); }
+                if (unlockedArray[27] == false) //barley
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 26); }
+                if (unlockedArray[28] == false) //seashroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 27); }
+                if (unlockedArray[29] == false)//plantern
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 28); }
+                if (unlockedArray[30] == false)//cactus
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 29); }
+                if (unlockedArray[31] == false)//blover
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 30); }
+                if (unlockedArray[32] == false)//starfruit
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 31); }
+                if (unlockedArray[33] == false)//pumpkin
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 32); }
+                if (unlockedArray[34] == false)//magnet shroom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 33); }
+                if (unlockedArray[35] == false)//cattail
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 34); }
+                if (unlockedArray[36] == false)//imitater
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 35); }
+                if (unlockedArray[37] == false)//cabbagepult
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 36); }
+                if (unlockedArray[38] == false)//flower pot
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 37); }
+                if (unlockedArray[39] == false)//kernel pult
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 38); }
+                if (unlockedArray[40] == false)//garlic
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 39); }
+                if (unlockedArray[41] == false)//Umbrellaleaf
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 40); }
+                if (unlockedArray[42] == false)//marigold
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 41); }
+                if (unlockedArray[43] == false)//melonpult
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 42); }
+                if (unlockedArray[44] == false)//cobcannon
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 43); }
+                if (unlockedArray[45] == false)//jicamagic
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 44); }
+                if (unlockedArray[46] == false)//firnace
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 45); }
+                if (unlockedArray[47] == false)//spruce sharpshooter
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 46); }
+                if (unlockedArray[48] == false)//sawmenot
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 47); }
+                if (unlockedArray[49] == false)//icelotus
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 48); }
+                if (unlockedArray[50] == false)//aloe aqua
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 49); }
+                if (unlockedArray[51] == false)//bamblock
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 50); }
+                if (unlockedArray[52] == false)//hoarfrost lichen
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 51); }
+                if (unlockedArray[53] == false)//spruce ballista
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 52); }
+                if (unlockedArray[54] == false)//frozen giftbox
+                { HideSpecifiedNewSeedSlot(canvasupGl, page1, 53); }
 
-                if (unlockedArray[55] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "CattailGirl"); }
-                if (unlockedArray[56] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "SwordStar"); }
-                if (unlockedArray[57] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "Squalour"); }
-                if (unlockedArray[58] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "Hamburger"); }
-                if (unlockedArray[59] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "EndoFlameGirl"); }
-                if (unlockedArray[60] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "IceBean"); }
-                if (unlockedArray[61] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "Prismflower"); }
-                if (unlockedArray[62] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "SniperPea"); }
-                if (unlockedArray[63] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "Chrysantheautumn"); }
-                if (unlockedArray[64] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "IcePeach"); }
-                if (unlockedArray[65] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "FrozenPear"); }
-                if (unlockedArray[66] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "PassionFruit"); }
-                if (unlockedArray[67] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "LuckyBlover"); }
-                if (unlockedArray[68] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "DiamondImitater"); }
-                if (unlockedArray[69] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "BucketPlant"); }
-                if (unlockedArray[84] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "HelmetPlant"); }
-                if (unlockedArray[85] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "Apple"); }
-                if (unlockedArray[86] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "Firecracker"); }
-                if (unlockedArray[87] == false)
-                { HideTargetObjectChildren(canvasupGl, page2 + "GoldScaryPot"); }
+                if (unlockedArray[61] == false)//ohmion
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 0); }
+                if (unlockedArray[55] == false)//cattail girl
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 1); }
+                if (unlockedArray[56] == false)//swordmaster starfruit
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 2); }
+                if (unlockedArray[57] == false)//nyan squash
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 3); }
+                if (unlockedArray[58] == false)//burger blaster
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 4); }
+                if (unlockedArray[60] == false)//ice bean
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 5); }
+                if (unlockedArray[63] == false)//chrysanctum
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 6); }
+                if (unlockedArray[64] == false)//icetip lilly
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 7); }
+                if (unlockedArray[65] == false)//frozen pear
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 8); }
+                if (unlockedArray[66] == false)//doubleblast passionfruit
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 9); }
+                if (unlockedArray[67] == false)//luckyblover
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 10); }
+                //if (unlockedArray[69] == false)//bucket
+                //{ HideSpecifiedNewSeedSlot(canvasupGl, page2, 11); }
+                //if (unlockedArray[84] == false)//football helmet
+                //{ HideSpecifiedNewSeedSlot(canvasupGl, page2, 12); }
+                if (unlockedArray[85] == false)//hearty apple
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 11); }
+                if (unlockedArray[86] == false)//bamboom
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 12); }
+                if (unlockedArray[87] == false)//gold recycling vase
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 13); }
+                if (unlockedArray[59] == false)//queen endoflame
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 14); }
+                if (unlockedArray[62] == false)//sniper pea
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 15); }
+                if (unlockedArray[68] == false)//diamond imitater
+                { HideSpecifiedNewSeedSlot(canvasupGl, page2, 16); }
+
+
 
 
             } 
 
 
             if (unlockedArray[70] == false)//shovel
-            { HideTargetObject("Canvas", "InGameUI(Clone)/ShovelBank");
-                HideTargetObject("CanvasUp", "InGameUI(Clone)/ShovelBank");
+            { HideTargetObject("Canvas", "InGameUI(Clone)/Tools/ShovelBank");
+                HideTargetObject("CanvasUp", "InGameUI(Clone)/Tools/ShovelBank");
             }
 
 
@@ -603,12 +612,12 @@ namespace PVZFusionArchipelago
 
                 if (unlockedArray[72] == false)//gloves
                 {
-                    HideTargetObject("Canvas", "InGameUI(Clone)/GloveBank");
-                    HideTargetObject("CanvasUp", "InGameUI(Clone)/GloveBank");
+                    HideTargetObject("Canvas", "InGameUI(Clone)/Tools/GloveBank");
+                    HideTargetObject("CanvasUp", "InGameUI(Clone)/Tools/GloveBank");
                     HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/GloveBank");
                 }
                 if (unlockedArray[74] == false)//mallet
-                { HideTargetObject("Canvas", "InGameUI(Clone)/HammerBank");
+                { HideTargetObject("Canvas", "InGameUI(Clone)/Tools/HammerBank");
                     HideTargetObject("CanvasUp", "InGameUI(Clone)/HammerBank");
                 }
 
@@ -623,7 +632,14 @@ namespace PVZFusionArchipelago
                 { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/BugSprayBank"); }
 
                 if (unlockedArray[79] == false)//wheelbarrow
-                { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/WheelBarrowBank"); }
+                { HideTargetObjectChildren(canvasGl, "GardenUI(Clone)/Tools/WheelBarrowBank");
+                    HideTargetObject("Canvas", "InGameUI(Clone)/Tools/WheelBank");
+                }
+
+
+                
+                if (unlockedArray[88] == false)//coffee bean
+                { HideTargetObject("CanvasUp", "CanvasUp/MoneyBank/BeanBank"); }
 
 
             }
@@ -751,6 +767,7 @@ namespace PVZFusionArchipelago
                 HideTargetObject("Canvas", advanturePage4 + "Lv7");
                 HideTargetObject("Canvas", advanturePage4 + "Lv8");
                 HideTargetObject("Canvas", advanturePage4 + "Lv9");
+                HideTargetObject("Canvas", advanturePage4 + "Lv10");
             }   else
             {   if (!checkedArray[46]) { HideTargetObject("Canvas", advanturePage4 + "Lv1/Window/Trophy"); }
                 if (!checkedArray[47]) { HideTargetObject("Canvas", advanturePage4 + "Lv2/Window/Trophy"); }
@@ -761,6 +778,7 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[52]) { HideTargetObject("Canvas", advanturePage4 + "Lv7/Window/Trophy"); }
                 if (!checkedArray[53]) { HideTargetObject("Canvas", advanturePage4 + "Lv8/Window/Trophy"); }
                 if (!checkedArray[54]) { HideTargetObject("Canvas", advanturePage4 + "Lv9/Window/Trophy"); }
+                if (!checkedArray[78]) { HideTargetObject("Canvas", advanturePage4 + "Lv10/Window/Trophy"); }
             }
             if (unlockedArray[96] == false)
             {
@@ -788,6 +806,9 @@ namespace PVZFusionArchipelago
                 if (!checkedArray[200]) { HideTargetObject("Canvas", vasePage + "Lv102/Window/Trophy"); }
                 if (!checkedArray[201]) { HideTargetObject("Canvas", vasePage + "Lv103/Window/Trophy"); }
                 if (!checkedArray[202]) { HideTargetObject("Canvas", vasePage + "Lv104/Window/Trophy"); }
+                if (!checkedArray[203]) { HideTargetObject("Canvas", vasePage + "Lv175/Window/Trophy"); }
+                if (!checkedArray[204]) { HideTargetObject("Canvas", vasePage + "Lv176/Window/Trophy"); }
+                if (!checkedArray[205]) { HideTargetObject("Canvas", vasePage + "Lv177/Window/Trophy"); }
 
             }
                 if (unlockedArray[97] == false)
@@ -811,7 +832,7 @@ namespace PVZFusionArchipelago
             }
             if (unlockedArray[98] == false)
             {
-                HideTargetObject("MainMenuCanvas", "MainMenu(Clone)/Grave/Btn/Shop");
+                HideTargetObject("Canvas", "MainMenu(Clone)/Grave/LowerButtons/Travel");
             }
 
 
@@ -868,6 +889,16 @@ namespace PVZFusionArchipelago
             if (unlockedArray[127] == false)
             { HideTargetObject("Canvas", minigamePage1 + "Lv62"); }
             else { if (!checkedArray[95]) { HideTargetObject("Canvas", minigamePage1 + "Lv62/Window/Trophy"); } }
+
+
+            if (unlockedArray[168] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv186"); }
+            else { if (!checkedArray[135]) { HideTargetObject("Canvas", minigamePage1 + "Lv186/Window/Trophy"); } }
+            if (unlockedArray[169] == false)
+            { HideTargetObject("Canvas", minigamePage1 + "Lv187"); }
+            else { if (!checkedArray[136]) { HideTargetObject("Canvas", minigamePage1 + "Lv187/Window/Trophy"); } }
+
+
             if (unlockedArray[128] == false)
             { HideTargetObject("Canvas", minigamePage2 + "Lv63"); }
             else { if (!checkedArray[96]) { HideTargetObject("Canvas", minigamePage2 + "Lv63/Window/Trophy"); } }
@@ -970,6 +1001,7 @@ namespace PVZFusionArchipelago
             if (unlockedArray[159] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv158"); }
            
+
             if (unlockedArray[160] == false)
             { HideTargetObject("Canvas", minigamePage3 + "Lv160"); }
             else { if (!checkedArray[127]) { HideTargetObject("Canvas", minigamePage3 + "Lv160/Window/Trophy"); } }
@@ -995,6 +1027,15 @@ namespace PVZFusionArchipelago
             { HideTargetObject("Canvas", minigamePage4 + "Lv178"); }
             else { if (!checkedArray[134 ]) { HideTargetObject("Canvas", minigamePage4 + "Lv178/Window/Trophy"); } }
 
+            if (unlockedArray[170] == false)
+            { HideTargetObject("Canvas", minigamePage4 + "Lv185"); }
+            else { if (!checkedArray[137]) { HideTargetObject("Canvas", minigamePage4 + "Lv185/Window/Trophy"); } }
+            if (unlockedArray[171] == false)
+            { HideTargetObject("Canvas", minigamePage4 + "Lv193"); }
+            else { if (!checkedArray[138]) { HideTargetObject("Canvas", minigamePage4 + "Lv193/Window/Trophy"); } }
+            if (unlockedArray[172] == false)
+            { HideTargetObject("Canvas", minigamePage4 + "Lv190"); }
+            else { if (!checkedArray[139]) { HideTargetObject("Canvas", minigamePage4 + "Lv190/Window/Trophy"); } }
 
 
             if (canvasGl != null)
@@ -1078,53 +1119,76 @@ namespace PVZFusionArchipelago
             {
                 HideTargetChildByID(canvasGl, survivalPage2, 1);
             }
+            GameObject odadvpage1 = GameObject.Find(odysseyadvanturePage1);
+            if (odadvpage1 != null)
+            {
+                if (numOdysseyLevels < 1)
+                { HideSpecifiedTargetChild(odadvpage1, 0); }
+                else { if (!checkedArray[601]) { HideSpecifiedNewTrophy(odadvpage1, 0); } }
+                if (numOdysseyLevels < 2)
+                { HideSpecifiedTargetChild(odadvpage1, 1); }
+                else { if (!checkedArray[602]) { HideSpecifiedNewTrophy(odadvpage1, 1); } }
+                if (numOdysseyLevels < 3)
+                { HideSpecifiedTargetChild(odadvpage1, 2); }
+                else { if (!checkedArray[603]) { HideSpecifiedNewTrophy(odadvpage1, 2); } }
+                if (numOdysseyLevels < 4)
+                { HideSpecifiedTargetChild(odadvpage1, 3); }
+                else { if (!checkedArray[604]) { HideSpecifiedNewTrophy(odadvpage1, 3); } }
+                if (numOdysseyLevels < 5)
+                { HideSpecifiedTargetChild(odadvpage1, 4); }
+                else { if (!checkedArray[605]) { HideSpecifiedNewTrophy(odadvpage1, 4); } }
+                if (numOdysseyLevels < 6)
+                { HideSpecifiedTargetChild(odadvpage1, 5); }
+                else { if (!checkedArray[606]) { HideSpecifiedNewTrophy(odadvpage1, 5); } }
+                if (numOdysseyLevels < 7)
+                { HideSpecifiedTargetChild(odadvpage1, 6); }
+                else { if (!checkedArray[607]) { HideSpecifiedNewTrophy(odadvpage1, 6); } }
+                if (numOdysseyLevels < 8)
+                { HideSpecifiedTargetChild(odadvpage1, 7); }
+                else { if (!checkedArray[608]) { HideSpecifiedNewTrophy(odadvpage1, 7); } }
+                if (numOdysseyLevels < 9)
+                { HideSpecifiedTargetChild(odadvpage1, 8); }
+                else { if (!checkedArray[609]) { HideSpecifiedNewTrophy(odadvpage1, 8); } }
+                if (numOdysseyLevels < 10)
+                { HideSpecifiedTargetChild(odadvpage1, 9); }
+                else { if (!checkedArray[610]) { HideSpecifiedNewTrophy(odadvpage1, 9); } }
+                if (numOdysseyLevels < 11)
+                { HideSpecifiedTargetChild(odadvpage1, 10); }
+                else { if (!checkedArray[611]) { HideSpecifiedNewTrophy(odadvpage1, 10); } }
+                if (numOdysseyLevels < 12)
+                { HideSpecifiedTargetChild(odadvpage1, 11); }
+                else { if (!checkedArray[612]) { HideSpecifiedNewTrophy(odadvpage1, 11); } }
+                if (numOdysseyLevels < 13)
+                { HideSpecifiedTargetChild(odadvpage1, 12); }
+                else { if (!checkedArray[613]) { HideSpecifiedNewTrophy(odadvpage1, 12); } }
+                if (numOdysseyLevels < 14)
+                { HideSpecifiedTargetChild(odadvpage1, 13); }
+                else { if (!checkedArray[614]) { HideSpecifiedNewTrophy(odadvpage1, 13); } }
+                if (numOdysseyLevels < 15)
+                { HideSpecifiedTargetChild(odadvpage1, 14); }
+                else { if (!checkedArray[615]) { HideSpecifiedNewTrophy(odadvpage1, 14); } }
+                if (numOdysseyLevels < 16)
+                { HideSpecifiedTargetChild(odadvpage1, 15); }
+                else { if (!checkedArray[616]) { HideSpecifiedNewTrophy(odadvpage1, 15); } }
+                if (numOdysseyLevels < 17)
+                { HideSpecifiedTargetChild(odadvpage1, 16); }
+                else { if (!checkedArray[617]) { HideSpecifiedNewTrophy(odadvpage1, 16); } }
+                if (numOdysseyLevels < 18)
+                { HideSpecifiedTargetChild(odadvpage1, 17); }
+                else { if (!checkedArray[618]) { HideSpecifiedNewTrophy(odadvpage1, 17); } }
+                if (numOdysseyLevels < 19)
+                { HideSpecifiedTargetChild(odadvpage1, 18); }
+                else { if (!checkedArray[619]) { HideSpecifiedNewTrophy(odadvpage1, 18); } }
 
-            if (numOdysseyLevels < 1)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_1"); }
-            else { if (!checkedArray[601]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_1/Window/Trophy"); } }
-            if (numOdysseyLevels < 2)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_2"); }
-            else { if (!checkedArray[602]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_2/Window/Trophy"); } }
-            if (numOdysseyLevels < 3)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_3"); }
-            else { if (!checkedArray[603]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_3/Window/Trophy"); } }
-            if (numOdysseyLevels < 4)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_4"); }
-            else { if (!checkedArray[604]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_4/Window/Trophy"); } }
-            if (numOdysseyLevels < 5)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_5"); }
-            else { if (!checkedArray[605]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_5/Window/Trophy"); } }
-            if (numOdysseyLevels < 6)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_6"); }
-            else { if (!checkedArray[606]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_6/Window/Trophy"); } }
-            if (numOdysseyLevels < 7)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_7"); }
-            else { if (!checkedArray[607]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_7/Window/Trophy"); } }
-            if (numOdysseyLevels < 8)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_8"); }
-            else { if (!checkedArray[608]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_8/Window/Trophy"); } }
-            if (numOdysseyLevels < 9)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_9"); }
-            else { if (!checkedArray[609]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_9/Window/Trophy"); } }
-            if (numOdysseyLevels < 10)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_10"); }
-            else { if (!checkedArray[610]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_10/Window/Trophy"); } }
-            if (numOdysseyLevels < 11)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_11"); }
-            else { if (!checkedArray[611]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_11/Window/Trophy"); } }
-            if (numOdysseyLevels < 12)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_12"); }
-            else { if (!checkedArray[612]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_12/Window/Trophy"); } }
-            if (numOdysseyLevels < 13)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_13"); }
-            else { if (!checkedArray[613]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_13/Window/Trophy"); } }
-            if (numOdysseyLevels < 14)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_14"); }
-            else { if (!checkedArray[614]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_14/Window/Trophy"); } }
-            if (numOdysseyLevels < 15)
-            { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_15"); }
-            else { if (!checkedArray[615]) { HideTargetObject("Canvas", odysseyadvanturePage1 + "Lv_15/Window/Trophy"); } }
 
+
+
+                //if (numOdysseyLevels < 19)
+                //{ HideSpecifiedNewSeedSlot(canvasGl, odysseyadvanturePage1, 18); }
+                //else { if (!checkedArray[618]) { HideSpecifiedNewTrophy(canvasGl, odysseyadvanturePage1, 18); } }
+            }
+
+            
 
             GameObject odminipage1 = GameObject.Find(odysseyminigamePage1);
             if (odminipage1 != null) {
@@ -1266,7 +1330,12 @@ namespace PVZFusionArchipelago
                 if (unlockedArray[342] == false)
                 { HideSpecifiedTargetChild(odminipage3, 6); }
                 else { if (!checkedArray[687]) { HideSpecifiedTargetTrophy(odminipage3, 6); } }
-
+                if (unlockedArray[343] == false)
+                { HideSpecifiedTargetChild(odminipage3, 7); }
+                else { if (!checkedArray[688]) { HideSpecifiedTargetTrophy(odminipage3, 7); } }
+                if (unlockedArray[344] == false)
+                { HideSpecifiedTargetChild(odminipage3, 8); }
+                else { if (!checkedArray[689]) { HideSpecifiedTargetTrophy(odminipage3, 8); } }
             }
 
 
@@ -1692,10 +1761,10 @@ namespace PVZFusionArchipelago
                     return;
                 }
 
-                var leveltext = canvas.transform.Find("LevelName2");
+                var leveltext = canvas.transform.Find("CanvasUp/LevelName2");
                 if (leveltext == null)
                 {
-                    leveltext = canvas.transform.Find("LevelName3");
+                    leveltext = canvas.transform.Find("CanvasUp/LevelName3");
 
                     if (leveltext == null)
                     {
@@ -1994,6 +2063,15 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(354);
                         CheckForGoalType1();
                         break;
+
+                    case "Snowy Night: Memory":
+                        checkedArray[78] = true;
+                        session.Locations.CompleteLocationChecks(78);
+                        session.Locations.CompleteLocationChecks(378);
+                        break;
+
+
+
                     case "Fusion Challenge: Explode-o-shooter":
                         checkedArray[55] = true;
                         session.Locations.CompleteLocationChecks(55);
@@ -2269,7 +2347,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(113);
                         session.Locations.CompleteLocationChecks(413);
                         break;
-                    case "Zombies VS Zombies 2":
+                    case "Zombies vs Zombies":
                         checkedArray[114] = true;
                         session.Locations.CompleteLocationChecks(114);
                         session.Locations.CompleteLocationChecks(414);
@@ -2334,6 +2412,14 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(126);
                         session.Locations.CompleteLocationChecks(426);
                         break;
+                    case "打砖块2"://graveout 2 duplicate
+                        checkedArray[126] = true;
+                        session.Locations.CompleteLocationChecks(126);
+                        session.Locations.CompleteLocationChecks(426);
+                        break;
+
+
+                        
                     case "The Floor is Lava":
                         checkedArray[127] = true;
                         session.Locations.CompleteLocationChecks(127);
@@ -2344,7 +2430,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(128);
                         session.Locations.CompleteLocationChecks(428);
                         break;
-                    case "Challenge Mode":
+                    case "I, Zombie (Mini-game Version)":
                         checkedArray[129] = true;
                         session.Locations.CompleteLocationChecks(129);
                         session.Locations.CompleteLocationChecks(429);
@@ -2364,7 +2450,37 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(132);
                         session.Locations.CompleteLocationChecks(432);
                         break;
-                        //location 133 is checked for in default case
+
+
+                    case "Lava Land":
+                        checkedArray[133] = true;
+                        session.Locations.CompleteLocationChecks(133);
+                        session.Locations.CompleteLocationChecks(433);
+                        break;
+                    //location 134 is checked for in default case
+                    case "Zombie Sorter":
+                        checkedArray[135] = true;
+                        session.Locations.CompleteLocationChecks(135);
+                        session.Locations.CompleteLocationChecks(435);
+                        break;
+                    case "Explode-O-su!":
+                        checkedArray[136] = true;
+                        session.Locations.CompleteLocationChecks(136);
+                        session.Locations.CompleteLocationChecks(436);
+                        break;
+                    case "I, Zomboss?":
+                        checkedArray[137] = true;
+                        session.Locations.CompleteLocationChecks(137);
+                        session.Locations.CompleteLocationChecks(437);
+                        break;
+                    
+                    case "Fusion Challenge: Wheelbarrow":
+                        checkedArray[139] = true;
+                        session.Locations.CompleteLocationChecks(139);
+                        session.Locations.CompleteLocationChecks(439);
+                        break;
+
+                        
 
 
                     case "Vasebreaker":
@@ -2453,81 +2569,101 @@ namespace PVZFusionArchipelago
 
 
 
-                    case "Odyssey Adventure: Level 1":
+                    case "Odyssey Adventure: Gatling Doom":
                         checkedArray[601] = true;
                         session.Locations.CompleteLocationChecks(601);
                         session.Locations.CompleteLocationChecks(901);
                         break;
-                    case "Odyssey Adventure: Level 2":
+                    case "Odyssey Adventure: Gatling Icicle-shroom":
                         checkedArray[602] = true;
                         session.Locations.CompleteLocationChecks(602);
                         session.Locations.CompleteLocationChecks(902);
                         break;
-                    case "Odyssey Adventure: Level 3":
+                    case "Odyssey Adventure: Big Bang Cherry":
                         checkedArray[603] = true;
                         session.Locations.CompleteLocationChecks(603);
                         session.Locations.CompleteLocationChecks(903);
                         break;
-                    case "Odyssey Adventure: Level 4":
+                    case "Odyssey Adventure: Twin Solar-nut":
                         checkedArray[604] = true;
                         session.Locations.CompleteLocationChecks(604);
                         session.Locations.CompleteLocationChecks(904);
                         break;
-                    case "Odyssey Adventure: Level 5":
+                    case "Odyssey Adventure: Aristocattail":
                         checkedArray[605] = true;
                         session.Locations.CompleteLocationChecks(605);
                         session.Locations.CompleteLocationChecks(905);
                         break;
-                    case "Odyssey Adventure: Level 6":
+                    case "Odyssey Adventure: Empress-shroom":
                         checkedArray[606] = true;
                         session.Locations.CompleteLocationChecks(606);
                         session.Locations.CompleteLocationChecks(906);
                         break;
-                    case "Odyssey Adventure: Level 7":
+                    case "Odyssey Adventure: Cornveyor Weed":
                         checkedArray[607] = true;
                         session.Locations.CompleteLocationChecks(607);
                         session.Locations.CompleteLocationChecks(907);
                         break;
-                    case "Odyssey Adventure: Level 8":
+                    case "Odyssey Adventure: Phoenix Threepeater":
                         checkedArray[608] = true;
                         session.Locations.CompleteLocationChecks(608);
                         session.Locations.CompleteLocationChecks(908);
                         break;
 
-                    case "Odyssey Adventure: Level 9":
+                    case "Odyssey Adventure: Obsidian Spikerock":
                         checkedArray[609] = true;
                         session.Locations.CompleteLocationChecks(609);
                         session.Locations.CompleteLocationChecks(909);
                         break;
-                    case "Odyssey Adventure: Level 10":
+                    case "Odyssey Adventure: Omni Pumpkin":
                         checkedArray[610] = true;
                         session.Locations.CompleteLocationChecks(610);
                         session.Locations.CompleteLocationChecks(910);
                         break;
-                    case "Odyssey Adventure: Level 11":
+                    case "Odyssey Adventure: Pharos Umbrella":
                         checkedArray[611] = true;
                         session.Locations.CompleteLocationChecks(611);
                         session.Locations.CompleteLocationChecks(911);
                         break;
-                    case "Odyssey Adventure: Level 12":
+                    case "Odyssey Adventure: Buck-shroom Squad":
                         checkedArray[612] = true;
                         session.Locations.CompleteLocationChecks(612);
                         session.Locations.CompleteLocationChecks(912);
                         break;
-                    case "Odyssey Adventure: Level 13":
+                    case "Odyssey Adventure: Calamity-shroom":
                         checkedArray[613] = true;
                         session.Locations.CompleteLocationChecks(613);
                         session.Locations.CompleteLocationChecks(913);
                         break;
-                    case "Odyssey Adventure: Level 14":
+                    case "Odyssey Adventure: Tesla Magnet":
                         checkedArray[614] = true;
                         session.Locations.CompleteLocationChecks(614);
                         session.Locations.CompleteLocationChecks(914);
                         break;
-                    case "Odyssey Adventure: Level 15":
+                    case "Odyssey Adventure: Radiant Pot":
                         checkedArray[615] = true;
                         session.Locations.CompleteLocationChecks(615);
                         session.Locations.CompleteLocationChecks(915);
+                        break;
+                    case "Odyssey Adventure: Midas Umbrella":
+                        checkedArray[616] = true;
+                        session.Locations.CompleteLocationChecks(616);
+                        session.Locations.CompleteLocationChecks(916);
+                        break;
+                    case "Odyssey Adventure: Tycoonwood":
+                        checkedArray[617] = true;
+                        session.Locations.CompleteLocationChecks(617);
+                        session.Locations.CompleteLocationChecks(917);
+                        break;
+                    case "Odyssey Adventure: Grim Arbiter":
+                        checkedArray[618] = true;
+                        session.Locations.CompleteLocationChecks(618);
+                        session.Locations.CompleteLocationChecks(918);
+                        break;
+                    case "Odyssey Adventure: Dragonbreath Torcher":
+                        checkedArray[619] = true;
+                        session.Locations.CompleteLocationChecks(619);
+                        session.Locations.CompleteLocationChecks(919);
                         if (goalType == 2)
                         { session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal }); }
                         break;
@@ -2733,7 +2869,16 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(689);
                         session.Locations.CompleteLocationChecks(989);
                         break;
-
+                    case "Stats VS Mechanics 1":
+                        checkedArray[690] = true;
+                        session.Locations.CompleteLocationChecks(690);
+                        session.Locations.CompleteLocationChecks(990);
+                        break;
+                    case "Odyssey Gacha: Gacha Box":
+                        checkedArray[691] = true;
+                        session.Locations.CompleteLocationChecks(691);
+                        session.Locations.CompleteLocationChecks(991);
+                        break;
 
                     case "Dr. Zomboss' Revenge":
                         checkedArray[99] = true;
@@ -2750,13 +2895,19 @@ namespace PVZFusionArchipelago
                     default:
                         if ( levelName.StartsWith("Total num. of Mines"))//nutsweeper
                         {
-                            checkedArray[133] = true;
-                            session.Locations.CompleteLocationChecks(133);
-                            session.Locations.CompleteLocationChecks(433);
+                            checkedArray[134] = true;
+                            session.Locations.CompleteLocationChecks(134);
+                            session.Locations.CompleteLocationChecks(434);
                             break;
                         }
-
-
+                        if (levelName.StartsWith("时间陷阱："))//time attack
+                        {
+                            checkedArray[138] = true;
+                            session.Locations.CompleteLocationChecks(138);
+                            session.Locations.CompleteLocationChecks(438);
+                            break;
+                        }
+                        
 
                         MelonLogger.Msg("Level not implemented");
                         break;
@@ -2842,11 +2993,11 @@ namespace PVZFusionArchipelago
                                 }
                             }
                             catch (System.NullReferenceException)
-                            { MelonLogger.Msg("Ringlink packet recieved from SA1 or SA2"); }
+                            { }//MelonLogger.Msg("Ringlink packet recieved from SA1 or SA2"); }
                             catch (System.Exception)
-                            { MelonLogger.Msg("Ringlink packet recieved from SA1 or SA2 (1)"); }
-                            
-                                
+                            { }//MelonLogger.Msg("Ringlink packet recieved from SA1 or SA2 (1)"); }
+
+
 
                                 var board = GameObject.Find("Board");
                                 if (board == null)
@@ -2854,37 +3005,37 @@ namespace PVZFusionArchipelago
                                     continue;
                                 }
                                 var boardComp = board.GetComponent(Il2CppType.Of<Board>());
-                                
+
                                 var type = boardComp.GetIl2CppType();
                                 var field = type.GetField("theSun");
                                 Il2CppSystem.Object rawValue = field.GetValue(boardComp);
-                                int intValue = Il2CppSystem.Convert.ToInt32(rawValue);
+                                int intValue = Il2CppSystem.Convert.ToInt32(rawValue)/10;
+                            int oldValue = Il2CppSystem.Convert.ToInt32(rawValue);
 
-                                
 
                                 var data = jObject["data"];
                                 int amount = data.Value<int>("amount");
 
-                                prevSun = (intValue/10) + (amount);
-                            if (!negativeSun)//lazy ahh programming
-                            {
-                                if (prevSun < 0)
+                                prevSun = intValue + amount;
+                                if (!negativeSun)//lazy ahh programming
                                 {
-                                    prevSun = 0;
-                                    field.SetValue(boardComp, 0);
+                                    if (prevSun < 0)
+                                    {
+                                        prevSun = 0;
+                                        field.SetValue(boardComp, 0);
+                                    }
+                                    else
+                                    {
+                                        field.SetValue(boardComp, oldValue + (amount * 10));
+                                    }
                                 }
-                                else
-                                {
-                                    field.SetValue(boardComp, intValue + amount * 10);
-                                }
+                                else { field.SetValue(boardComp, oldValue + (amount * 10)); }
+
+
+
+
+
                             }
-                            else { field.SetValue(boardComp, intValue + amount * 10); }
-
-
-
-
-
-                        }
 
                     }
                     break;
@@ -2917,6 +3068,10 @@ namespace PVZFusionArchipelago
                         session.Socket.SendPacket(new StatusUpdatePacket() { Status = ArchipelagoClientState.ClientGoal });
                     }
                 }
+                if (networkItem.ItemId == 208)//50 starting sun
+                {
+                    extraStartSun += 50;
+                }
 
             }
         }
@@ -2947,7 +3102,7 @@ namespace PVZFusionArchipelago
                     {
                         var tutor = canvasupGl.transform.Find("Tutor(Clone)");
 
-                        var textMan = tutor.GetComponent<InGameText>();
+                        var textMan = tutor.GetComponent<Il2CppCore.InGameText>();
 
                         textMan.DebugWarning("Received " + ItemIdToString(networkItem.ItemId));
 
@@ -2960,12 +3115,13 @@ namespace PVZFusionArchipelago
 
 
 
+                if (networkItem.ItemId == 208)//50 starting sun
+                {
+                    extraStartSun += 50;
+                }
 
 
-
-
-
-                if (networkItem.ItemId == 200)//bonus sun
+                    if (networkItem.ItemId == 200)//bonus sun
                 {
                     if (boardGl == null)
                     {
@@ -3061,14 +3217,37 @@ namespace PVZFusionArchipelago
 
                 }
 
+                if (networkItem.ItemId == 209)//ice-shroom assist
+                {
+                    if (boardGl == null)
+                    {
+                        boardGl = GameObject.Find("Board");
+                    }
+                    if (boardGl == null)
+                    {
+                        return;
+                    }
+
+
+                    Board board = boardGl.GetComponent<Board>();
+
+                    Il2CppSystem.Collections.Generic.List<Zombie> zlist = board.zombieArray;
+
+                    foreach (Zombie zombie in zlist)
+                    {
+
+                        zombie.SetFreeze(4);
+
+
+                    }
 
 
 
+                }
 
 
 
-
-                if (networkItem.ItemId == 205)//star meteor
+                    if (networkItem.ItemId == 205)//star meteor
                 {
                     GameObject.Instantiate(starMeteorPrefabObject, new Vector3((float)-8, (float)5, 0), Quaternion.identity);
                 }
@@ -3096,7 +3275,7 @@ namespace PVZFusionArchipelago
                     if (canvasGl != null)
                     {
                         var tutor = canvasupGl.transform.Find("Tutor(Clone)");
-                        var textMan = tutor.GetComponent<InGameText>();
+                        var textMan = tutor.GetComponent<Il2CppCore.InGameText>();
                         textMan.DebugWarning("No planting cooldown for 10 seconds");
                     }
                     Board component = boardGl.GetComponent<Board>();
@@ -3107,7 +3286,7 @@ namespace PVZFusionArchipelago
 
 
 
-                    cdResetTime = 10.0F;
+                    cdResetTime = 10.0f;
                     resetCD = true;
 
 
@@ -3156,9 +3335,17 @@ namespace PVZFusionArchipelago
 
                             if (seedPacket == null)
                             {
-                                MelonLogger.Msg("couldnt find seed packet");
-                                MelonLogger.Msg("if theres another space in the name im going to kill myself");
-                                continue;
+
+                                seedPacket = canvasGl.transform.Find(slotPath + "seed" + i.ToString() + "/Packet (Clone)");//stupid bullshit
+
+                                if (seedPacket == null)
+                                {
+
+
+                                    MelonLogger.Msg("couldnt find seed packet");
+                                    MelonLogger.Msg("if theres another space in the name im going to kill myself");
+                                    continue;
+                                }
                             }
                         }
                         GameObject obj = seedPacket.gameObject;
@@ -3195,7 +3382,7 @@ namespace PVZFusionArchipelago
                     if (canvasGl != null)
                     {
                         var tutor = canvasupGl.transform.Find("Tutor(Clone)");
-                        var textMan = tutor.GetComponent<InGameText>();
+                        var textMan = tutor.GetComponent<Il2CppCore.InGameText>();
                         textMan.DebugWarning("The fog is coming...");
                     }
 
@@ -3261,8 +3448,8 @@ namespace PVZFusionArchipelago
                     for (int i = 0; i < 5; i++)
                     {
 
-                        if (UnityEngine.Random.Range(0, 5) == 0) { boardComp.SetZombie(i, ZombieType.RandomPlusZombie); }
-                        else { boardComp.SetZombie(i, ZombieType.RandomZombie); }
+                        if (UnityEngine.Random.Range(0, 5) == 0) { boardComp.SetZombie(i, ZombieType.RandomPlusZombie, 9.9f, false); }
+                        else { boardComp.SetZombie(i, ZombieType.RandomZombie,9.9f,false); }
 
 
                     }
@@ -3285,7 +3472,7 @@ namespace PVZFusionArchipelago
                     if (canvasGl != null)
                     {
                         var tutor = canvasupGl.transform.Find("Tutor(Clone)");
-                        var textMan = tutor.GetComponent<InGameText>();
+                        var textMan = tutor.GetComponent<Il2CppCore.InGameText>();
                         textMan.DebugWarning("Extra Flag");
                     }
                     var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
@@ -3306,15 +3493,15 @@ namespace PVZFusionArchipelago
                     if (canvasGl != null)
                     {
                         var tutor = canvasupGl.transform.Find("Tutor(Clone)");
-                        var textMan = tutor.GetComponent<InGameText>();
-                        var rand = UnityEngine.Random.Range(0, 4);
+                        var textMan = tutor.GetComponent<Il2CppCore.InGameText>();
+                        var rand = UnityEngine.Random.Range(0, 10);
                         switch (rand)
                         {
                             case 0:
                                 textMan.DebugWarning("Beware!   There could be\nan invis. wall   around here.\nTry to   go around it.");
                                 break;
-                            case 1://receive a random plant thats not in the game
-                                var temp =  UnityEngine.Random.Range(0, 8);
+                            case 1 or 2 or 3://receive a random plant thats not in the game
+                                var temp =  UnityEngine.Random.Range(0, 13);
                                 string plantstring = "";
                                 switch (temp)
                                 {
@@ -3325,16 +3512,34 @@ namespace PVZFusionArchipelago
                                     case 5: plantstring = "Garlic Angel"; break;
                                     case 6: plantstring = "Banana Launcher"; break;
                                     case 7: plantstring = "Wise Mystical Oak"; break;
+                                    case 8: plantstring = "Ohm-ion"; break;
+                                    case 9: plantstring = "Pomegrenade"; break;
+                                    case 10: plantstring = "Brawlccoli"; break;
+                                    case 11: plantstring = "Progressive Shop"; break;
+                                    case 12: plantstring = "Amp-nion (but like the one from 3.7)"; break;
+
+
+
+
                                     default: plantstring = "Twin Sunflower with slightly larger petals"; break;
                                 }
                                 textMan.DebugWarning("Received "+plantstring);
                                 break;
 
-                            case 2:
+                            case 7:
                                 textMan.DebugWarning("i love how you are still on about grass sanity\r\nits literally not that bad \r\nalso grass sanity * 20 = 12k\r\nthats less than powerwash max sanity");
                                 break;
-                            case 3:
+                            case 8:
                                 textMan.DebugWarning("Do not post links to ROM files or other copyrighted content.\r\nThe @Moderator team has been alerted to this incident.\r\nThe potentially problematic file(s) in question were:\r\n- z.json");
+                                break;
+                            case 4:
+                                textMan.DebugWarning("One of your nuts were busted!");
+                                break;
+                            case 5:
+                                textMan.DebugWarning("You don't have a tall enough tree of wisdom for that");
+                                break;
+                            case 6:
+                                textMan.DebugWarning("this guy fucking sucks at plants vs zombies fusion. in this video we can see a player so atrociously bad that he almost gets his vital sun production eaten multiple times a second.\ndespite the obviously zealous zombies he sucks so fucking bad at the game that he doesnt know youre supposed to protect your primary source of sun.\nit's only by sheer luck that he just barely avoids sending our chloraphilled friends 12 feet under.\nsubscribe if you think this total embarrassment of a gamer should never be allowed to touch a fangame again");
                                 break;
 
                             default:
@@ -3373,6 +3578,44 @@ namespace PVZFusionArchipelago
             child = child.transform.GetChild(1);
 
             child.gameObject.SetActive(false);
+
+        }
+
+        private void HideSpecifiedNewSeedSlot(GameObject obj, string target, int childnum)
+        {
+
+
+            if (obj == null)
+            {
+                //LoggerInstance.Warning("CanvasUp not found");
+                return;
+            }
+            var inGameUI = obj.transform.Find(target);
+            if (inGameUI == null)
+            {
+                return;
+            }
+            var child = inGameUI.transform.GetChild(0);
+            child = child.transform.GetChild(childnum);
+
+            int childCount = child.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                var child2 = child.GetChild(i);
+                child2.gameObject.SetActive(false);
+            }
+
+        }
+        private void HideSpecifiedNewTrophy(GameObject obj, int childnum)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+            var child = obj.transform.GetChild(childnum);
+                var child2 = child.GetChild(4);
+                child2.gameObject.SetActive(false);
+
 
         }
 
@@ -3518,8 +3761,9 @@ namespace PVZFusionArchipelago
                 case 45: return "Jicamagic"; case 46: return "Firnace";
                 case 47: return "Spruce Sharpshooter"; case 48: return "Saw-me-not";
                 case 49: return "Snow Lotus"; case 50: return "Aloe Aqua";
-                case 51: return "Bamblock"; case 52: return "Frozen Giftbox";
+                case 51: return "Bamblock"; case 52: return "Hoarfrost Lichen";
                 case 53: return "Spruce Ballista";
+                case 54: return "Frozen Giftbox";
 
                 case 55: return "Cattail Girl"; case 56: return "Swordmaster Starfruit";
                 case 57: return "Nyan Squash"; case 58: return "Burger Blaster";
@@ -3531,11 +3775,15 @@ namespace PVZFusionArchipelago
                 case 69: return "Bucket"; case 84: return "Football Helmet";
                 case 85: return "Hearty Apple"; case 86: return "Bamboom";
                 case 87: return "Golden Recycling Vase";
+                case 88: return "Coffee Bean";
 
                 case 70: return "Shovel";
                 case 71: return "Fertilizer";
                 case 72: return "Plant Gloves";
                 case 74: return "Mallet";
+                
+
+
 
                 case 82: return "Lawnmowers";
                 case 83: return "Pool Cleaners";
@@ -3563,9 +3811,9 @@ namespace PVZFusionArchipelago
 
 
                 default:
-                    if (id > 99 && id < 170) { return "A New Minigame"; }
+                    if (id > 99 && id < 180) { return "A New Minigame"; }
                     if (id >= 300 && id < 350) { return "A New Odyssey Minigame"; }
-
+                    if (id >= 255 && id < 265) { return "A Survival Endless"; }
 
 
                     return "ID NOT FOUND (REPORT THIS TO THE AP DEV)";
@@ -3659,6 +3907,21 @@ namespace PVZFusionArchipelago
                     }
                 }
 
+                if (arg.Key == "Fusionsanity")
+                {
+                    MelonLogger.Msg(arg.Value);
+                    if (arg.Value.ToString() == "False")
+                    {
+                        fusionsanity = 0;//add more later
+                    }
+                    else if (arg.Value.ToString() == "True")
+                    {
+                        fusionsanity = 1;
+                    }
+
+                }
+
+
                 if (arg.Key == "AdventureExtra" && arg.Value.ToString() == "2")
                 {
                     adventureExtraEnabled = true;
@@ -3707,6 +3970,713 @@ namespace PVZFusionArchipelago
 
 
         }
+
+
+        [HarmonyLib.HarmonyPatch(typeof(CreatePlant), "CheckFlying")]
+        public static class Patch64
+        {
+            private static void Prefix(int theBoxColumn, int theBoxRow)
+            {
+                MelonLogger.Msg($"checkflying 1:{theBoxColumn} 2:{theBoxRow}");
+
+
+            }
+
+            }
+
+            [HarmonyLib.HarmonyPatch(typeof(InitBoard), "Awake")]
+        public static class Patch65
+        {
+
+            private static void Postfix()
+            {
+                if (boardGl == null)
+                {
+                    boardGl = GameObject.Find("Board");
+                }
+
+                if (boardGl == null) { MelonLogger.Msg("failed to find board"); return; }
+                var boardComp = boardGl.GetComponent(Il2CppType.Of<Board>());
+
+                var type = boardComp.GetIl2CppType();
+                var field = type.GetField("theSun");
+                Il2CppSystem.Object rawValue = field.GetValue(boardComp);
+                int intValue = Il2CppSystem.Convert.ToInt32(rawValue);
+                field.SetValue(boardComp, intValue+extraStartSun);
+            }
+        }
+
+
+
+
+
+
+        [HarmonyLib.HarmonyPatch(typeof(Money), "ReinforcePlant")]
+        public static class Patch66
+        {
+
+            private static void Prefix(Plant plant)
+            {
+                
+
+                int tempid = -1;
+                switch (plant.thePlantType.ToString())
+                {
+                    case "SilverCabbage": tempid = 2200; break;
+                    case "SilverPot": tempid = 2201; break;
+                    case "SilverCorn": tempid = 2202; break;
+                    case "SilverGarlic": tempid = 2203; break;
+                    case "SilverUmbrella": tempid = 2204; break;
+                    case "SilverMelon": tempid = 2205; break;
+                    case "SilverSunflower": tempid = 2206; break;
+                    case "SilverDoom": tempid = 2207; break;
+                    case "SilverNut": tempid = 2208; break;
+                    case "SilverIceShroom": tempid = 2209; break;
+                    default: break;
+                }
+
+                if (tempid != -1)
+                {
+                    if (!checkedArray[tempid])
+                    {
+
+                        checkedArray[tempid] = true;
+                        session.Locations.CompleteLocationChecks(tempid);
+
+                    }
+                }
+
+
+
+            }
+        }
+
+            [HarmonyLib.HarmonyPatch(typeof(CreatePlant), "CheckMix")]
+        public static class Patch67
+        {
+            private static bool Prefix(int theColumn, int theRow, PlantType theUsedType)
+            {
+
+
+                
+
+                if (fusionsanity == 0) { return true; }
+                Il2CppSystem.Collections.Generic.List<Plant> il2cpplist = Lawnf.Get1x1Plants(theColumn, theRow);
+
+
+                if (il2cpplist != null)
+                {
+                    PlantType c = PlantType.Nothing;
+                    PlantType highest = PlantType.Nothing;
+                    foreach (Plant plant in il2cpplist) {
+
+                        MixData.TryGetMix(plant.thePlantType, theUsedType, out c);
+
+                        //if (c != PlantType.Nothing && c != PlantType.Peashooter)//peashooter seems to be used to denote there are no mixes available
+                        //{
+                        //
+                        //    highest = c;
+                        //
+                        //}
+
+                        highest = theUsedType;
+                    
+
+                    if (highest != PlantType.Nothing)
+                    {
+                        
+                        int tempid = 0;
+                        switch (c.ToString())
+                        {
+
+                            case "DoubleShooter": tempid = 1500; break;
+                            case "PeaSunFlower": tempid = 1501; break;
+                            case "Cherryshooter": tempid = 1502; break;
+                            case "PeaNut": tempid = 1503; break;
+                            case "PeaMine": tempid = 1504; break;
+                            case "PeaChomper": tempid = 1505; break;
+                            case "PeaPuff": tempid = 1506; break;
+                            case "PeaFume": tempid = 1507; break;
+                            case "HypnoPeashooter": tempid = 1508; break;
+                            case "PeaScaredy": tempid = 1509; break;
+                            case "SnowPeaShooter": tempid = 1510; break;
+                            case "DoomPeashooter": tempid = 1511; break;
+                            case "PeaSquash": tempid = 1512; break;
+                            case "AllPeater": tempid = 1513; break;
+                            case "JalaPeashooter": tempid = 1514; break;
+                            case "LanternPea": tempid = 1515; break;
+                            case "PeaBlover": tempid = 1516; break;
+                            case "StarPea": tempid = 1517; break;
+                            case "PeaPumpkin": tempid = 1518; break;
+                            case "PeaPot": tempid = 1519; break;
+                            case "GarlicPea": tempid = 1520; break;
+                            case "TwinFlower": tempid = 1521; break;
+                            case "SunBomb": tempid = 1522; break;
+                            case "SunNut": tempid = 1523; break;
+                            case "SunMine": tempid = 1524; break;
+                            case "SunChomper": tempid = 1525; break;
+                            case "SunShroom": tempid = 1526; break;
+                            case "BigSunShroom": tempid = 1527; break;
+                            case "SunHypno": tempid = 1528; break;
+                            case "ScaredSun": tempid = 1529; break;
+                            case "SunIceShroom": tempid = 1530; break;
+                            case "DoomSunflower": tempid = 1531; break;
+                            case "SunSquash": tempid = 1532; break;
+                            case "SunJalapeno": tempid = 1533; break;
+                            case "SunCaltrop": tempid = 1534; break;
+                            case "TorchSunflower": tempid = 1535; break;
+                            case "SeaSunShroom": tempid = 1536; break;
+                            case "SunBlover": tempid = 1537; break;
+                            case "SunStar": tempid = 1538; break;
+                            case "SunPumpkin": tempid = 1539; break;
+                            case "SunMagnet": tempid = 1540; break;
+                            case "SunCabbage": tempid = 1541; break;
+                            case "SunPot": tempid = 1542; break;
+                            case "SilverSunflower": tempid = 1543; break;
+                            case "CherryNut": tempid = 1544; break;
+                            case "CherryMine": tempid = 1545; break;
+                            case "CherryChomper": tempid = 1546; break;
+                            case "CherryHypno": tempid = 1547; break;
+                            case "CherryScaredy": tempid = 1548; break;
+                            case "IceCherry": tempid = 1549; break;
+                            case "DoomCherry": tempid = 1550; break;
+                            case "CherrySquash": tempid = 1551; break;
+                            case "CherryThreePeater": tempid = 1552; break;
+                            case "CherryJalapeno": tempid = 1553; break;
+                            case "CherryTorch": tempid = 1554; break;
+                            case "CherryBlover": tempid = 1555; break;
+                            case "CherryPumpkin": tempid = 1556; break;
+                            case "CherryMagnet": tempid = 1557; break;
+                            case "CherryPot": tempid = 1558; break;
+                            case "CherryUmbrella": tempid = 1559; break;
+                            case "PotatoNut": tempid = 1560; break;
+                            case "NutChomper": tempid = 1561; break;
+                            case "PuffNut": tempid = 1562; break;
+                            case "NutFume": tempid = 1563; break;
+                            case "HypnoNut": tempid = 1564; break;
+                            case "ScaredyNut": tempid = 1565; break;
+                            case "IceNut": tempid = 1566; break;
+                            case "DoomNut": tempid = 1567; break;
+                            case "SquashNut": tempid = 1568; break;
+                            case "ThreeNut": tempid = 1569; break;
+                            case "KelpNut": tempid = 1570; break;
+                            case "FireNut": tempid = 1571; break;
+                            case "CaltropNut": tempid = 1572; break;
+                            case "NutTorch": tempid = 1573; break;
+                            case "SeaNut": tempid = 1574; break;
+                            case "LanternNut": tempid = 1575; break;
+                            case "CactusNut": tempid = 1576; break;
+                            case "NutBlover": tempid = 1577; break;
+                            case "StarNut": tempid = 1578; break;
+                            case "NutPumpkin": tempid = 1579; break;
+                            case "MagnetNut": tempid = 1580; break;
+                            case "CabbageNut": tempid = 1581; break;
+                            case "NutPot": tempid = 1582; break;
+                            case "CornNut": tempid = 1583; break;
+                            case "GarlicNut": tempid = 1584; break;
+                            case "NutUmbrella": tempid = 1585; break;
+                            case "SilverNut": tempid = 1586; break;
+                            case "MelonNut": tempid = 1587; break;
+                            case "PotatoChomper": tempid = 1588; break;
+                            case "PotatoPuff": tempid = 1589; break;
+                            case "PotatoFume": tempid = 1590; break;
+                            case "HypnoMine": tempid = 1591; break;
+                            case "ScaredyPotato": tempid = 1592; break;
+                            case "IceMine": tempid = 1593; break;
+                            case "PotatoDoom": tempid = 1594; break;
+                            case "PotatoSquashBody": tempid = 1595; break;
+                            case "ThreeMine": tempid = 1596; break;
+                            case "KelpMine_water": tempid = 1597; break;
+                            case "KelpMine_land": tempid = 1597; break;
+                            case "JalaMine": tempid = 1598; break;
+                            case "TorchMine": tempid = 1599; break;
+                            case "SeaMine_land": tempid = 1600; break;
+                            case "SeaMine_water": tempid = 1600; break;
+                            case "BloverMine": tempid = 1601; break;
+                            case "PotatoPumpkin": tempid = 1602; break;
+                            case "TreasureMine": tempid = 1603; break;
+                            case "HypnoChomper": tempid = 1604; break;
+                            case "DoomChomper": tempid = 1605; break;
+                            case "ChomperSquash": tempid = 1606; break;
+                            case "LanternChomper": tempid = 1607; break;
+                            case "ChomperPumpkin": tempid = 1608; break;
+                            case "HypnoPuff": tempid = 1609; break;
+                            case "SmallIceShroom": tempid = 1610; break;
+                            case "PuffDoom": tempid = 1611; break;
+                            case "PuffSquash": tempid = 1612; break;
+                            case "KelpPuff": tempid = 1613; break;
+                            case "PuffJalapeno": tempid = 1614; break;
+                            case "PuffSeaShroom": tempid = 1615; break;
+                            case "StarPuff": tempid = 1616; break;
+                            case "PuffPumpkin": tempid = 1617; break;
+                            case "CabbagePuff": tempid = 1618; break;
+                            case "CornPuff": tempid = 1619; break;
+                            case "SmallUmbrella": tempid = 1620; break;
+                            case "MelonPuff": tempid = 1621; break;
+                            case "HypnoFume": tempid = 1622; break;
+                            case "ScaredFume": tempid = 1623; break;
+                            case "IceFumeShroom": tempid = 1624; break;
+                            case "DoomFume": tempid = 1625; break;
+                            case "KelpFume": tempid = 1626; break;
+                            case "FireFume": tempid = 1627; break;
+                            case "TorchFume": tempid = 1628; break;
+                            case "SeaFume": tempid = 1629; break;
+                            case "LanternFume": tempid = 1630; break;
+                            case "CactusFume": tempid = 1631; break;
+                            case "StarFume": tempid = 1632; break;
+                            case "FumePumpkin": tempid = 1633; break;
+                            case "MagnetFume": tempid = 1634; break;
+                            case "CabbageFume": tempid = 1635; break;
+                            case "CornFume": tempid = 1636; break;
+                            case "GarlicFume": tempid = 1637; break;
+                            case "MelonFume": tempid = 1638; break;
+                            case "ScaredyHypno": tempid = 1639; break;
+                            case "IceHypno": tempid = 1640; break;
+                            case "HypnoDoom": tempid = 1641; break;
+                            case "HypnoSquash": tempid = 1642; break;
+                            case "HypnoJalapeno": tempid = 1643; break;
+                            case "HypnoTorch": tempid = 1644; break;
+                            case "SeaHypno": tempid = 1645; break;
+                            case "HypnoBlover": tempid = 1646; break;
+                            case "StarHypno": tempid = 1647; break;
+                            case "HypnoPumpkin": tempid = 1648; break;
+                            case "HypnoMagnet": tempid = 1649; break;
+                            case "HypnoPot": tempid = 1650; break;
+                            case "HypnoGarlic": tempid = 1651; break;
+                            case "HypnoMelon": tempid = 1652; break;
+                            case "IceScaredyShroom": tempid = 1653; break;
+                            case "ScaredyDoom": tempid = 1654; break;
+                            case "SeaScaredyshroom": tempid = 1655; break;
+                            case "ScaredyBlover": tempid = 1656; break;
+                            case "ScaredyStar": tempid = 1657; break;
+                            case "ScaredyPumpkin": tempid = 1658; break;
+                            case "ScaredyPot": tempid = 1659; break;
+                            case "IceDoom": tempid = 1660; break;
+                            case "IceSquash": tempid = 1661; break;
+                            case "ObsidianJalapeno": tempid = 1662; break;
+                            case "IceCaltrop": tempid = 1663; break;
+                            case "IceTorch": tempid = 1664; break;
+                            case "IceSeashroom": tempid = 1665; break;
+                            case "IcePlantern": tempid = 1666; break;
+                            case "IceBlover": tempid = 1667; break;
+                            case "IceCabbage": tempid = 1668; break;
+                            case "IcePot": tempid = 1669; break;
+                            case "IceCorn": tempid = 1670; break;
+                            case "SilverIceShroom": tempid = 1671; break;
+                            case "WinterMelon": tempid = 1672; break;
+                            case "DoomSquash": tempid = 1673; break;
+                            case "DoomKelp": tempid = 1674; break;
+                            case "DoomJalapeno": tempid = 1675; break;
+                            case "DoomTorch": tempid = 1676; break;
+                            case "DoomSeaShroom": tempid = 1677; break;
+                            case "DoomPlantern": tempid = 1678; break;
+                            case "DoomCactus": tempid = 1679; break;
+                            case "DoomBlover": tempid = 1680; break;
+                            case "DoomStar": tempid = 1681; break;
+                            case "DoomPumpkin": tempid = 1682; break;
+                            case "MagnetDoom": tempid = 1683; break;
+                            case "DoomCabbage": tempid = 1684; break;
+                            case "DoomCorn": tempid = 1685; break;
+                            case "DoomGarlic": tempid = 1686; break;
+                            case "SilverDoom": tempid = 1687; break;
+                            case "DoomMelon": tempid = 1688; break;
+                            case "ThreeSquash": tempid = 1689; break;
+                            case "Squashkelp": tempid = 1690; break;
+                            case "JalaSquash": tempid = 1691; break;
+                            case "SquashSpike": tempid = 1692; break;
+                            case "SquashTorch": tempid = 1693; break;
+                            case "SeaSquash": tempid = 1694; break;
+                            case "SquashBlover": tempid = 1695; break;
+                            case "SquashPumpkin": tempid = 1696; break;
+                            case "CabbageSquash": tempid = 1697; break;
+                            case "SquashCorn": tempid = 1698; break;
+                            case "SquashMelon": tempid = 1699; break;
+                            case "Threekelp": tempid = 1700; break;
+                            case "DarkThreePeater": tempid = 1701; break;
+                            case "ThreeSpike": tempid = 1702; break;
+                            case "ThreeTorch": tempid = 1703; break;
+                            case "ThreePlantern": tempid = 1704; break;
+                            case "GarlicThreePeater": tempid = 1705; break;
+                            case "Jalakelp": tempid = 1706; break;
+                            case "CaltropKelp_water": tempid = 1707; break;
+                            case "CaltropKelp_land": tempid = 1707; break;
+                            case "KelpTorch": tempid = 1708; break;
+                            case "JalaCaltrop": tempid = 1709; break;
+                            case "JalaTorch": tempid = 1710; break;
+                            case "JalaStar": tempid = 1711; break;
+                            case "JalaPumpkin": tempid = 1712; break;
+                            case "FireCabbage": tempid = 1713; break;
+                            case "JalaCorn": tempid = 1714; break;
+                            case "FireMelon": tempid = 1715; break;
+                            case "TorchSpike": tempid = 1716; break;
+                            case "CactusCaltrop": tempid = 1717; break;
+                            case "CabbageCaltrop": tempid = 1718; break;
+                            case "CaltropPot": tempid = 1719; break;
+                            case "CornCaltrop": tempid = 1720; break;
+                            case "MelonCaltrop": tempid = 1721; break;
+                            case "StarTorch": tempid = 1722; break;
+                            case "TorchPumpkin": tempid = 1723; break;
+                            case "GarlicTorch": tempid = 1724; break;
+                            case "SeaLantern": tempid = 1725; break;
+                            case "SeaCactus": tempid = 1726; break;
+                            case "SeaBlover": tempid = 1727; break;
+                            case "SeaStarfruit": tempid = 1728; break;
+                            case "SeaPumpkin": tempid = 1729; break;
+                            case "SeaMagnet": tempid = 1730; break;
+                            case "LanternCactus": tempid = 1731; break;
+                            case "LanternBlover": tempid = 1732; break;
+                            case "LanternStar": tempid = 1733; break;
+                            case "LanternPumpkin": tempid = 1734; break;
+                            case "LanternMagnet": tempid = 1735; break;
+                            case "LanternPot": tempid = 1736; break;
+                            case "LanternUmbrella": tempid = 1737; break;
+                            case "CactusBlover": tempid = 1738; break;
+                            case "CacstusStar": tempid = 1739; break;
+                            case "CactusPumpkin": tempid = 1740; break;
+                            case "MagnetCactus": tempid = 1741; break;
+                            case "CactusUmbrella": tempid = 1742; break;
+                            case "HurricaneBlover": tempid = 1743; break;
+                            case "StarBlover": tempid = 1744; break;
+                            case "BlowerPumpkin": tempid = 1745; break;
+                            case "MagnetBlover": tempid = 1746; break;
+                            case "CabbageBlover": tempid = 1747; break;
+                            case "CornBlover": tempid = 1748; break;
+                            case "GarlicBlover": tempid = 1749; break;
+                            case "BloverUmbrella": tempid = 1750; break;
+                            case "MelonBlover": tempid = 1751; break;
+                            case "MagnetCorn": tempid = 1752; break;
+                            case "GoldMagnet": tempid = 1753; break;
+                            case "MagnetMelon": tempid = 1754; break;
+                            case "CabbagePot": tempid = 1755; break;
+                            case "CornCabbage": tempid = 1756; break;
+                            case "GarlicCabbage": tempid = 1757; break;
+                            case "CabbageUmbrella": tempid = 1758; break;
+                            case "SilverCabbage": tempid = 1759; break;
+                            case "CabbageMelon": tempid = 1760; break;
+                            case "CornPot": tempid = 1761; break;
+                            case "GarlicPot": tempid = 1762; break;
+                            case "UmbrellaPot": tempid = 1763; break;
+                            case "SilverPot": tempid = 1764; break;
+                            case "MelonPot": tempid = 1765; break;
+                            case "GarlicCorn": tempid = 1766; break;
+                            case "CornUmbrella": tempid = 1767; break;
+                            case "SilverCorn": tempid = 1768; break;
+                            case "CornMelon": tempid = 1769; break;
+                            case "GarlicUmbrella": tempid = 1770; break;
+                            case "SilverGarlic": tempid = 1771; break;
+                            case "GarlicMelon": tempid = 1772; break;
+                            case "SilverUmbrella": tempid = 1773; break;
+                            case "MelonUmbrella": tempid = 1774; break;
+                            case "SilverMelon": tempid = 1775; break;
+
+
+                            case "StarPumpkin": tempid = 1792; break;
+                            case "MagnetStar": tempid = 1793; break;
+                            case "Pumpiner": tempid = 1794; break;
+                            case "GarlicPumpkin": tempid = 1795; break;
+                            case "MelonPumpkin": tempid = 1796; break;
+                            case "TwinMarigold": tempid = 1797; break;
+                            case "BigWallNut": tempid = 1811; break;
+
+                            case "SpruceShulk": tempid = 1776; break;
+                            case "LotusSpruce": tempid = 1777; break;
+                            case "WaterSpruce": tempid = 1778; break;
+                            case "BambooSpruce": tempid = 1779; break;
+                            case "ThornsSpruce": tempid = 1780; break;
+                            case "Twinshulk": tempid = 1781; break;
+                            case "ShulkLotus": tempid = 1782; break;
+                            case "WaterShulk": tempid = 1783; break;
+                            case "ShulkBamboo": tempid = 1784; break;
+                            case "ThornsShulk": tempid = 1785; break;
+                            case "LotusAloes": tempid = 1786; break;
+                            case "LotusBamboo": tempid = 1787; break;
+                            case "ThornsLotus": tempid = 1788; break;
+                            case "WaterBamboo": tempid = 1789; break;
+                            case "ThronsAloes": tempid = 1790; break;
+                            case "ThornsBamboo": tempid = 1791; break;
+
+
+                            case "IceCactus": tempid = 1798; break;
+                            case "CherryFume": tempid = 1799; break;
+                            case "TorchSeaShroom": tempid = 1800; break;
+                            case "ThreeMelon": tempid = 1801; break;
+                            case "ThreeCorn": tempid = 1802; break;
+                            case "ThreePumpkin": tempid = 1803; break;
+                            case "IcePumpkin": tempid = 1804; break;
+                            case "BloverPot": tempid = 1805; break;
+                            case "CaltropFume": tempid = 1806; break;
+                            case "ThreeCabbage": tempid = 1807; break;
+                            case "DoomThreePeater": tempid = 1808; break;
+                            case "StarSquash": tempid = 1809; break;
+                            case "ThreePot": tempid = 1810; break;
+
+
+                            case "DoubleCherry": tempid = 1900; break;
+                            case "HypnoRepeater": tempid = 1901; break;
+                            case "DoubleSnow": tempid = 1902; break;
+                            case "JalaDoubleshooter": tempid = 1903; break;
+                            case "LanternRepeater": tempid = 1904; break;
+                            case "GarlicRepeater": tempid = 1905; break;
+                            case "SplitPea": tempid = 1906; break;
+                            case "CherrySplit": tempid = 1907; break;
+                            case "HypnoSplit": tempid = 1908; break;
+                            case "SnowSplit": tempid = 1909; break;
+                            case "JalaSplit": tempid = 1910; break;
+                            case "LanternSplit": tempid = 1911; break;
+                            case "GarlicSplit": tempid = 1912; break;
+                            case "GatlingPea": tempid = 1913; break;
+                            case "CherryGatling": tempid = 1914; break;
+                            case "HypnoGatling": tempid = 1915; break;
+                            case "SnowGatling": tempid = 1916; break;
+                            case "JalaGatling": tempid = 1917; break;
+                            case "LanternGatling": tempid = 1918; break;
+                            case "GarlicGatling": tempid = 1919; break;
+
+                            case "IronPea": tempid = 1930; break;
+                            case "IronNut": tempid = 1931; break;
+                            case "TallNutFootball": tempid = 1932; break;
+                            case "IronStar": tempid = 1935; break;
+                            case "PickaxeStar": tempid = 1934; break;
+                            case "JackboxStar": tempid = 1933; break;
+                            case "IronPumpkin": tempid = 1936; break;
+                            case "JackboxPumpkin": tempid = 1937; break;
+                            case "PickaxePumpkin": tempid = 1938; break;
+                            case "MachineNut": tempid = 1939; break;
+                            case "IronPuff": tempid = 1940; break;
+                            case "IronFume": tempid = 1941; break;
+                            case "PortalPea": tempid = 1942; break;
+                            case "PortalCorn": tempid = 1943; break;
+                            case "IronCorn": tempid = 1944; break;
+                            case "PortalDoom": tempid = 1945; break;
+                            case "PortalNut": tempid = 1946; break;
+                            case "BucketDoom": tempid = 1947; break;
+                            case "JackboxDoom": tempid = 1948; break;
+                            case "IronSquash": tempid = 1949; break;
+
+                            case "IronMelon": tempid = 1950; break;
+                            case "PortalMelon": tempid = 1951; break;
+
+
+                            case "SuperCherryShooter": tempid = 2000; break;
+                            case "SuperChomper": tempid = 2001; break;
+                            case "SuperHypno": tempid = 2002; break;
+                            case "SuperFume": tempid = 2003; break;
+                            case "SuperTorch": tempid = 2004; break;
+                            case "SuperKelp": tempid = 2005; break;
+                            case "SuperStar": tempid = 2006; break;
+                            case "SuperPumpkin": tempid = 2007; break;
+                            case "SuperMelon": tempid = 2008; break;
+                            case "MelonCannon": tempid = 2009; break;
+                            case "SuperUmbrella": tempid = 2010; break;
+                            case "HelmetFume": tempid = 2011; break;
+                            case "BigGatling": tempid = 2012; break;
+                            case "BigPumpkin": tempid = 2013; break;
+                            case "BigChomper": tempid = 2014; break;
+                            case "BigSeaShroom": tempid = 2015; break;
+                            case "SuperSpruce": tempid = 2016; break;
+                            case "SuperFurnace": tempid = 2017; break;
+                            case "HugeWallNut": tempid = 2018; break;
+                            case "BigGloom": tempid = 2019; break;
+                            case "HelmetGatling": tempid = 2020; break;
+                            case "CabbageCannon": tempid = 2021; break;
+
+
+
+                            default: tempid = -1; break;
+
+
+
+
+
+
+
+                        }
+                        if (tempid != -1)
+                        {
+                            if (!checkedArray[tempid])
+                            {
+
+                                checkedArray[tempid] = true;
+                                session.Locations.CompleteLocationChecks(tempid);
+
+                            }
+                        }
+
+
+                        }
+                    }
+
+                }
+                     
+                return true;
+                
+            }
+        }
+
+
+
+
+
+
+        [HarmonyLib.HarmonyPatch(typeof(CreatePlant), "SetPlant")]
+        public static class Patch69
+        {
+            private static bool Prefix(int newColumn, int newRow, Il2Cpp.PlantType theSeedType, Il2Cpp.Plant targetPlant, UnityEngine.Vector2 puffV, bool isFreeSet, bool withEffect, Il2Cpp.Plant hidplant)
+            {
+
+
+                if (boardGl == null) {
+                    boardGl = GameObject.Find("Board");
+
+
+                }
+
+                if (boardGl == null) { MelonLogger.Msg("failed to find board"); return true; }
+
+                InitBoard temp = boardGl.GetComponent<InitBoard>();
+
+
+                if (!temp.ready)
+                {
+                    MelonLogger.Msg("not ready");
+                    return true;
+                }
+
+
+                //dont do this if glove or wheelbarrow is in use, but do it if either has already been used this frame
+
+
+                MelonLogger.Msg($"setplant 1:{theSeedType} (lazy)");
+                switch (theSeedType.ToString()) {
+
+                    case "Peashooter": if (!unlockedArray[1]) { return false; } break;
+                    case "Sunflower": if (!unlockedArray[2]) { return false; } break;
+                    case "CherryBomb": if (!unlockedArray[3]) { return false; } break;
+                    case "WallNut": if (!unlockedArray[4]) { return false; } break;
+                    case "PotatoMine": if (!unlockedArray[5]) { return false; } break;
+                    case "Chomper": if (!unlockedArray[6]) { return false; } break;
+                    case "SmallPuff": if (!unlockedArray[10]) { return false; } break;
+                    case "FumeShroom": if (!unlockedArray[11]) { return false; }break;
+                    case "HypnoShroom": if (!unlockedArray[12]) { return false; } break;
+                    case "ScaredyShroom": if (!unlockedArray[13]) { return false; } break;
+                    case "IceShroom": if (!unlockedArray[14]) { return false; } break;
+                    case "DoomShroom": if (!unlockedArray[15]) { return false; } break;
+                    case "LilyPad": if (!unlockedArray[19]) { return false; } break;
+                    case "Squash": if (!unlockedArray[20]) { return false; } break;
+                    case "ThreePeater": if (!unlockedArray[21]) { return false; } break;
+                    case "Tanglekelp": if (!unlockedArray[22]) { return false; } break;
+                    case "Jalapeno": if (!unlockedArray[23]) { return false; } break;
+                    case "Caltrops": if (!unlockedArray[24]) { return false; } break;
+                    case "TorchWood": if (!unlockedArray[25]) { return false; } break;
+                    case "SeaShroom": if (!unlockedArray[28]) { return false; } break;
+                    case "Plantern": if (!unlockedArray[29]) { return false; } break;
+                    case "Cactus": if (!unlockedArray[30]) { return false; } break;
+                    case "Blover": if (!unlockedArray[31]) { return false; } break;
+                    case "StarFruit": if (!unlockedArray[32]) { return false; } break;
+                    case "Pumpkin": if (!unlockedArray[33]) { return false; } break;
+                    case "Magnetshroom": if (!unlockedArray[34]) { return false; } break;
+                    case "Cabbagepult": if (!unlockedArray[37]) { return false; } break;
+                    case "Pot": if (!unlockedArray[38]) { return false; } break;
+                    case "Cornpult": if (!unlockedArray[39]) { return false; } break;
+                    case "Garlic": if (!unlockedArray[40]) { return false; } break;
+                    case "Umbrellaleaf": if (!unlockedArray[41]) { return false; } break;
+                    case "Marigold": if (!unlockedArray[42]) { return false; } break;
+                    case "Melonpult": if (!unlockedArray[43]) { return false; } break;
+
+                    case "PineFurnace": if (!unlockedArray[46]) { return false; } break;
+                    case "SpruceShooter": if (!unlockedArray[47]) { return false; } break;
+                    case "Shulkflower": if (!unlockedArray[48]) { return false; } break;
+                    case "IceLotus": if (!unlockedArray[49]) { return false; } break;
+                    case "WaterAloes": if (!unlockedArray[50]) { return false; } break;
+                    case "Bamboo": if (!unlockedArray[51]) { return false; } break;
+                    case "Thorns": if (!unlockedArray[52]) { return false; } break;
+
+                        
+
+                    default: break;
+                }
+
+                int tempid = 0;
+                switch (theSeedType.ToString())
+                {
+                    case "IronPea": tempid = 1930; break;
+                    case "IronNut": tempid = 1931; break;
+                    case "TallNutFootball": tempid = 1932; break;
+                    case "IronStar": tempid = 1935; break;
+                    case "PickaxeStar": tempid = 1934; break;
+                    case "JackboxStar": tempid = 1933; break;
+                    case "IronPumpkin": tempid = 1936; break;
+                    case "JackboxPumpkin": tempid = 1937; break;
+                    case "PickaxePumpkin": tempid = 1938; break;
+                    case "MachineNut": tempid = 1939; break;
+                    case "IronPuff": tempid = 1940; break;
+                    case "IronFume": tempid = 1941; break;
+                    case "PortalPea": tempid = 1942; break;
+                    case "PortalCorn": tempid = 1943; break;
+                    case "IronCorn": tempid = 1944; break;
+                    case "PortalDoom": tempid = 1945; break;
+                    case "PortalNut": tempid = 1946; break;
+                    case "BucketDoom": tempid = 1947; break;
+                    case "JackboxDoom": tempid = 1948; break;
+                    case "IronSquash": tempid = 1949; break;
+
+                    case "IronMelon": tempid = 1950; break;
+                    case "PortalMelon": tempid = 1951; break;
+
+
+                    case "MelonCannon": tempid = 2009; break;
+
+                    case "HelmetFume": tempid = 2011; break;
+                    case "BigGatling": tempid = 2012; break;
+                    case "BigPumpkin": tempid = 2013; break;
+                    case "BigChomper": tempid = 2014; break;
+                    case "BigSeaShroom": tempid = 2015; break;
+
+                    case "SuperFurnace": tempid = 2017; break;
+                    case "HugeWallNut": tempid = 2018; break;
+                    case "BigGloom": tempid = 2019; break;
+                    case "HelmetGatling": tempid = 2020; break;
+                    case "CabbageCannon": tempid = 2021; break;
+
+
+
+                    default: tempid = -1; break;
+
+
+
+
+
+
+
+                }
+                if (tempid != -1)
+                {
+                    
+                    if (!checkedArray[tempid])
+                    {
+
+                        checkedArray[tempid] = true;
+                        session.Locations.CompleteLocationChecks(tempid);
+
+                    }
+                }
+
+                //code here to prevent placing plants you dont have unlocked
+
+                //MelonLogger.Msg($"1:{newColumn} 2:{newRow} 3:{theSeedType} 4:{targetPlant} 5:{puffV} 6:{isFreeSet} 7:{withEffect} 8:{hidplant}");
+
+
+                return true;
+            }
+            
+        }
+
+
+
+
+
+
+
     }
 
 
