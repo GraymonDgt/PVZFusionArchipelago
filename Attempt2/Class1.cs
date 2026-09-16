@@ -2087,7 +2087,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(57);
                         session.Locations.CompleteLocationChecks(357);
                         break;
-                    case "Fusion Challenge: Doomspike-shroom":
+                    case "Fusion Challenge: Glacier-shroom":
                         checkedArray[58] = true;
                         session.Locations.CompleteLocationChecks(58);
                         session.Locations.CompleteLocationChecks(358);
@@ -2107,7 +2107,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(61);
                         session.Locations.CompleteLocationChecks(361);
                         break;
-                    case "Fusion Challenge: Pump-karrier":
+                    case "Fusion Challenge: Pumpkarrier":
                         checkedArray[62] = true;
                         session.Locations.CompleteLocationChecks(62);
                         session.Locations.CompleteLocationChecks(362);
