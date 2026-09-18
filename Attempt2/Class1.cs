@@ -2272,7 +2272,7 @@ namespace PVZFusionArchipelago
                         session.Locations.CompleteLocationChecks(97);
                         session.Locations.CompleteLocationChecks(397);
                         break;
-                    case "Hypno-tism!":
+                    case "Hypno-nut":
                         checkedArray[98] = true;
                         session.Locations.CompleteLocationChecks(98);
                         session.Locations.CompleteLocationChecks(398);
