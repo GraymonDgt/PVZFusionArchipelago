@@ -211,7 +211,7 @@ td_plants_item_data_table: dict[str, PVZFItemData] = {
 }
 
 tools_item_data_table: dict[str, PVZFItemData] = {
-    "Shovel": PVZFItemData(70, ItemClassification.useful),
+    "Shovel": PVZFItemData(70, ItemClassification.progression),
     "Fertilizer": PVZFItemData(71, ItemClassification.progression),
     "Plant Gloves":PVZFItemData(72, ItemClassification.progression),
     #"Zombie Gloves": PVZFItemData(73, ItemClassification.useful),
@@ -276,7 +276,7 @@ minigame_item_table: dict[str, PVZFItemData] = {
     "Chomper Snake": PVZFItemData(143, ItemClassification.progression),
     "Chinese Chezz": PVZFItemData(144, ItemClassification.progression),
     "Squash Showdown! 2": PVZFItemData(145, ItemClassification.progression),
-    "Zombies VS Zombies 2": PVZFItemData(146, ItemClassification.progression),#yes this is a normal minigame not odyssey for some reason
+    "Zombies vs Zombies": PVZFItemData(146, ItemClassification.progression),#yes this is a normal minigame not odyssey for some reason
     "2048: Pea-volution": PVZFItemData(147, ItemClassification.progression),
     "Splash and Clash": PVZFItemData(148, ItemClassification.progression),
     "Melon Ninja": PVZFItemData(149, ItemClassification.progression),
