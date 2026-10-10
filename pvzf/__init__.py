@@ -180,7 +180,7 @@ class PVZFWorld(World):
     def create_items(self):
             # 1Up Mushrooms
             possible_starts = ["Peashooter", "Fume-shroom", "Scaredy-shroom", "Threepeater", "Cactus", "Starfruit",
-                               "Cabbage-pult", "Kernel-pult", "Spruce Sharpshooter","Chomper"]
+                               "Cabbage-pult", "Kernel-pult", "Spruce Sharpshooter"]
             for i in self.options.no_start_plant:
                 if i in possible_starts:
                     possible_starts.remove(i)
